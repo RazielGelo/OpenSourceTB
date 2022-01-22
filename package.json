@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "express": "^4.17.2",
+    "http": "^0.0.1-security",
+    "jade": "^0.29.0",
+    "mongoose": "^6.1.7"
+  },
+  "devDependencies": {
+    "dotenv": "^14.2.0",
+    "nodemon": "^2.0.15"
+  }
+}
