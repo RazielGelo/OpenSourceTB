@@ -5,7 +5,6 @@ const router = express.Router()
 // Link to models/users.js
 const User = require('../models/user.js')
 
-
 // CREATE
 router.post('/', async (req, res) => {
 	const user = new User({
@@ -111,6 +110,8 @@ router.delete('/:id', getUser, async (req, res) => {
 		res.status(500).json({message: err.message })
 	}
 })
+
+
 
 
 module.exports = router;
