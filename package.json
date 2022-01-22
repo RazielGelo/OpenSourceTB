@@ -1,4 +1,23 @@
-{
+{  
+  "name": "opensourcetb",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "node index.js",
+	"dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RazielGelo/OpenSourceTB.git"
+  },
+  "author": "NIKEA Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RazielGelo/OpenSourceTB/issues"
+  },
+  "homepage": "https://github.com/RazielGelo/OpenSourceTB#readme",
   "dependencies": {
     "express": "^4.17.2",
     "http": "^0.0.1-security",
