@@ -1,0 +1,12 @@
+header {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: left;
+}
+
+footer {
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    clear: both;
+}
