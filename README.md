@@ -1,1 +1,3 @@
-# OpenSourceTB
+# Open Source Textbook Project
+## Overview
+We thought of making an open source website for our project in CSTP 1206 that will be helpful to everyone specially with the students, with the help of contributors which we can call educators that will share their knowledge by adding and updating virtual books that will be available to everyone. An open source website unlike static paper textbooks, the open source textbook reflects users' experience and opinions to always improve the knowledge of people all over the world. You can take a look at [our documentation](https://docs.google.com/document/d/1_tiEi8_Zj89bupu_WBLN0ZhiwYvD9s7V4sJP7vu_QEo/edit#).
