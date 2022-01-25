@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	middleName: {
+		type: String,
+		required: true
+	},
 	birthday: {
 		type: Date,
 		required: true,
