@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
 	},
 	middleName: {
 		type: String,
-		required: true
 	},
 	birthday: {
 		type: Date,
