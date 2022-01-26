@@ -33,4 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Listen to Server
-app.listen(process.env.PORT || 3000, () => console.log(`Server started on port http://localhost:${process.env.PORT || 3000}`))
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server started on port http://localhost:${process.env.PORT || 3000}`)
+    console.log(path.join(__dirname, 'views'))
+} )

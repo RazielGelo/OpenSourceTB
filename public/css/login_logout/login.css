@@ -1,0 +1,53 @@
+.login_pannel{
+    background-color: #EEEEEE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login_prompt{
+    color: #000;
+    background-color: #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 40%;
+    margin-top: 5em;
+    margin-bottom: 6em;
+
+}
+
+.login_prompt>h2{
+    font-size: 2em;
+}
+form{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+label{
+    align-items: flex-start;
+
+}
+.log_input{
+    margin-bottom: .8em;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+}
+
+.login_button{
+    justify-content: center;
+    background-color: #C4C4C4;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: 12px;
+}
