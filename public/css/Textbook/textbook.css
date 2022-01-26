@@ -1,0 +1,129 @@
+#textbook_pannel{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    background-color: #DFDFDF;
+}
+
+.textbook_content{
+    color: black;
+    display: grid;
+    text-align: center;
+    grid-template-columns: 5% 45% 45% 5%;
+    grid-template-rows: auto;
+    
+}
+
+.textbook_content{
+    color: #000;
+    margin: 0em;
+    padding: 1em;
+    border-radius: 3px;
+}
+
+/* Title */
+.textbook_title{
+    display: flex;
+    grid-column: 2/4;
+    text-align: center;
+    justify-content: center;
+}
+
+    #chapter_title{
+        margin-bottom: 0em;
+    }
+
+/* Introduction */
+.introduction{
+    display: flex;
+    grid-column: 2/4;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+    margin-bottom: 3em;
+}
+
+.textbook_sentence{
+    text-align: left;
+    margin: 0.5em;
+}
+
+.explanation{
+    display: flex;
+    flex-direction: column;
+}
+.expl_heading{
+    margin: 0.1em;
+    margin-top: 0.5em;
+    padding-left: 0.5em;
+    text-align: left
+    
+}
+
+.illustration{
+    display: flex;
+    background-color: #C4C4C4;
+    border-radius: 5px;
+    margin: 0.5em;
+    height: 250px;
+}
+
+#expl_1{
+    grid-column: 2/3;
+    grid-row: 3/4;
+
+}
+
+#ill_1{
+    grid-column: 3/4;
+    grid-row: 3/4;
+
+}
+#ill_2{
+    grid-column: 2/3;
+    grid-row: 4/5;
+
+}
+
+#expl_2{
+    grid-column: 3/4;
+    grid-row: 4/5;
+
+}
+
+.conclusion{
+    margin-top: 3em;
+    margin-bottom: 4em;
+    display: flex;
+    flex-direction: column;
+    grid-column: 2/5;
+    
+}
+*/
+#chapter_content{
+    grid-column: 1/2;
+    grid-row: 1;
+}
+
+#side_bar{
+    border-radius: 0px;
+    background-color: #909090;
+    grid-column: 2/3;
+    grid-row: 1;
+}
+
+#side_bar>h2{
+    text-align: center;
+    color: black;
+}
+
+.textbook_index{
+    display: flex;
+    flex-direction: column;
+}
+.chapter{
+    color: black;
+    
+    text-decoration: none;
+    margin: 1em;
+
+} 

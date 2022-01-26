@@ -1,0 +1,45 @@
+body {
+    margin:0;
+    color: whitesmoke;
+}
+header{
+    background-color: #483B3B;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+.logo{
+    display:relative;
+    padding-left: 1em;
+    align-items: center; 
+}
+
+#logo{
+    margin-left: 1em;
+}
+
+#logo>a{
+    text-decoration: none;
+    color: white;
+}
+
+.nav{
+    justify-content: flex-end;
+    text-align: center;
+}
+
+.nav{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.nav>a{
+    text-decoration: none;
+    color: whitesmoke;
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+    font-size: 1.2em;
+}
+
+#login{
+    font-size: 1em;
+}

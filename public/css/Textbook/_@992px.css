@@ -1,0 +1,16 @@
+
+@media screen and (max-width: 992px) {
+    .nav>a{
+        font-size: 1em;
+        margin-right: 1em;
+        margin-left: 1em;
+    }
+
+    #login{
+        font-size: 0.8em;
+    }
+
+    #side_bar>h2{
+        font-size: 1em;
+    }
+}
