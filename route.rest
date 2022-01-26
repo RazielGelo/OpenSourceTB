@@ -1,0 +1,50 @@
+// CREATE
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+	"email": "emiljansangil@gmail.com",
+	"password": "password",
+	"firstName": "Emil Jan",
+	"lastName": "Sangil",
+	"birthday": "1991-08-20"
+}
+
+###
+// SELECT ALL 
+GET http://localhost:3000/users
+
+###
+// SELECT ONE
+GET http://localhost:3000/users/IDHERE
+
+###
+// UPDATE ALL FIELDS
+POST http://localhost:3000/users/
+Content-Type: application/json
+
+{
+	"email": "angeloguerra1986x@gmail.com",
+	"password": "password",
+	"firstName": "Joseph",
+	"lastName": "Guerra",
+	"birthday": "1986-03-19"
+}
+
+###
+// DELETE ONE
+DELETE http://localhost:3000/users/61ea0106bc20245ae83917bf
+
+
+###
+// UPDATE ONE
+PATCH http://localhost:3000/users/IDHERE
+Content-Type: application/json
+
+{
+	"email": "angeloguerra1986x@gmail.com",
+	"password": "password",
+	"firstName": "Joseph",
+	"lastName": "Guerra",
+	"birthday": "1986-03-19"
+}
