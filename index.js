@@ -25,7 +25,7 @@ const indexRouter = require('./routes/index');
 
 // Use route
 app.use('/users', userRouter)
-app.use('/index', indexRouter)
+app.use('/', indexRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup View Engine
@@ -34,6 +34,6 @@ app.set('view engine', 'jade');
 
 // Listen to Server
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server started on port http://localhost:${process.env.PORT || 3000}`)
+    console.log(`Server started on http://localhost:${process.env.PORT || 3000}`)
     console.log(path.join(__dirname, 'views'))
 } )
