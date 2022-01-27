@@ -1,18 +1,33 @@
 extends layout 
 
+block head
+
+	
 block content
 
-div(class="login_pannel")
-	div(class="login_prompt")
-		h2 Welcome Back!
+	div(class="login_pannel")
+		div(class="login_prompt")
+			h2 Welcome Back!
+			form(action="")
+				div
+					input(id="username-input", type='text', placeholder="username")
+				br
+				div
+					input(id="password-input",type='text', placeholder="password")
+					a(href="create")
+				br
+				div
+					button Login
+				
+			<p id="message-1"></p>
+			<p id="message-2"></p>
 
-		form(action="")
-			label(for="fname") Email
-			br
-			input(class="log_input", type="text")
-			br
-			label(for="fname") Password 
-			br
-			input(class="log_input", type="password", name="password")
-			br
-			button(class ='login_button') Login
+			//- label(for="fname") Email
+			//- br
+			//- input(class="log_input", type="text")
+			//- br
+			//- label(for="fname") Password 
+			//- br
+			//- input(class="log_input", type="password", name="password")
+			//- br
+			//- button(class ='login_button') Login
