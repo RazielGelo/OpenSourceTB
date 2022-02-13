@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h1 Register Page
+	p This is where you register. 
+	hr
+	h2= error
+	form(action="/register", method='POST')
+		div
+			label(for="firstName") FirstName:
+			input(type="text", id="firstName", name="firstName", required=true)
+		div
+			label(for="lastName") LastName:
+			input(type="text", id="lastName", name="lastName", required=true)
+		div
+			label(for="birthday") Birthday:
+			input(type="Date", id="birthday", name="birthday", required=true)
+		div
+			label(for="email") Email:
+			input(type="email", id="email", name="email", required=true)
+		div
+			label(for="password") Password:
+			input(type="password", id="password", name="password", required=true)
+		div
+			button(type="submit") Register

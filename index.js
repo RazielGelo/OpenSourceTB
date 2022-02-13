@@ -1,5 +1,7 @@
 // For .env to work, we need this
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config()
+}
 
 // Initialization of Frameworks
 const express = require('express')
@@ -15,22 +17,29 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to database'))
 
-// Setup server to accept JSON (Middleware)
-app.use(express.json())
+// Middleware
+app.use(express.json()) // Setup server to accept JSON
+app.use(express.urlencoded({ extended: false })) // Setup server to accept form data
+
 
 // Routes
-const userRouter = require('./routes/users')
-const indexRouter = require('./routes/index');
+// const userRouter = require('./routes/users')
+const indexRouter = require('./routes/index')
+const loginRouter = require('./routes/login')
+const registerRouter = require('./routes/register')
 
 
 // Use route
-app.use('/users', userRouter)
+// app.use('/users', userRouter)
 app.use('/', indexRouter)
+app.use('/login', loginRouter)
+app.use('/register', registerRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
+
 
 // Listen to Server
 app.listen(process.env.PORT || 3000, () => {

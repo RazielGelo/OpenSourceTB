@@ -3,11 +3,11 @@ POST http://localhost:3000/users/
 Content-Type: application/json
 
 {
-	"email": "emiljansangil@gmail.com",
+	"email": "alex@gmail.com",
 	"password": "password",
-	"firstName": "Emil Jan",
-	"lastName": "Sangil",
-	"birthday": "1991-08-20"
+	"firstName": "Alex",
+	"lastName": "Guerra",
+	"birthday": "1971-12-02"
 }
 
 ###
@@ -16,8 +16,7 @@ GET http://localhost:3000/users
 
 ###
 // SELECT ONE
-GET http://localhost:3000/users/IDHERE
-
+GET http://localhost:3000/users?email=alex@gmail.com
 ###
 // UPDATE ALL FIELDS
 POST http://localhost:3000/users/
