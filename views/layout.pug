@@ -6,14 +6,24 @@ html(lang="en")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		link(rel="stylesheet", href="../stylesheets/style.css")
 		block title
-			title default title
+			title OpenSourceTextbook
 	header
 		div
-			a(href='./') Home
+			a(href='/') Home
 			| 
-			a(href='./login') Login
-			| 
-			a(href='./register') Register
+			if user
+				a(href='/articles/add') Add Article
+				| 
+				a(href='/users/logout') Logout
+			else 
+				a(href='/login') Login
+				| 
+				a(href='/register') Register
 	body
+		!= messages('message', locals)
+		if errors
+			each error, i in errors
+				div(class="alert alert-danger") #{error.msg}
 		block content
-	footer Footer
+	footer
+		p Copyright &copy; 2021

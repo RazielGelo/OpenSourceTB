@@ -5,21 +5,24 @@ block content
 	p This is where you register. 
 	hr
 	h2= error
-	form(action="/register", method='POST')
+	form(action="/users/register", method='POST')
 		div
 			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName", required=true)
+			input(type="text", id="firstName", name="firstName")
 		div
 			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName", required=true)
+			input(type="text", id="lastName", name="lastName")
 		div
 			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday", required=true)
+			input(type="Date", id="birthday", name="birthday")
 		div
 			label(for="email") Email:
-			input(type="email", id="email", name="email", required=true)
+			input(type="email", id="email", name="email")
 		div
 			label(for="password") Password:
-			input(type="password", id="password", name="password", required=true)
+			input(type="password", id="password", name="password")
+		div
+			label(for="password2") Confirm Password:
+			input(type="password", id="password2", name="password2")
 		div
 			button(type="submit") Register

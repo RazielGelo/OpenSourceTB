@@ -4,9 +4,7 @@ block content
 	h1 Login Page
 	p This is where you login after registering.
 	hr
-	h2= error
-	h3= success
-	form(action="/login", method='POST')
+	form(action="/users/login", method='POST')
 		div
 			label(for="email") Email:
 			input(type="email", id="email", name="email", required=true)
@@ -15,5 +13,3 @@ block content
 			input(type="password", id="password", name="password", required=true)
 		div
 			button(type="submit") Login
-	h4
-	
