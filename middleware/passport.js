@@ -10,7 +10,7 @@ module.exports = function (passport) {
     User.findOne(query, (err, user) => {
       if (err) throw err;
       if (!user) {
-        return done(null, false, { message: 'User email not found' });
+        return done(null, false, { message: "Sorry, we can't find an account with this email address. Please try again or create a new account." });
       }
 
       // Match Password
@@ -19,7 +19,7 @@ module.exports = function (passport) {
         if (isMatch) {
           return done(null, user);
         } else {
-          return done(null, false, { message: 'Incorrect password, please try again' });
+          return done(null, false, { message: 'Login Failed! Your password is incorrect. Please try again.' });
         }
       });
     });

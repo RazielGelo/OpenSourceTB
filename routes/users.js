@@ -21,10 +21,10 @@ router.post('/register', async (req, res) => {
 	req.checkBody('lastName', 'Lastname is required').notEmpty()
 	req.checkBody('birthday', 'Birthday is required').notEmpty()
 	req.checkBody('email', 'Email is required').notEmpty()
-	req.checkBody('email', 'Email is not valid').isEmail();
+	req.checkBody('email', 'You have entered an invalid email address. Please try again.').isEmail();
 	req.checkBody('password', 'Password is required').notEmpty()
-	req.checkBody('password', 'Password must have 8 characters').len(8)
-	req.checkBody('password2', 'Passwords do not match').equals(req.body.password)
+	req.checkBody('password', 'Password must contain at least 8 characters.').len(8)
+	req.checkBody('password2', 'Password did not match').equals(req.body.password)
 	
   
 	let errors = req.validationErrors()
