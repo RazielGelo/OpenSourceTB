@@ -8,6 +8,13 @@ const express = require('express')
 const app = express()
 const path = require('path');
 
+// Passport related Frameworks
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+
+
 // Initialization of Database
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, {useNewURLParser: true})
@@ -21,19 +28,67 @@ db.once('open', () => console.log('Connected to database'))
 app.use(express.json()) // Setup server to accept JSON
 app.use(express.urlencoded({ extended: false })) // Setup server to accept form data
 
+/* ================PASSPORT RELATED==================== */
+
+// Express Session Middleware
+app.use(session({
+	secret: 'keyboard cat',
+	resave: true,
+	saveUninitialized: true
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use((req, res, next) => {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+
+// Express Validator Middleware
+app.use(expressValidator({
+	errorFormatter: (param, msg, value) => {		
+		var namespace = param.split('.'),
+		root = namespace.shift(),
+		formParam = root;
+
+		while (namespace.length) {
+			formParam += '[' + namespace.shift() + ']'
+		}
+
+		return	{
+			param: formParam,
+			msg: msg,
+			value: value
+		}
+	}
+}))
+  
+// Passport Config
+require('./middleware/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+  
+app.get('*', function (req, res, next) {
+	res.locals.user = req.user || null
+	next()
+})
+
+/* ======================================================= */
+
 
 // Routes
-// const userRouter = require('./routes/users')
+const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
-const loginRouter = require('./routes/login')
-const registerRouter = require('./routes/register')
+// const loginRouter = require('./routes/login')
+// const registerRouter = require('./routes/register')
 
 
 // Use route
-// app.use('/users', userRouter)
+app.use('/users', userRouter)
 app.use('/', indexRouter)
-app.use('/login', loginRouter)
-app.use('/register', registerRouter)
+// app.use('/login', loginRouter)
+// app.use('/register', registerRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup View Engine
