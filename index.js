@@ -15,15 +15,6 @@ const session = require('express-session');
 const passport = require('passport');
 
 
-// Initialization of Database
-// const mongoose = require('mongoose')
-// mongoose.connect(process.env.DATABASE_URL, {useNewURLParser: true})
-
-// // Establish connection to database
-// const db = mongoose.connection
-// db.on('error', (error) => console.error(error))
-// db.once('open', () => console.log('Connected to database'))
-
 // Middleware
 app.use(express.json()) // Setup server to accept JSON
 app.use(express.urlencoded({ extended: false })) // Setup server to accept form data
