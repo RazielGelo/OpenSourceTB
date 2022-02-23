@@ -71,15 +71,13 @@ app.get('*', function (req, res, next) {
 // Routes
 const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
-// const loginRouter = require('./routes/login')
-// const registerRouter = require('./routes/register')
+const booksRouter = require('./routes/books')
 
 
 // Use route
-app.use('/users', userRouter)
 app.use('/', indexRouter)
-// app.use('/login', loginRouter)
-// app.use('/register', registerRouter)
+app.use('/users', userRouter)
+app.use('/books', booksRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup View Engine

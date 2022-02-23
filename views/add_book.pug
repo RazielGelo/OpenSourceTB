@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	h1 Add Book
+	p This is where you add your new book.
+	hr
+	form(method='POST', action='/books/add')
+		div
+			label Title: 
+			input(name='title', type='text')
+		div 
+			label Body: 
+			textarea.form-control(name='body')
+		div
+			button(type="submit") Create 

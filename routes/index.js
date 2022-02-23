@@ -14,4 +14,8 @@ router.get('/register', async (req, res) => {
 	res.render('register.pug');
 })
 
+// router.get('/books', async (req, res) => {
+// 	res.render('book.pug');
+// })
+
 module.exports = router

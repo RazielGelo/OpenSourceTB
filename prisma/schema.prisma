@@ -18,5 +18,15 @@ model User {
   firstName 	String
   lastName 		String
   birthday      DateTime    @db.Date
+  books			Book[]
+  dateCreated 	DateTime 	@default(now())
+}
+
+model Book {
+  id      		Int      	@id @default(autoincrement())
+  title   		String  	@unique 
+  body    		String
+  author		User    	@relation(fields: [authorId], references: [id])
+  authorId  	Int
   dateCreated 	DateTime 	@default(now())
 }

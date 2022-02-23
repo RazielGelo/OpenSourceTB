@@ -19,7 +19,7 @@
 	},
 	"homepage": "https://github.com/RazielGelo/OpenSourceTB#readme",
 	"dependencies": {
-		"@prisma/client": "^3.9.2",
+		"@prisma/client": "^3.10.0",
 		"bcrypt": "^5.0.1",
 		"connect-flash": "^0.1.1",
 		"ejs": "^3.1.6",
@@ -36,6 +36,6 @@
 	"devDependencies": {
 		"dotenv": "^14.2.0",
 		"nodemon": "^2.0.15",
-		"prisma": "^3.9.2"
+		"prisma": "^3.10.0"
 	}
 }
