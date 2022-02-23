@@ -15,15 +15,6 @@ const session = require('express-session');
 const passport = require('passport');
 
 
-// Initialization of Database
-const mongoose = require('mongoose')
-mongoose.connect(process.env.DATABASE_URL, {useNewURLParser: true})
-
-// Establish connection to database
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to database'))
-
 // Middleware
 app.use(express.json()) // Setup server to accept JSON
 app.use(express.urlencoded({ extended: false })) // Setup server to accept form data
@@ -80,15 +71,13 @@ app.get('*', function (req, res, next) {
 // Routes
 const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
-// const loginRouter = require('./routes/login')
-// const registerRouter = require('./routes/register')
+const booksRouter = require('./routes/books')
 
 
 // Use route
-app.use('/users', userRouter)
 app.use('/', indexRouter)
-// app.use('/login', loginRouter)
-// app.use('/register', registerRouter)
+app.use('/users', userRouter)
+app.use('/books', booksRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup View Engine
