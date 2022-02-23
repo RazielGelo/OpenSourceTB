@@ -4,4 +4,9 @@ block content
 	h1 Books
 	p This is your books are displayed
 	hr
+	ul
+    each article, i in articles
+      li.list-group-item
+        a(href="/articles/"+article._id)= article.title
+
 	

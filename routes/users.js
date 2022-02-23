@@ -74,14 +74,14 @@ router.get('/login', async (req, res) => {
 })
 
 // New User Form
-router.get('/new', async (req, res) => {
-	res.render('new.pug')
+router.get('/profile', async (req, res) => {
+	res.render('profile.pug')
 })
 
 // Login Process
 router.post('/login', async (req, res, next) => {
 	passport.authenticate('local', {
-		successRedirect: '/users/new',
+		successRedirect: '/users/profile',
 		failureRedirect: '/users/login',
 		failureFlash: true
 	})(req, res, next)
