@@ -3,8 +3,12 @@ extends layout
 block content
 	h1 Register Page
 	p This is where you register. 
+	p Please note that once Username has been set it cannot be changed. 
 	hr
 	form(action="/users/register", method='POST')
+		div
+			label(for="userName") Username:
+			input(type="text", id="userName", name="userName")
 		div
 			label(for="firstName") FirstName:
 			input(type="text", id="firstName", name="firstName")

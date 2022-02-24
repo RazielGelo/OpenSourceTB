@@ -4,6 +4,23 @@ block content
 	h1 Users Page
 	p This is where all the information is displayed after you login.
 	hr
-	p Fullname: #{user.firstName + ' ' + user.lastName}
-	p Birthday: #{user.birthday}
+	//- form(action="/users/profile", method='GET')
+	div
+		label(for="userName") Username:
+		input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
+	div
+		label(for="email") Email:
+		input(type="email", id="email", name="email", value=`${user.email}`, disabled)
+	div
+		label(for="firstName") FirstName:
+		input(type="text", id="firstName", name="firstName", value=`${user.firstName}`, disabled)
+	div
+		label(for="lastName") LastName:
+		input(type="text", id="lastName", name="lastName", value=`${user.lastName}`, disabled)
+	div
+		label(for="birthday") Birthday:
+		input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
 	
+	div
+		a(href='/users/modify') Edit Profile
+		

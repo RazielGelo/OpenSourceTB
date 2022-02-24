@@ -1,0 +1,33 @@
+extends layout
+
+block content
+	h1 Edit Profile Page
+	p This is where you edit your profile and password. 
+	hr
+	form(action="/users/modify", method='POST')
+		div
+			label(for="userName") Username:
+			input(type="text", id="userName", name="userName")
+		div
+			label(for="email") Email:
+			input(type="email", id="email", name="email")
+		div
+			label(for="firstName") FirstName:
+			input(type="text", id="firstName", name="firstName")
+		div
+			label(for="lastName") LastName:
+			input(type="text", id="lastName", name="lastName")
+		div
+			label(for="birthday") Birthday:
+			input(type="date", id="birthday", name="birthday")
+		div
+			label(for="current_password") Current Password:
+			input(type="password", id="current_password", name="current_password")
+		div
+			label(for="new_password") New Password:
+			input(type="password", id="new_password", name="new_password")
+		div
+			label(for="confirm_new_password") Confirm New Password:
+			input(type="password", id="confirm_new_password", name="confirm_new_password")
+		div
+			button(type="submit") Update

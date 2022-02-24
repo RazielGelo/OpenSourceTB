@@ -42,7 +42,7 @@ router.post('/add', async (req, res) => {
 				}
 			})
 			req.flash('success', 'Book successfully created');
-      		res.redirect('/books');
+      		res.redirect('/');
 		}
 	} catch (e) {
 		res.send(e);

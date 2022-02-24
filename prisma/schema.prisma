@@ -13,7 +13,8 @@ datasource db {
 
 model User {
   id      		Int      	@id @default(autoincrement())
-  email   		String  	@unique 
+  email   		String  	@unique
+  userName 		String 		@unique
   password    	String
   firstName 	String
   lastName 		String
@@ -26,7 +27,7 @@ model Book {
   id      		Int      	@id @default(autoincrement())
   title   		String  	@unique 
   body    		String
-  author		User    	@relation(fields: [authorId], references: [id])
-  authorId  	Int
+  author		User    	@relation(fields: [authorName], references: [userName])
+  authorName  	String
   dateCreated 	DateTime 	@default(now())
 }
