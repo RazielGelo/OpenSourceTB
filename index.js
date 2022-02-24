@@ -36,23 +36,23 @@ app.use((req, res, next) => {
 })
 
 // Express Validator Middleware
-app.use(expressValidator({
-	errorFormatter: (param, msg, value) => {		
-		var namespace = param.split('.'),
-		root = namespace.shift(),
-		formParam = root;
+// app.use(expressValidator({
+// 	errorFormatter: (param, msg, value) => {		
+// 		var namespace = param.split('.'),
+// 		root = namespace.shift(),
+// 		formParam = root;
 
-		while (namespace.length) {
-			formParam += '[' + namespace.shift() + ']'
-		}
+// 		while (namespace.length) {
+// 			formParam += '[' + namespace.shift() + ']'
+// 		}
 
-		return	{
-			param: formParam,
-			msg: msg,
-			value: value
-		}
-	}
-}))
+// 		return	{
+// 			param: formParam,
+// 			msg: msg,
+// 			value: value
+// 		}
+// 	}
+// }))
   
 // Passport Config
 require('./middleware/passport')(passport);

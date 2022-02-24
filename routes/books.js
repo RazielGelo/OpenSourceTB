@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 // Import PrismaClient
-const { PrismaClient, Prisma } = require('@prisma/client');
-const { PrismaClientUnknownRequestError } = require('@prisma/client/runtime');
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
+
+// Import framework for error handling
+const { body, validationResult } = require('express-validator')
 
 // Render Add Book
 router.get('/add', ensureAuthenticated, (req, res) => {
@@ -16,39 +18,38 @@ router.get('/', (req, res) => {
 })
 
 // Add Book
-router.post('/add', async (req, res) => {
-	//let data = JSON.stringify(req.user)
-	try {
-		req.checkBody('title', 'Title is required').notEmpty();
-		req.checkBody('body', 'Body is required').notEmpty();
+router.post('/add',
+	body('title', 'Title is required').notEmpty(),
+	body('body', 'Body is required').notEmpty(),
+	async (req, res) => {
+		try {
+			// Get Errors
+			let errors = validationResult(req)
 
-		// Get Errors
-		let errors = req.validationErrors();
-
-		if (errors) {
-			res.render('add_book', {
-				errors: errors
-			})
-		} else {
-			let newBook = await prisma.book.create({
-				data: {
-					title: req.body.title,
-					body: req.body.body,
-					author: {
-						connect: {
-							id: req.user.id
+			if (errors) {
+				res.render('add_book', {
+					errors: errors
+				})
+			} else {
+				let newBook = await prisma.book.create({
+					data: {
+						title: req.body.title,
+						body: req.body.body,
+						author: {
+							connect: {
+								id: req.user.id
+							}
 						}
 					}
-				}
-			})
-			req.flash('success', 'Book successfully created');
-      		res.redirect('/');
+				})
+				req.flash('success', 'Book successfully created');
+				res.redirect('/');
+			}
+		} catch (e) {
+			res.send(e);
 		}
-	} catch (e) {
-		res.send(e);
-	}
 
-})
+	})
 
 
 // Access Control
