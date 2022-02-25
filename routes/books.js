@@ -26,9 +26,9 @@ router.post('/add',
 			// Get Errors
 			let errors = validationResult(req)
 
-			if (errors) {
+			if (!errors.isEmpty()) {
 				res.render('add_book', {
-					errors: errors
+					errors: errors.array()
 				})
 			} else {
 				let newBook = await prisma.book.create({

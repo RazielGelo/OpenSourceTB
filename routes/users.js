@@ -113,9 +113,9 @@ router.post('/modify',
 		const validPassword = await bcrypt.compare(req.body.current_password, req.user.password)
 		let errors = validationResult(req)
 
-		if (errors) {
+		if (!errors.isEmpty()) {
 			return res.render('modify.pug', {
-				errors: errors
+				errors: errors.array()
 			})
 		}
 		if (!validPassword) {

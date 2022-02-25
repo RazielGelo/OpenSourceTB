@@ -1,5 +1,17 @@
 extends layout
 
+block header
+	div
+		a(href='/') Home
+			| 
+			if user
+				a(href='/books/add') Add Book
+				| 
+				a(href='/users/logout') Logout
+			else 
+				a(href='/login') Login
+				| 
+				a(href='/register') Register
 block content
 	h1 Register Page
 	p This is where you register. 
