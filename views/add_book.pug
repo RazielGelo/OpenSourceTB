@@ -1,17 +1,5 @@
-extends layout
+extends layout 
 
-block header
-	div
-		a(href='/') Home
-			| 
-			if user
-				a(href='/books/add') Add Book
-				| 
-				a(href='/users/logout') Logout
-			else 
-				a(href='/login') Login
-				| 
-				a(href='/register') Register
 block content
 	h1 Add Book
 	p This is where you add your new book.
@@ -21,7 +9,7 @@ block content
 			label Title: 
 			input(name='title', type='text')
 		div 
-			label Body: 
-			textarea.form-control(name='body')
+			label Genre: 
+			input(name='genre', type='text')
 		div
 			button(type="submit") Create 

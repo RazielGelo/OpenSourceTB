@@ -25,9 +25,20 @@ model User {
 
 model Book {
   id      		Int      	@id @default(autoincrement())
-  title   		String  	@unique 
-  body    		String
+  title   		String  	
+  genre         String
   author		User    	@relation(fields: [authorName], references: [userName])
   authorName  	String
+  pages         Page[]
+  dateCreated 	DateTime 	@default(now())
+}
+
+model Page {
+  id      		Int      	@id @default(autoincrement())
+  chapterName 	String		
+  pageNumber    Int  	    
+  body          String
+  book		    Book    	@relation(fields: [bookID], references: [id])
+  bookID  	    Int
   dateCreated 	DateTime 	@default(now())
 }

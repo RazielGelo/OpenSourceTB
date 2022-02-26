@@ -1,9 +1,21 @@
 const express = require('express');
 const router = express.Router();
+// Import PrismaClient
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient()
 
 // Render Index page
-router.get('/', (req, res) => {
-	res.render('index.pug')
+router.get('/', async (req, res) => {
+	const books = await prisma.book.findMany({
+		// Use below code to select specific fields
+		// select: {
+		// 	id: true,
+		// 	title: true,
+		// 	genre: true,
+		// 	authorName: true
+		// }
+	})
+	res.render('index.pug', { books })
 })
 
 router.get('/login', async (req, res) => {
@@ -14,8 +26,8 @@ router.get('/register', async (req, res) => {
 	res.render('register.pug');
 })
 
-// router.get('/books', async (req, res) => {
-// 	res.render('books.pug');
-// })
+router.get('/books', async (req, res) => {
+	res.render('books.pug');
+})
 
 module.exports = router

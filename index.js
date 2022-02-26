@@ -61,9 +61,13 @@ app.use(passport.initialize());
 app.use(passport.session());
   
 app.get('*', function (req, res, next) {
-	res.locals.user = req.user || null
+	res.locals.user = req.user || null,
 	next()
 })
+// localhost:3000/*
+// localhost:3000/books/*
+// localhost:3000/users/*
+
 
 /* ======================================================= */
 

@@ -14,7 +14,7 @@ router.get('/register', async (req, res) => {
 })
 
 // Register Process
-router.post('/register',
+router.post('/register', 
 
 	body('userName', "Username is required").notEmpty(),
 	body('userName', 'Username should at least be 2 characters long').isLength(2),
@@ -34,7 +34,6 @@ router.post('/register',
 		}
 		return true;
 	}), checkExisting, async (req, res) => {
-
 
 		let errors = validationResult(req)
 
@@ -86,7 +85,12 @@ router.get('/login', async (req, res) => {
 
 // Render Profile page
 router.get('/profile', async (req, res) => {
-	res.render('profile.pug')
+	const books = await prisma.book.findMany({
+		where: {
+			authorName: req.user.userName
+		}
+	})
+	res.render('profile.pug', { books })
 })
 
 // Render Modify page
@@ -95,7 +99,7 @@ router.get('/modify', async (req, res) => {
 })
 
 // Modify User
-router.post('/modify',
+router.post('/modify', ensureAuthenticated,
 	body('firstName', 'Firstname is required').notEmpty(),
 	body('firstName', 'Firstname should at least be 2 characters long').isLength(2),
 	body('lastName', 'Lastname is required').notEmpty(),
@@ -110,12 +114,14 @@ router.post('/modify',
 		}
 		return true;
 	}), ensureAuthenticated, async (req, res) => {
+		const user = req.user;
 		const validPassword = await bcrypt.compare(req.body.current_password, req.user.password)
 		let errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
 			return res.render('modify.pug', {
-				errors: errors.array()
+				errors: errors.array(),
+				user: user
 			})
 		}
 		if (!validPassword) {
@@ -138,7 +144,7 @@ router.post('/modify',
 					}
 				})
 				req.flash('success', 'Updated Successfully')
-				res.redirect('/users/login')
+				res.redirect('/users/profile')
 
 			} catch (e) {
 				res.send(e)
@@ -154,6 +160,8 @@ router.post('/login', async (req, res, next) => {
 		failureFlash: true
 	})(req, res, next)
 })
+
+
 
 // logout
 router.get('/logout', async (req, res) => {

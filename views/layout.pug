@@ -8,7 +8,22 @@ html(lang="en")
 		block title
 			title OpenSourceTextbook
 	header
-		block header
+		div
+		if user
+			p Welcome #{user.firstName}!
+		div
+		a(href='/') Home
+			| 
+			if user
+				a(href='/books/add') Add Book
+				| 
+				a(href='/users/profile') Profile
+				| 
+				a(href='/users/logout') Logout
+			else 
+				a(href='/login') Login
+				| 
+				a(href='/register') Register
 	body
 		!= messages('message', locals)
 		if errors
