@@ -69,6 +69,12 @@ app.get('*', function (req, res, next) {
 // localhost:3000/users/*
 
 
+/* ================BOOTSTRAP==================== */
+app.use(
+	express.static(path.join(__dirname, "node_modules/bootstrap/dist/"))
+  );
+console.log(__dirname)
+
 /* ======================================================= */
 
 

@@ -17,7 +17,9 @@ router.get('/', async (req, res) => {
 	})
 	res.render('index.pug', { books })
 })
-
+// router.get('/textbook', async (req, res) => {
+// 	res.render('textbook.pug')
+// })
 router.get('/login', async (req, res) => {
 	res.render('login.pug')
 })
