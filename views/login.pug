@@ -1,15 +1,17 @@
 extends layout
 
 block content
-	h1 Login Page
-	p This is where you login after registering.
-	hr
-	form(action="/users/login", method='POST')
-		div
-			label(for="email") Email:
-			input(type="email", id="email", name="email", required=true)
-		div
-			label(for="password") Password:
-			input(type="password", id="password", name="password", required=true)
-		div
-			button.btn.btn.btn-success(type="submit") Login
+
+	main(style='padding-top: 100px;')
+		div.card.container.bg-light.TB-login-flex-container(style='width: 40%;')
+			div.TB-login-flex-item.TBwidth-100
+				h2(style='padding-top: 1em; padding-bottom: 1em;').text-dark.text-center Login
+				form(action="/users/login", method='POST')
+					div(style='padding-top: 1em; padding-bottom: 1em;')
+						label.text-dark(for="email") Email
+						input.form-control(type="email", id="email", name="email", required=true)
+					div(style='padding-top: 1em; padding-bottom: 1em;')
+						label.text-dark(for="password") Password
+						input.form-control(type="password", id="password", name="password", required=true)
+					div(style='padding-top: 1em; padding-bottom: 1em;')
+						button.TBwidth-100.align-self-center.btn.btn-success.btn-block(type="submit") Login

@@ -1,31 +1,32 @@
 extends layout 
 
 block content
-	h1 Register Page
-	p This is where you register. 
-	p Please note that once Username has been set it cannot be changed. 
-	hr
-	form(action="/users/register", method='POST')
-		div
-			label(for="userName") Username:
-			input(type="text", id="userName", name="userName")
-		div
-			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName")
-		div
-			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName")
-		div
-			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday")
-		div
-			label(for="email") Email:
-			input(type="email", id="email", name="email")
-		div
-			label(for="password") Password:
-			input(type="password", id="password", name="password")
-		div
-			label(for="password2") Confirm Password:
-			input(type="password", id="password2", name="password2")
-		div
-			button.btn.btn-success(type="submit") Register
+	main(style='padding-top: 100px;')
+		div.card.container.bg-light.TB-login-flex-container(style='width: 40%;')
+			div.TB-login-flex-item(style='width: 100%;')
+				h2(style='padding-top: 1em; padding-bottom: 1em;').text-dark.text-center Register
+				form(action="/users/register", method='POST')
+					div.TB-1em-top-bottom
+						label.text-dark(for="userName") Username
+						input.form-control(type="text", id="userName", name="userName")
+					div.TB-1em-top-bottom
+						label.text-dark(for="firstName") FirstName
+						input.form-control(type="text", id="firstName", name="firstName")
+					div.TB-1em-top-bottom
+						label.text-dark(for="lastName") LastName
+						input.form-control(type="text", id="lastName", name="lastName")
+					div.TB-1em-top-bottom
+						label.text-dark(for="birthday") Birthday
+						input.form-control(type="Date", id="birthday", name="birthday")
+					div.TB-1em-top-bottom
+						label.text-dark(for="email") Email
+						input.form-control(type="email", id="email", name="email")
+					div.TB-1em-top-bottom
+						label.text-dark(for="password") Password
+						input.form-control(type="password", id="password", name="password")
+					div.TB-1em-top-bottom
+						label.text-dark(for="password2") Confirm Password
+						input.form-control(type="password", id="password2", name="password2")
+					div.TB-1em-top-bottom
+						button.btn.btn-success(type="submit") Register
+		div.TBpadding-bottom
