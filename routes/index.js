@@ -17,9 +17,20 @@ router.get('/', async (req, res) => {
 	})
 	res.render('index.pug', { books })
 })
-// router.get('/textbook', async (req, res) => {
-// 	res.render('textbook.pug')
-// })
+
+router.get('/textbook', async (req, res) => {
+	const books = await prisma.book.findMany({
+		// Use below code to select specific fields
+		// select: {
+		// 	id: true,
+		// 	title: true,
+		// 	genre: true,
+		// 	authorName: true
+		// }
+	})
+	res.render('textbook.pug', { books })
+})
+
 router.get('/login', async (req, res) => {
 	res.render('login.pug')
 })

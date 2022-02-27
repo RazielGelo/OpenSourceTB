@@ -2,16 +2,14 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
-html, body{
+body{
+	margin-top: 70px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-}
-
-body {
 	padding-bottom: 3rem;
 	color: #e4e4e4;
-	background-color: #273469;
+	background-color: #1E2749;
   }
 
 header {
@@ -40,7 +38,7 @@ header {
 	}
 .TBfooter-flex-container {
 	background-color: rgb(33, 37, 41);
-
+	position: fixed;
 	/* position: fixed; */
 	left: 0;
 	bottom: 0;
@@ -100,6 +98,10 @@ header {
 	display: grid; 
 	grid-template-columns: 15% 1fr 15%; 
 	grid-template-rows: 1fr;
+}
+
+.TBpadding-bottom{
+	padding-bottom: 70px;
 }
 
   /* RESPONSIVE CSS
