@@ -2,8 +2,8 @@ extends layout
 
 block content
 	h1= book.title
-	h1 Written by #{author}
-	h1 Genre: #{book.genre}
+	h5 Written by #{author}
+	label Genre: #{genre.genre}
 	hr
 	div
 		label Chapter Name:
@@ -19,3 +19,5 @@ block content
 			button(type="submit") Edit Page
 			| 
 			a(href='#',user.userName=book.id) Delete
+			| 
+			a(href=`/books/page/${book.id}`) Cancel

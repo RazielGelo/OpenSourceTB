@@ -84,7 +84,7 @@ router.get('/login', async (req, res) => {
 })
 
 // Render Profile page
-router.get('/profile', async (req, res) => {
+router.get('/profile', ensureAuthenticated, async (req, res) => {
 	const books = await prisma.book.findMany({
 		where: {
 			authorName: req.user.userName
@@ -94,7 +94,7 @@ router.get('/profile', async (req, res) => {
 })
 
 // Render Modify page
-router.get('/modify', async (req, res) => {
+router.get('/modify', ensureAuthenticated, async (req, res) => {
 	res.render('modify.pug')
 })
 
@@ -137,7 +137,7 @@ router.post('/modify', ensureAuthenticated,
 		}
 	})
 
-router.get('/modify/password', async (req, res) => {
+router.get('/modify/password', ensureAuthenticated, async (req, res) => {
 	res.render('modify_password.pug')
 })
 

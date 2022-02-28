@@ -1,0 +1,14 @@
+extends layout 
+
+block content
+	h1 Add Genre
+	p This is where you add more genre.
+	hr
+	form(method='POST', action='/books/genre')
+		device
+			label New Genre: 
+			input(name='genre', type='text')
+		div
+			button(type="submit") Create Genre
+			| 
+			a(href='/books/add') Cancel

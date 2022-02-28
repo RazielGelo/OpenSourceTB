@@ -9,7 +9,7 @@ const { body, validationResult } = require('express-validator')
 
 // Render Add Book
 router.get('/add', ensureAuthenticated, async (req, res) => {
-	const distinctGenre = await prisma.book.findMany({
+	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
 		  genre: true,
@@ -18,28 +18,78 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 	res.render('add_book.pug', { distinctGenre })
 })
 
+// Render Add Book
+router.get('/genre', ensureAuthenticated, async (req, res) => {
+	res.render('add_genre.pug')
+})
+
+// Add Genre
+router.post('/genre', ensureAuthenticated,
+	body('genre', 'Genre is required').notEmpty(),
+	async (req, res) => {
+		const existingGenres = await prisma.genre.findMany({})
+		const user = req.user;
+		try {
+			// Get Errors
+			let errors = validationResult(req)
+
+			existingGenres.forEach((genre) => {
+				if (genre.genre === req.body.genre) {
+					req.flash('failure', 'Genre already exist, add a new one or just cancel');
+					res.redirect('/');
+				}
+			})
+			if (!errors.isEmpty()) {
+				res.render('add_genre', {
+					errors: errors.array(),
+					user: user
+				})			
+			} else {
+				let newGenre = await prisma.genre.create({
+					data: {
+						genre: req.body.genre
+						}
+				})
+				req.flash('success', 'Genre successfully created');
+				res.redirect('/books/add');
+			}
+		} catch (e) {
+			res.send(e);
+		}
+
+	})
+
 // Add Book
 router.post('/add', ensureAuthenticated,
 	body('title', 'Title is required').notEmpty(),
 	body('genre', 'Genre is required').notEmpty(),
 	async (req, res) => {
-		console.log(req.body.genre)
+		const distinctGenre = await prisma.genre.findMany({
+			distinct: ['genre'],
+			select: {
+			  genre: true,
+			},
+		  })		
 		const user = req.user;
-		console.log(user)
 		try {
 			// Get Errors
 			let errors = validationResult(req)
-
+			const genre = await prisma.genre.findFirst({
+				where : {
+					genre: req.body.genre
+				}
+			})
 			if (!errors.isEmpty()) {
 				res.render('add_book', {
 					errors: errors.array(),
-					user: user
+					user: user,
+					distinctGenre: distinctGenre
 				})
 			} else {
 				let newBook = await prisma.book.create({
 					data: {
 						title: req.body.title,
-						genre: req.body.genre,
+						genreID: genre.id,
 						author: {
 							connect: {
 								id: req.user.id
@@ -73,10 +123,16 @@ router.get('/:id', async (req, res) => {
 			bookID: book.id
 		}
 	})
+	const genre = await prisma.genre.findFirst({
+		where: {
+			id: book.genreID
+		}
+	})
 	if (user) {
 		res.render('books.pug', {
 			book: book,
 			page: page,
+			genre: genre,
 			author: user.userName
 		})
 	}
@@ -99,10 +155,16 @@ router.get('/page/:id', async (req, res) => {
 			userName: book.authorName
 		}
 	})
+	const genre = await prisma.genre.findFirst({
+		where: {
+			id: book.genreID
+		}
+	})
 	if (user) {
 		res.render('page.pug', {
 			book: book,
 			page: page,
+			genre: genre,
 			author: user.userName
 		})
 	}
@@ -124,6 +186,11 @@ router.post('/:id', ensureAuthenticated,
 				bookID: book.id
 			}
 		})
+		const genre = await prisma.genre.findFirst({
+			where: {
+				id: book.genreID
+			}
+		})
 		const user = req.user
 		console.log(user)
 		try {			
@@ -136,6 +203,7 @@ router.post('/:id', ensureAuthenticated,
 					user: user,					
 					book: book,
 					page: page,
+					genre: genre,
 					author: user.userName
 				})
 			} else {
