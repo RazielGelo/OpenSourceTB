@@ -105,6 +105,44 @@ router.post('/modify', ensureAuthenticated,
 	body('lastName', 'Lastname is required').notEmpty(),
 	body('lastName', 'Lastname should at least be 2 characters long').isLength(2),
 	body('birthday', 'Birthday is required').notEmpty(),
+	ensureAuthenticated, async (req, res) => {
+		const user = req.user;
+		let errors = validationResult(req)
+
+		if (!errors.isEmpty()) {
+			return res.render('modify.pug', {
+				errors: errors.array(),
+				user: user
+			})
+		}
+		else {
+			// This code can be refined
+			try {
+				const updateUser = await prisma.user.update({
+					where: {
+						email: req.user.email
+					},
+					data: {
+						firstName: req.body.firstName,
+						lastName: req.body.lastName,
+						birthday: new Date(req.body.birthday)
+					}
+				})
+				req.flash('success', 'Updated Successfully')
+				res.redirect('/users/profile')
+
+			} catch (e) {
+				res.send(e)
+			}
+		}
+	})
+
+router.get('/modify/password', async (req, res) => {
+	res.render('modify_password.pug')
+})
+
+// Modify User Password
+router.post('/modify/password', ensureAuthenticated,
 	body('current_password', 'Current Password is required').notEmpty(),
 	body('new_password', 'Password must have 8 characters').isLength(8),
 	body('confirm_new_password').custom((value, { req }) => {
@@ -119,14 +157,14 @@ router.post('/modify', ensureAuthenticated,
 		let errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
-			return res.render('modify.pug', {
+			return res.render('modify_password.pug', {
 				errors: errors.array(),
 				user: user
 			})
 		}
 		if (!validPassword) {
 			req.flash('failure', "Current password is not equal to your old password")
-			return res.redirect('/users/modify')
+			return res.redirect('modify_password.pug')
 		}
 		else {
 			const hashedPassword = await bcrypt.hash(req.body.new_password, 10)
@@ -137,9 +175,6 @@ router.post('/modify', ensureAuthenticated,
 						email: req.user.email
 					},
 					data: {
-						firstName: req.body.firstName,
-						lastName: req.body.lastName,
-						birthday: new Date(req.body.birthday),
 						password: hashedPassword
 					}
 				})
@@ -151,6 +186,7 @@ router.post('/modify', ensureAuthenticated,
 			}
 		}
 	})
+
 
 // Login Process
 router.post('/login', async (req, res, next) => {

@@ -24,5 +24,7 @@ block content
 					textarea(name='body')
 				div
 					button(type="submit") Add Page
-					//- a(href='/books/edit/'+book.id) Add Page
+					| 
 					a(href='#',user.userName=book.id) Delete
+					| 
+					a(href='/users/profile') Cancel

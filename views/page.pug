@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h1= book.title
+	h1 Written by #{author}
+	h1 Genre: #{book.genre}
+	hr
+	div
+		label Chapter Name:
+		input(type="text", name='chapterName', value=`${page.chapterName}`, disabled)
+	div
+		label Page Number:
+		input(type="number", name='pageNumber', value=`${page.pageNumber}`, disabled)
+	div
+		label Content:
+		p=page.body
+	if user 	
+		if user.userName == book.authorName
+			button(type="submit") Edit Page
+			| 
+			a(href='#',user.userName=book.id) Delete

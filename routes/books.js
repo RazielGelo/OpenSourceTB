@@ -7,11 +7,6 @@ const prisma = new PrismaClient()
 // Import framework for error handling
 const { body, validationResult } = require('express-validator')
 
-// // Render Books
-// router.get('/', ensureAuthenticated, (req, res) => {
-// 	res.render('book.pug')
-// })
-
 // Render Add Book
 router.get('/add', ensureAuthenticated, (req, res) => {
 	res.render('add_book.pug')
@@ -73,6 +68,32 @@ router.get('/:id', async (req, res) => {
 	})
 	if (user) {
 		res.render('books.pug', {
+			book: book,
+			page: page,
+			author: user.userName
+		})
+	}
+})
+
+// Get single page
+router.get('/page/:id', async (req, res) => {	
+	const page = await prisma.page.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})	
+	const book = await prisma.book.findUnique({
+		where: {
+			id: page.bookID
+		}
+	})
+	const user = await prisma.user.findUnique({
+		where: {
+			userName: book.authorName
+		}
+	})
+	if (user) {
+		res.render('page.pug', {
 			book: book,
 			page: page,
 			author: user.userName

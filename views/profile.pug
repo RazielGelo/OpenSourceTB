@@ -22,7 +22,11 @@ block content
 		input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
 	
 	div
+		a(href='/books/add') Add Book
+		| 
 		a(href='/users/modify') Edit Profile
+		| 
+		a(href='/users/modify/password') Change Password
 	hr
 	ul
 		each book, i in books

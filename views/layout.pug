@@ -4,7 +4,7 @@ html(lang="en")
 		meta(charset="UTF-8")
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet", href="../stylesheets/style.css")
+		link(rel="stylesheet", href="/stylesheets/style.css")
 		block title
 			title OpenSourceTextbook
 	header
@@ -12,18 +12,17 @@ html(lang="en")
 		if user
 			p Welcome #{user.firstName}!
 		div
-		a(href='/') Home
-			| 
-			if user
-				a(href='/books/add') Add Book
+			img(src="https://i.ibb.co/wBK49jh/Logo.png" alt="OpensourceTB" class="logo" style={height: "100px"})
+			a(href='/') Home
 				| 
-				a(href='/users/profile') Profile
-				| 
-				a(href='/users/logout') Logout
-			else 
-				a(href='/login') Login
-				| 
-				a(href='/register') Register
+				if user
+					a(href='/users/profile') Profile
+					| 
+					a(href='/users/logout') Logout
+				else 
+					a(href='/login') Login
+					| 
+					a(href='/register') Register
 	body
 		!= messages('message', locals)
 		if errors
@@ -31,4 +30,6 @@ html(lang="en")
 				div(class="alert alert-danger") #{error.msg}
 		block content
 	footer
+		p OpenSource Textbook empowers and connects authors and readers through open accessto a global reading and publishing platform.
+		p Vancouver Community College, Vancouver, B.C., Canada
 		p Copyright &copy; 2021
