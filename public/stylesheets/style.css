@@ -96,7 +96,7 @@ header {
 
 .TB10container {
 	display: grid; 
-	grid-template-columns: 15% 1fr 15%; 
+	grid-template-columns: 25% 1fr 25%; 
 	grid-template-rows: 1fr;
 }
 
@@ -154,6 +154,13 @@ header {
 	.responsive-width {
 		width: 80%;
 	}
+
+	.TB10container {
+		display: grid; 
+		grid-template-columns: 10% 1fr 10%; 
+		grid-template-rows: 1fr;
+	}
+	
   
 	
   }
