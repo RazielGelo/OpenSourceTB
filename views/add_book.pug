@@ -8,10 +8,12 @@ block content
 		div
 			label Title: 
 			input(name='title', type='text')
-		div 
-			label Genre: 
-			input(name='genre', type='text')
 		div
-			button(type="submit") Create 
+			label Genre:
+			select(name='genre')
+				each genre in distinctGenre
+					option(selected) #{genre.genre}
+		div
+			button(type="submit") Create
 			| 
 			a(href='/users/profile') Cancel

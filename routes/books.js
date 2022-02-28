@@ -8,8 +8,14 @@ const prisma = new PrismaClient()
 const { body, validationResult } = require('express-validator')
 
 // Render Add Book
-router.get('/add', ensureAuthenticated, (req, res) => {
-	res.render('add_book.pug')
+router.get('/add', ensureAuthenticated, async (req, res) => {
+	const distinctGenre = await prisma.book.findMany({
+		distinct: ['genre'],
+		select: {
+		  genre: true,
+		},
+	  })
+	res.render('add_book.pug', { distinctGenre })
 })
 
 // Add Book
@@ -17,6 +23,7 @@ router.post('/add', ensureAuthenticated,
 	body('title', 'Title is required').notEmpty(),
 	body('genre', 'Genre is required').notEmpty(),
 	async (req, res) => {
+		console.log(req.body.genre)
 		const user = req.user;
 		console.log(user)
 		try {
