@@ -4,6 +4,7 @@ block content
 	h1 Users Page
 	p This is where all the information is displayed after you login.
 	hr
+	h3 Profile: 
 	//- form(action="/users/profile", method='GET')
 	div
 		label(for="userName") Username:
@@ -28,6 +29,7 @@ block content
 		| 
 		a(href='/users/modify/password') Change Password
 	hr
+	h3 #{user.firstName}'s Books
 	ul
 		each book, i in books
 			li

@@ -18,9 +18,25 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 	res.render('add_book.pug', { distinctGenre })
 })
 
-// Render Add Book
+// Render Book Genre
 router.get('/genre', ensureAuthenticated, async (req, res) => {
 	res.render('add_genre.pug')
+})
+
+// Render Book Modify
+router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
+	const book = await prisma.book.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	const distinctGenre = await prisma.genre.findMany({
+		distinct: ['genre'],
+		select: {
+			genre: true,
+		},
+	})
+	res.render('modify_book.pug', { distinctGenre, book })
 })
 
 // Add Genre
@@ -140,6 +156,45 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+// Modify Book
+router.post('/modify/:id', ensureAuthenticated,
+	body('title', 'Title is required').notEmpty(),
+	ensureAuthenticated, async (req, res) => {
+		const user = req.user;
+		let errors = validationResult(req)
+
+		if (!errors.isEmpty()) {
+			return res.render('modify.pug', {
+				errors: errors.array(),
+				user: user
+			})
+		}
+		else {
+			// This code can be refined
+			try {
+				const genre = await prisma.genre.findFirst({
+					where: {
+						genre: req.body.genre
+					}
+				})
+				const updateBook = await prisma.book.update({
+					where: {
+						id: parseInt(req.params.id)
+					},
+					data: {
+						title: req.body.title,
+						genreID: genre.id,
+					}
+				})
+				req.flash('success', 'Book updated Successfully')
+				res.redirect(`/books/${req.params.id}`)
+
+			} catch (e) {
+				res.send(e)
+			}
+		}
+	})
+
 // Get single page
 router.get('/page/:id', async (req, res) => {
 	const page = await prisma.page.findUnique({
@@ -221,8 +276,8 @@ router.post('/:id', ensureAuthenticated,
 						}
 					}
 				})
-				req.flash('success', 'page successfully created');
-				res.redirect('/');
+				req.flash('success', 'Page successfully created');
+				res.redirect(`/books/${req.params.id}`);
 			}
 		} catch (e) {
 			res.send(e);
@@ -247,6 +302,16 @@ function ensureAuthenticated(req, res, next) {
 		req.flash('danger', 'Please login');
 		res.redirect('/users/login');
 	}
+}
+
+// This code is for future reference 
+const distinctGenre = async () => {
+	await prisma.genre.findMany({
+		distinct: ['genre'],
+		select: {
+			genre: true,
+		},
+	})
 }
 
 module.exports = router

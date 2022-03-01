@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	h1 Modify Book page
+	p This is where you edit details of your book. 
+	hr
+	form(action=`/books/modify/${book.id}`, method='POST')
+		div
+			label(for="title") Title: 
+			input(type="text", id="text", name="title")
+		div
+			label Genre: 
+			select(name='genre')
+				each genre in distinctGenre
+					option(selected) #{genre.genre}
+		div
+			button(type="submit") Update
+			| 
+			a(href=`/books/${book.id}`) Cancel
