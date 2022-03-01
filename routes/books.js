@@ -12,9 +12,9 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
-		  genre: true,
+			genre: true,
 		},
-	  })
+	})
 	res.render('add_book.pug', { distinctGenre })
 })
 
@@ -26,29 +26,31 @@ router.get('/genre', ensureAuthenticated, async (req, res) => {
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
+	body('genre').custom(async (value, { req }) => {
+		value = await prisma.genre.findMany({})
+		value.forEach((genre) => {
+			if (genre.genre === req.body.genre) {
+				throw new Error('Genre already exist, add a new one or just cancel')
+			}
+			return true;
+		})
+	}),
 	async (req, res) => {
-		const existingGenres = await prisma.genre.findMany({})
 		const user = req.user;
 		try {
 			// Get Errors
 			let errors = validationResult(req)
 
-			existingGenres.forEach((genre) => {
-				if (genre.genre === req.body.genre) {
-					req.flash('failure', 'Genre already exist, add a new one or just cancel');
-					res.redirect('/');
-				}
-			})
 			if (!errors.isEmpty()) {
 				res.render('add_genre', {
 					errors: errors.array(),
 					user: user
-				})			
+				})
 			} else {
 				let newGenre = await prisma.genre.create({
 					data: {
 						genre: req.body.genre
-						}
+					}
 				})
 				req.flash('success', 'Genre successfully created');
 				res.redirect('/books/add');
@@ -67,15 +69,15 @@ router.post('/add', ensureAuthenticated,
 		const distinctGenre = await prisma.genre.findMany({
 			distinct: ['genre'],
 			select: {
-			  genre: true,
+				genre: true,
 			},
-		  })		
+		})
 		const user = req.user;
 		try {
 			// Get Errors
 			let errors = validationResult(req)
 			const genre = await prisma.genre.findFirst({
-				where : {
+				where: {
 					genre: req.body.genre
 				}
 			})
@@ -107,7 +109,7 @@ router.post('/add', ensureAuthenticated,
 	})
 
 // Get Single book
-router.get('/:id', async (req, res) => {	
+router.get('/:id', async (req, res) => {
 	const book = await prisma.book.findUnique({
 		where: {
 			id: parseInt(req.params.id)
@@ -139,12 +141,12 @@ router.get('/:id', async (req, res) => {
 })
 
 // Get single page
-router.get('/page/:id', async (req, res) => {	
+router.get('/page/:id', async (req, res) => {
 	const page = await prisma.page.findUnique({
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})	
+	})
 	const book = await prisma.book.findUnique({
 		where: {
 			id: page.bookID
@@ -193,14 +195,14 @@ router.post('/:id', ensureAuthenticated,
 		})
 		const user = req.user
 		console.log(user)
-		try {			
+		try {
 			// Get Errors
 			let errors = validationResult(req)
 
 			if (!errors.isEmpty()) {
 				res.render('books', {
 					errors: errors.array(),
-					user: user,					
+					user: user,
 					book: book,
 					page: page,
 					genre: genre,
@@ -219,7 +221,6 @@ router.post('/:id', ensureAuthenticated,
 						}
 					}
 				})
-				console.log(newPage)
 				req.flash('success', 'page successfully created');
 				res.redirect('/');
 			}
