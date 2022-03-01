@@ -39,6 +39,21 @@ router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
 	res.render('modify_book.pug', { distinctGenre, book })
 })
 
+// Render Page Modify
+router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
+	const page = await prisma.page.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	const book = await prisma.book.findUnique({
+		where: {
+			id: page.bookID
+		}
+	})
+	res.render('modify_page.pug', { page, book })
+})
+
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
@@ -160,13 +175,26 @@ router.get('/:id', async (req, res) => {
 router.post('/modify/:id', ensureAuthenticated,
 	body('title', 'Title is required').notEmpty(),
 	ensureAuthenticated, async (req, res) => {
+		const book = await prisma.book.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
+		})
+		const distinctGenre = await prisma.genre.findMany({
+			distinct: ['genre'],
+			select: {
+				genre: true,
+			},
+		})
 		const user = req.user;
 		let errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
-			return res.render('modify.pug', {
+			return res.render('modify_book.pug', {
 				errors: errors.array(),
-				user: user
+				user: user,
+				book: book,
+				distinctGenre: distinctGenre
 			})
 		}
 		else {
@@ -229,7 +257,7 @@ router.get('/page/:id', async (req, res) => {
 
 // Add Page
 router.post('/:id', ensureAuthenticated,
-	body('chapterName', 'Chapter Name should not be empty').notEmpty(),
+	body('chapterName', 'Chapter name should not be empty').notEmpty(),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('body', 'Page should not be empty').notEmpty(),
 	async (req, res) => {
@@ -277,13 +305,81 @@ router.post('/:id', ensureAuthenticated,
 					}
 				})
 				req.flash('success', 'Page successfully created');
-				res.redirect(`/books/${req.params.id}`);
+				res.redirect(`/books/${book.id}`);
 			}
 		} catch (e) {
 			res.send(e);
 		}
 
 	})
+
+// Modify Page
+router.post('/page/modify/:id', ensureAuthenticated,
+	body('chapterName', 'Chapter name is required').notEmpty(),
+	body('pageNumber', 'Page number is required').notEmpty(),
+	body('body', 'Content is required').notEmpty(),
+	ensureAuthenticated, async (req, res) => {
+		const page = await prisma.page.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
+		})
+		const book = await prisma.book.findUnique({
+			where: {
+				id: page.bookID
+			}
+		})
+		const distinctGenre = await prisma.genre.findMany({
+			distinct: ['genre'],
+			select: {
+				genre: true,
+			},
+		})
+		const user = req.user;
+		let errors = validationResult(req)
+
+		if (!errors.isEmpty()) {
+			return res.render('modify_page.pug', {
+				errors: errors.array(),
+				page: page,
+				user: user,
+				book: book,
+				distinctGenre: distinctGenre
+			})
+		}
+		else {
+			// This code can be refined
+			try {
+				const updatePage = await prisma.page.update({
+					where: {
+						id: parseInt(req.params.id)
+					},
+					data: {
+						chapterName: req.body.chapterName,
+						pageNumber: parseInt(req.body.pageNumber),
+						body: req.body.body,
+					}
+				})
+				req.flash('success', 'Page updated Successfully')
+				res.redirect(`/books/page/${req.params.id}`)
+
+			} catch (e) {
+				res.send(e)
+			}
+		}
+	})
+
+// Delete Book
+router.delete('/:id', ensureAuthenticated, async (req, res) => {
+
+	const deleteBook = await prisma.book.delete({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	res.flash('success', 'Book successfully deleted')
+	res.redirect('/users/profile')
+})
 
 async function checkPageNumber(req, res, next) {
 	const page = await prisma.page.findMany({

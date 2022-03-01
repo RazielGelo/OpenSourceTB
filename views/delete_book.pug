@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	h1= book.title
+	h5 Written by #{author}
+	label Genre: #{genre.genre}
+	if user
+		if user.userName == book.authorName
+			div
+				a(href=`/books/modify/${book.id}`) Modify Book
+	hr
+	h3 Book pages
+	if !book.pages
+		ul
+			each pg, i in page
+				li
+					a(href="/books/page/"+pg.id)= pg.pageNumber

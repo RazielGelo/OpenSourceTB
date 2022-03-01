@@ -23,18 +23,25 @@ router.post('/register',
 	body('lastName', 'Lastname is required').notEmpty(),
 	body('lastName', 'Lastname should at least be 2 characters long').isLength(2),
 	body('birthday', 'Birthday is required').notEmpty(),
+	body('birthday').custom((value, { req }) => {
+		value = Date.now()
+		if (new Date(req.body.birthday) > value) {
+			throw new Error('Birthday should be less than date today')
+
+		}
+		return true;
+	}),
 	body('email', 'Email is required').notEmpty(),
 	body('email', 'Email is not valid').isEmail(),
 	body('password', 'Password is required').notEmpty(),
 	body('password', 'Password must have 8 characters').isLength(8),
-	body('password2', 'Passwords do not match').custom((value, { req }) => {
+	body('password2').custom((value, { req }) => {
 		if (value !== req.body.password) {
 			throw new Error('Passwords do not match')
 
 		}
 		return true;
 	}), checkExisting, async (req, res) => {
-
 		let errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
@@ -105,6 +112,14 @@ router.post('/modify', ensureAuthenticated,
 	body('lastName', 'Lastname is required').notEmpty(),
 	body('lastName', 'Lastname should at least be 2 characters long').isLength(2),
 	body('birthday', 'Birthday is required').notEmpty(),
+	body('birthday').custom((value, { req }) => {
+		value = Date.now()
+		if (new Date(req.body.birthday) > value) {
+			throw new Error('Birthday should be less than date today')
+
+		}
+		return true;
+	}),
 	ensureAuthenticated, async (req, res) => {
 		const user = req.user;
 		let errors = validationResult(req)

@@ -32,6 +32,10 @@ block content
 				div
 					button(type="submit") Add Page
 					| 
-					a(href='#',user.userName=book.id) Delete
+					a(href=`/books/${book.id}`) Delete
 					| 
 					a(href='/users/profile') Cancel
+		else
+			a(href=`/`) Back
+	else
+		a(href=`/`) Back

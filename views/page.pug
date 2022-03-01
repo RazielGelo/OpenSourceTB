@@ -17,8 +17,12 @@ block content
 		p=page.body
 	if user 	
 		if user.userName == book.authorName
-			button(type="submit") Edit Page
+			a(href=`/books/page/modify/${page.id}`) Edit Page
 			| 
 			a(href='#',user.userName=book.id) Delete
 			| 
-			a(href=`/books/page/${book.id}`) Cancel
+			a(href=`/books/${book.id}`) Cancel
+		else
+			a(href=`/books/${book.id}`) Back
+	else
+		a(href=`/books/${book.id}`) Back
