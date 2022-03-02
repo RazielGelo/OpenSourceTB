@@ -2,12 +2,8 @@ extends layout
 
 block content
 	h1= book.title
-	h5 Written by #{author}
-	label Genre: #{genre.genre}
-	if user
-		if user.userName == book.authorName
-			div
-				a(href=`/books/modify/${book.id}`) Modify Book
+	h5 Written by #{book.authorName}
+	label Genre: #{genre.genre}	
 	hr
 	h3 Book pages
 	if !book.pages
@@ -15,3 +11,8 @@ block content
 			each pg, i in page
 				li
 					a(href="/books/page/"+pg.id)= pg.pageNumber
+	hr
+	form(method='POST', action=`/books/delete/${book.id}`)
+		button(type="submit") Delete Page
+		| 
+		a(href=`/books/${book.id}`) Cancel

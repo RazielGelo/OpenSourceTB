@@ -54,6 +54,31 @@ router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
 	res.render('modify_page.pug', { page, book })
 })
 
+// Render Delete Book
+router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
+	const book = await prisma.book.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	const user = await prisma.user.findUnique({
+		where: {
+			userName: book.authorName
+		}
+	})
+	const page = await prisma.page.findMany({
+		where: {
+			bookID: book.id
+		}
+	})
+	const genre = await prisma.genre.findFirst({
+		where: {
+			id: book.genreID
+		}
+	})
+	res.render('delete_book.pug', { book, user, page, genre })
+})
+
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
@@ -62,6 +87,7 @@ router.post('/genre', ensureAuthenticated,
 		value.forEach((genre) => {
 			if (genre.genre === req.body.genre) {
 				throw new Error('Genre already exist, add a new one or just cancel')
+				
 			}
 			return true;
 		})
@@ -131,7 +157,7 @@ router.post('/add', ensureAuthenticated,
 					}
 				})
 				req.flash('success', 'Book successfully created');
-				res.redirect('/');
+				res.redirect('/users/profile');
 			}
 		} catch (e) {
 			res.send(e);
@@ -277,7 +303,6 @@ router.post('/:id', ensureAuthenticated,
 			}
 		})
 		const user = req.user
-		console.log(user)
 		try {
 			// Get Errors
 			let errors = validationResult(req)
@@ -370,15 +395,20 @@ router.post('/page/modify/:id', ensureAuthenticated,
 	})
 
 // Delete Book
-router.delete('/:id', ensureAuthenticated, async (req, res) => {
-
+router.delete('/delete/:id', ensureAuthenticated, async (req, res) => {
+	const deletePages = await prisma.page.deleteMany({
+		where: {
+			bookID: parseInt(req.params.id)
+		}
+	})
 	const deleteBook = await prisma.book.delete({
 		where: {
 			id: parseInt(req.params.id)
 		}
 	})
-	res.flash('success', 'Book successfully deleted')
-	res.redirect('/users/profile')
+	// const transaction = await prisma.$transaction([deletePages, deleteBook])
+	req.flash('success', 'Book successfully deleted')
+	res.status(200).send("Successfully deleted")
 })
 
 async function checkPageNumber(req, res, next) {
