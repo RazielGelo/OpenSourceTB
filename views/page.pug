@@ -19,10 +19,11 @@ block content
 		if user.userName == book.authorName
 			a(href=`/books/page/modify/${page.id}`) Edit Page
 			| 
-			a(href='#',user.userName=book.id) Delete
+			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete
 			| 
 			a(href=`/books/${book.id}`) Cancel
 		else
 			a(href=`/books/${book.id}`) Back
 	else
 		a(href=`/books/${book.id}`) Back
+	script(src='/javascripts/delete_page.js') 

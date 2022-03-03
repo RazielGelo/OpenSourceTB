@@ -9,6 +9,17 @@ block content
 		each book, i in books
 			li
 				a(href="/books/"+book.id)= book.title
+	hr
+	div(class="search-wrapper")
+		label(for="search") Search Books
+		| 
+		input(type="search", id="search", data-search)
+	div(class="user-cards", data-book-cards-container)
+	template(data-book-template)
+		div(class="card")
+			div(class="header", data-header)
+			div(class="body", data-body)
+	script(src='/javascripts/search.js')
 
 		
 		

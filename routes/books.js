@@ -7,6 +7,13 @@ const prisma = new PrismaClient()
 // Import framework for error handling
 const { body, validationResult } = require('express-validator')
 
+// Render all books
+router.get('/all', async (req, res) => {
+	const books = await prisma.book.findMany({})
+	// console.log(typeof(books))
+	res.json(books)
+})
+
 // Render Add Book
 router.get('/add', ensureAuthenticated, async (req, res) => {
 	const distinctGenre = await prisma.genre.findMany({
@@ -180,6 +187,9 @@ router.get('/:id', async (req, res) => {
 	const page = await prisma.page.findMany({
 		where: {
 			bookID: book.id
+		},
+		orderBy: {
+			pageNumber: 'asc'
 		}
 	})
 	const genre = await prisma.genre.findFirst({
@@ -285,6 +295,23 @@ router.get('/page/:id', async (req, res) => {
 router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').notEmpty(),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
+	body('pageNumber').custom(async (value, { req }) => {
+		value = await prisma.page.findMany({
+			where: {
+				bookID: parseInt(req.params.id)
+			}
+		})
+		value.forEach((page) => {
+			if (page.pageNumber === parseInt(req.body.pageNumber)) {
+				throw new Error('Page number already exists')
+				
+			}
+			if (parseInt(req.body.pageNumber) <= 0) {
+				throw new Error('Page number should not be equal or less than 0')
+			}
+			return true;
+		})
+	}),
 	body('body', 'Page should not be empty').notEmpty(),
 	async (req, res) => {
 		const book = await prisma.book.findUnique({
@@ -408,6 +435,17 @@ router.delete('/delete/:id', ensureAuthenticated, async (req, res) => {
 	})
 	// const transaction = await prisma.$transaction([deletePages, deleteBook])
 	req.flash('success', 'Book successfully deleted')
+	res.status(200).send("Successfully deleted")
+})
+
+// Delete Page
+router.delete('/page/delete/:id', ensureAuthenticated, async (req, res) => {
+	const deletePage = await prisma.page.delete({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	req.flash('success', 'Page successfully deleted')
 	res.status(200).send("Successfully deleted")
 })
 

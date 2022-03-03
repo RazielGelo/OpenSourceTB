@@ -102,7 +102,7 @@ router.get('/profile', ensureAuthenticated, async (req, res) => {
 
 // Render Modify page
 router.get('/modify', ensureAuthenticated, async (req, res) => {
-	res.render('modify.pug')
+	res.render('modify_profile.pug')
 })
 
 // Modify User
@@ -125,7 +125,7 @@ router.post('/modify', ensureAuthenticated,
 		let errors = validationResult(req)
 
 		if (!errors.isEmpty()) {
-			return res.render('modify.pug', {
+			return res.render('modify_profile.pug', {
 				errors: errors.array(),
 				user: user
 			})
