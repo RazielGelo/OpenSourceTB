@@ -23,9 +23,15 @@
   
   .card > .header {
 	margin-bottom: .25rem;
+	color:rgb(255, 0, 0)
   }
   
   .card > .body {
+	font-size: .8rem;
+	color: rgb(62, 192, 79);
+  }
+
+  .card > .link {
 	font-size: .8rem;
 	color: #777;
   }

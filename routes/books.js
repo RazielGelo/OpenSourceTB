@@ -7,10 +7,9 @@ const prisma = new PrismaClient()
 // Import framework for error handling
 const { body, validationResult } = require('express-validator')
 
-// Render all books
+// Render all books API returning JSON data
 router.get('/all', async (req, res) => {
 	const books = await prisma.book.findMany({})
-	// console.log(typeof(books))
 	res.json(books)
 })
 

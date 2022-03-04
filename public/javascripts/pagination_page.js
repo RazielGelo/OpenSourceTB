@@ -19,10 +19,11 @@ fetch("http://localhost:3000/books/all")
   .then(res => res.json())
   .then(data => {
     books = data.map(book => {
-      const card = bookCardTemplate.content.cloneNode(true).children[0] // Clones data-book-templates child element <starts with index 0>
+      const card = bookCardTemplate.content.cloneNode(true).children[0]
       const header = card.querySelector("[data-header]")
       const body = card.querySelector("[data-body]")
 	  const link = card.querySelector("[data-link]")
+	  console.log(link)
       header.textContent = book.title
       body.textContent = book.authorName
 	  link.innerHTML = `<a href=/books/${book.id}>View Book</a>`
@@ -30,28 +31,3 @@ fetch("http://localhost:3000/books/all")
       return { title: book.title, authorName: book.authorName, bookID: book.bookID, element: card }
     })
   })
-
-// async function test() {
-// 	const data = 
-// 	await fetch("http://localhost:3000/books/all", {
-// 		method: "GET"
-// 	})
-// 	console.log(data)
-// }
-
-// test()
-
-
-
-// console.log(data)
-
-// const deleteButton = document.getElementById('delete')
-// const id = deleteButton.getAttribute("data-id")
-// searchInput. = async (e) => {
-// 	e.preventDefault() 	// do not trigger default functionality
-// 	console.log(id)
-// 	await fetch(`http://localhost:3000/books`, {
-// 		method: 'DELETE'
-// 	})
-// 	window.location.href = '/users/profile';
-// }

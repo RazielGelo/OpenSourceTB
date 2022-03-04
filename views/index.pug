@@ -7,9 +7,8 @@ block content
 	h3 All User Books
 	ul
 		each book, i in books
-			li
-				a(href="/books/"+book.id)= book.title
-	hr
+			//- li
+			//- 	a(href="/books/"+book.id)= book.title
 	div(class="search-wrapper")
 		label(for="search") Search Books
 		| 
@@ -19,6 +18,7 @@ block content
 		div(class="card")
 			div(class="header", data-header)
 			div(class="body", data-body)
+			div(class="link", data-link)
 	script(src='/javascripts/search.js')
 
 		
