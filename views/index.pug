@@ -4,9 +4,9 @@ block content
 	h1 Home
 	p This is where all main content will be displayed. 
 	hr
-	h3 All User Books
-	ul
-		each book, i in books
+	h2 Browse through our collection of <strong><u>#{totalbooksCount}</u></strong> books.
+	//- ul
+		//- each book, i in books
 			//- li
 			//- 	a(href="/books/"+book.id)= book.title
 	div(class="search-wrapper")

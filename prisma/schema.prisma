@@ -27,10 +27,12 @@ model Book {
   id      		Int      	@id @default(autoincrement())
   title   		String
   genreID		Int
+  description	String
   author		User    	@relation(fields: [authorName], references: [userName])
   authorName  	String
   pages         Page[]
   dateCreated 	DateTime 	@default(now())
+  contributorID Int[]
 }
 
 model Page {
@@ -46,4 +48,12 @@ model Page {
 model Genre {
   id      		Int      	@id @default(autoincrement())
   genre         String
+}
+
+model Request {
+	requestID	Int      	@id @default(autoincrement())
+	bookID		Int
+	userID		Int
+	message		String
+	reply		String?
 }

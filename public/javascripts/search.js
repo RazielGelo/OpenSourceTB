@@ -30,28 +30,3 @@ fetch("http://localhost:3000/books/all")
       return { title: book.title, authorName: book.authorName, bookID: book.bookID, element: card }
     })
   })
-
-// async function test() {
-// 	const data = 
-// 	await fetch("http://localhost:3000/books/all", {
-// 		method: "GET"
-// 	})
-// 	console.log(data)
-// }
-
-// test()
-
-
-
-// console.log(data)
-
-// const deleteButton = document.getElementById('delete')
-// const id = deleteButton.getAttribute("data-id")
-// searchInput. = async (e) => {
-// 	e.preventDefault() 	// do not trigger default functionality
-// 	console.log(id)
-// 	await fetch(`http://localhost:3000/books`, {
-// 		method: 'DELETE'
-// 	})
-// 	window.location.href = '/users/profile';
-// }

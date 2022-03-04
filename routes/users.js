@@ -97,7 +97,17 @@ router.get('/profile', ensureAuthenticated, async (req, res) => {
 			authorName: req.user.userName
 		}
 	})
-	res.render('profile.pug', { books })
+	const userTotalBooksCount = await prisma.user.findUnique({
+		where: {
+			id: req.user.id
+		},
+		include:{
+			_count: {
+				select: { books: true }
+			}
+		}
+	})
+	res.render('profile.pug', { books, userTotalBooksCount })
 })
 
 // Render Modify page

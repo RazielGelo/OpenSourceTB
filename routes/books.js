@@ -75,6 +75,9 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 	const page = await prisma.page.findMany({
 		where: {
 			bookID: book.id
+		},
+		orderBy: {
+			pageNumber: 'asc'
 		}
 	})
 	const genre = await prisma.genre.findFirst({
@@ -126,8 +129,10 @@ router.post('/genre', ensureAuthenticated,
 
 // Add Book
 router.post('/add', ensureAuthenticated,
-	body('title', 'Title is required').notEmpty(),
-	body('genre', 'Genre is required').notEmpty(),
+	body('title', 'Please add a title for your book').notEmpty(),
+	body('genre', 'Please choose or add a genre for your book').notEmpty(),
+	body('description', 'Please add a brief description of your book').notEmpty(),
+	body('description', 'Please limit your description to 200 characters').isLength({ max: 200 }),
 	async (req, res) => {
 		const distinctGenre = await prisma.genre.findMany({
 			distinct: ['genre'],
@@ -155,6 +160,7 @@ router.post('/add', ensureAuthenticated,
 					data: {
 						title: req.body.title,
 						genreID: genre.id,
+						description: req.body.description,
 						author: {
 							connect: {
 								id: req.user.id
@@ -209,6 +215,8 @@ router.get('/:id', async (req, res) => {
 // Modify Book
 router.post('/modify/:id', ensureAuthenticated,
 	body('title', 'Title is required').notEmpty(),
+	body('description', 'Please add a brief description of your book').notEmpty(),
+	body('description', 'Please limit your description to 200 characters').isLength({ max: 200 }),
 	ensureAuthenticated, async (req, res) => {
 		const book = await prisma.book.findUnique({
 			where: {
@@ -247,6 +255,7 @@ router.post('/modify/:id', ensureAuthenticated,
 					data: {
 						title: req.body.title,
 						genreID: genre.id,
+						description: req.body.description,
 					}
 				})
 				req.flash('success', 'Book updated Successfully')
@@ -321,6 +330,9 @@ router.post('/:id', ensureAuthenticated,
 		const page = await prisma.page.findMany({
 			where: {
 				bookID: book.id
+			},
+			orderBy: {
+				pageNumber: 'asc'
 			}
 		})
 		const genre = await prisma.genre.findFirst({
@@ -368,6 +380,23 @@ router.post('/:id', ensureAuthenticated,
 router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
 	body('pageNumber', 'Page number is required').notEmpty(),
+	body('pageNumber').custom(async (value, { req }) => {
+		value = await prisma.page.findMany({
+			where: {
+				bookID: parseInt(req.params.id)
+			}
+		})
+		value.forEach((page) => {
+			if (page.pageNumber === parseInt(req.body.pageNumber)) {
+				throw new Error('Page number already exists')
+				
+			}
+			if (parseInt(req.body.pageNumber) <= 0) {
+				throw new Error('Page number should not be equal or less than 0')
+			}
+			return true;
+		})
+	}),
 	body('body', 'Content is required').notEmpty(),
 	ensureAuthenticated, async (req, res) => {
 		const page = await prisma.page.findUnique({

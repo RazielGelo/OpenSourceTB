@@ -6,16 +6,9 @@ const prisma = new PrismaClient()
 
 // Render Index page
 router.get('/', async (req, res) => {
-	const books = await prisma.book.findMany({
-		// Use below code to select specific fields
-		// select: {
-		// 	id: true,
-		// 	title: true,
-		// 	genre: true,
-		// 	authorName: true
-		// }
-	})
-	res.render('index.pug', { books })
+	const books = await prisma.book.findMany({})
+	const totalbooksCount = await prisma.book.count()
+	res.render('index.pug', { books, totalbooksCount })
 })
 
 router.get('/login', async (req, res) => {

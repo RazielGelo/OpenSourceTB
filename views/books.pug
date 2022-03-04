@@ -4,6 +4,7 @@ block content
 	h1= book.title
 	h5 Written by #{author}
 	label Genre: #{genre.genre}
+	p Description: #{book.description}
 	if user
 		if user.userName == book.authorName
 			div

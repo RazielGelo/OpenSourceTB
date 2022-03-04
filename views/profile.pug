@@ -29,7 +29,7 @@ block content
 		| 
 		a(href='/users/modify/password') Change Password
 	hr
-	h3 #{user.firstName}'s Books
+	h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
 	ul
 		each book, i in books
 			li

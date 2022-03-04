@@ -14,6 +14,9 @@ block content
 				each genre in distinctGenre
 					option(selected) #{genre.genre}
 		div
+			label Description: 
+			textarea(name='description')
+		div
 			button(type="submit") Update
 			| 
 			a(href=`/books/${book.id}`) Cancel
