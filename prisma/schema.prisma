@@ -12,48 +12,54 @@ datasource db {
 }
 
 model User {
-  id      		Int      	@id @default(autoincrement())
-  email   		String  	@unique
-  userName 		String 		@unique
+  id      		  Int      	@id @default(autoincrement())
+  email   		  String  	@unique
+  userName 		  String 		@unique
   password    	String
-  firstName 	String
-  lastName 		String
-  birthday      DateTime    @db.Date
-  books			Book[]
+  firstName 	  String
+  lastName 		  String
+  birthday      DateTime  @db.Date
+  books			    Book[]
   dateCreated 	DateTime 	@default(now())
 }
 
 model Book {
-  id      		Int      	@id @default(autoincrement())
-  title   		String
-  genreID		Int
-  description	String
-  author		User    	@relation(fields: [authorName], references: [userName])
-  authorName  	String
+  id      		  Int      	@id @default(autoincrement())
+  title   	   	String
+  genreID		    Int
+  description	  String
+  author		    User    	@relation(fields: [authorName], references: [userName])
+  authorName  	String    
   pages         Page[]
   dateCreated 	DateTime 	@default(now())
   contributorID Int[]
+  request       Request[]
 }
 
 model Page {
-  id      		Int      	@id @default(autoincrement())
+  id      		  Int      	@id @default(autoincrement())
   chapterName 	String		
   pageNumber    Int  	    
   body          String
-  book		    Book    	@relation(fields: [bookID], references: [id])
+  book		      Book    	@relation(fields: [bookID], references: [id])
   bookID  	    Int
   dateCreated 	DateTime 	@default(now())
 }
 
 model Genre {
-  id      		Int      	@id @default(autoincrement())
+  id      		  Int      	@id @default(autoincrement())
   genre         String
 }
 
 model Request {
-	requestID	Int      	@id @default(autoincrement())
-	bookID		Int
-	userID		Int
-	message		String
-	reply		String?
+	requestID	    Int      	@id @default(autoincrement())
+	bookID		    Int
+	userID		    Int
+	message		    String
+  bookOwner     Book      @relation(fields: [bookOwnerID], references: [id])
+  bookOwnerID   Int
+	reply		      String?
 }
+
+
+

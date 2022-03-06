@@ -1,0 +1,14 @@
+extends layout 
+
+block content
+	h1 Request Access
+	p This is where you request access to the author.
+	hr
+	form(method='POST', action=`/books/request/${book.id}`)
+		div
+			label Message to Author: 
+			textarea(name='request')
+		div
+			button(type="submit") Send Request
+			| 
+			a(href=`/books/${book.id}`) Cancel

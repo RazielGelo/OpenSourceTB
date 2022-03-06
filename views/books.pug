@@ -15,6 +15,7 @@ block content
 	label Genre: #{genre.genre}
 	p Description: #{book.description}
 	if user
+		a(href=`/books/request/${book.id}`) Request Access
 		if user.userName == book.authorName
 			div
 				a(href=`/books/modify/${book.id}`) Modify Book
