@@ -88,6 +88,16 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 	res.render('delete_book.pug', { book, user, page, genre })
 })
 
+// Render request access
+router.get('/request/:id', ensureAuthenticated, async (req, res) => {
+	const book = await prisma.book.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
+	res.render('request_access.pug', { book })
+})
+
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
@@ -96,7 +106,7 @@ router.post('/genre', ensureAuthenticated,
 		value.forEach((genre) => {
 			if (genre.genre === req.body.genre) {
 				throw new Error('Genre already exist, add a new one or just cancel')
-				
+
 			}
 			return true;
 		})
@@ -303,6 +313,13 @@ router.get('/page/:id', async (req, res) => {
 router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').notEmpty(),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
+	body('pageNumber').custom((value, { req }) => {
+		value = parseInt(req.body.pageNumber)
+		if (value <= 0) {
+			throw new Error('Page number should not be equal or less than 0')
+		}
+		return true;
+	}),
 	body('pageNumber').custom(async (value, { req }) => {
 		value = await prisma.page.findMany({
 			where: {
@@ -312,13 +329,10 @@ router.post('/:id', ensureAuthenticated,
 		value.forEach((page) => {
 			if (page.pageNumber === parseInt(req.body.pageNumber)) {
 				throw new Error('Page number already exists')
-				
-			}
-			if (parseInt(req.body.pageNumber) <= 0) {
-				throw new Error('Page number should not be equal or less than 0')
-			}
+
+			}			
 			return true;
-		})
+		})	
 	}),
 	body('body', 'Page should not be empty').notEmpty(),
 	async (req, res) => {
@@ -380,25 +394,36 @@ router.post('/:id', ensureAuthenticated,
 router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
 	body('pageNumber', 'Page number is required').notEmpty(),
+	body('pageNumber').custom((value, { req }) => {
+		value = parseInt(req.body.pageNumber)
+		if (value <= 0) {
+			throw new Error('Page number should not be equal or less than 0')
+		}
+		return true;
+	}),
 	body('pageNumber').custom(async (value, { req }) => {
+		const currentPage = await prisma.page.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
+		})
 		value = await prisma.page.findMany({
 			where: {
-				bookID: parseInt(req.params.id)
+				bookID: currentPage.bookID
 			}
 		})
 		value.forEach((page) => {
-			if (page.pageNumber === parseInt(req.body.pageNumber)) {
-				throw new Error('Page number already exists')
-				
-			}
-			if (parseInt(req.body.pageNumber) <= 0) {
-				throw new Error('Page number should not be equal or less than 0')
-			}
+			if(currentPage.pageNumber !== parseInt(req.body.pageNumber)) {
+				if (page.pageNumber === parseInt(req.body.pageNumber)) {
+					throw new Error('Page number already exists')
+	
+				}
+			}			
 			return true;
 		})
 	}),
 	body('body', 'Content is required').notEmpty(),
-	ensureAuthenticated, async (req, res) => {
+	async (req, res) => {
 		const page = await prisma.page.findUnique({
 			where: {
 				id: parseInt(req.params.id)
@@ -447,6 +472,48 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				res.send(e)
 			}
 		}
+	})
+
+// Post request access
+router.post('/request/:id', ensureAuthenticated,
+	body('request', 'Please send the author a request message.').notEmpty(),
+	async (req, res) => {
+		const book = await prisma.book.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
+		})
+		const user = req.user
+		try {
+			// Get Errors
+			let errors = validationResult(req)
+
+			if (!errors.isEmpty()) {
+				res.render('books', {
+					errors: errors.array(),
+					user: user,
+					book: book
+				})
+			} else {
+				let newRequest = await prisma.request.create({
+					data: {
+						bookID: parseInt(req.params.id),
+						userID: parseInt(req.user.id),
+						message: req.body.request,
+						bookOwner: {
+							connect: {
+								id: book.id
+							}
+						}
+					}
+				})
+				req.flash('success', 'Request successfully sent to author');
+				res.redirect(`/books/${book.id}`);
+			}
+		} catch (e) {
+			res.send(e);
+		}
+
 	})
 
 // Delete Book
