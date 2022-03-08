@@ -52,17 +52,16 @@ model Genre {
 }
 
 model Update {
-    id          Int       @id @default(autoincrement())
-    bookID      Int
-    userID      Int
-    body        String
-    status      String
-    message     Message[]
-    bookOwner   Book      @relation(fields: [bookOwnerID], references: [id])
-    bookOwnerID Int
-    commit      String
-    Page        Page      @relation(fields: [pageID], references: [id])
-    pageID      Int
+    id      Int       @id @default(autoincrement())
+    userID  Int
+    body    String
+    status  String
+    message Message[]
+    book    Book      @relation(fields: [bookID], references: [id])
+    bookID  Int
+    commit  String
+    page    Page      @relation(fields: [pageID], references: [id])
+    pageID  Int
 }
 
 model Message {
