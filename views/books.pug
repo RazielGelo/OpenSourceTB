@@ -23,12 +23,12 @@ block content
 				a(href='#', id="delete", data-id=`${book.id}`) Delete
 				//- a(href=`/books/delete/${book.id}`) Delete
 	hr
-	h3 Book pages
+	h3 Book Chapter
 	if !book.pages
-		ul
+		div
 			each pg, i in page
-				li
-					a(href="/books/page/"+pg.id)= pg.pageNumber
+				div
+					a(href="/books/page/"+pg.id)= pg.chapterName
 	hr
 	if user
 		if user.userName == book.authorName

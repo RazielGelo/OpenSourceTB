@@ -28,7 +28,7 @@ block content
 			input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
 		div
 			label Current content:
-			textarea#body(name='body')=page.body
+			textarea#body(name='body', style="display:none;")=page.body
 		div
 			label Your content update:
 			textarea#tempbody(name='tempbody')=page.body

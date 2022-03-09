@@ -422,7 +422,7 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			return true;
 		})
 	}),
-	body('body', 'Content is required').notEmpty(),
+	body('tempbody', 'Content is required').notEmpty(),
 	async (req, res) => {
 		const page = await prisma.page.findUnique({
 			where: {
@@ -434,12 +434,6 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				id: page.bookID
 			}
 		})
-		const distinctGenre = await prisma.genre.findMany({
-			distinct: ['genre'],
-			select: {
-				genre: true,
-			},
-		})
 		const user = req.user;
 		let errors = validationResult(req)
 
@@ -448,14 +442,13 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				errors: errors.array(),
 				page: page,
 				user: user,
-				book: book,
-				distinctGenre: distinctGenre
+				book: book
 			})
 		}
 		else {
 			// This code can be refined
 			try {
-				const updatePage = await prisma.page.update({
+				const updatePage = await prisma.update.update({
 					where: {
 						id: parseInt(req.params.id)
 					},
