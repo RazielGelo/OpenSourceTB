@@ -9,6 +9,12 @@ block script
 			statusbar: false,
 			readonly: 1
 		})
+			tinymce.init({
+			selector:  '.currBody',
+			menubar: false,
+			statusbar: false,
+			readonly: 1
+		})
 
 block content
 	h1= book.title
@@ -28,6 +34,19 @@ block content
 		textarea#body=page.body
 	if user 	
 		if user.userName == book.authorName
+			each hist, i in history
+				form(action=`/books/page/${page.id}`, method='POST')
+					div
+						input(type="text", name="chapterName1", style="display:none;", value=`${page.chapterName}`)
+					div
+						input(type="number", name="pageNumber1", style="display:none;", value=`${page.pageNumber}`)
+					div
+						label Your content update:
+						textarea.currBody(name='currBody')=hist.currBody
+					div
+						input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
+					div
+						button#Approve(type="submit") Approve
 			a(href=`/books/page/modify/${page.id}`) Edit Page
 			| 
 			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete

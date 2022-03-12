@@ -24,26 +24,28 @@ model User {
 }
 
 model Book {
-    id          Int      @id @default(autoincrement())
+    id          Int       @id @default(autoincrement())
     title       String
     genreID     Int
+    link        String?
     description String
-    author      User     @relation(fields: [authorName], references: [userName])
+    author      User      @relation(fields: [authorName], references: [userName])
     authorName  String
     pages       Page[]
-    dateCreated DateTime @default(now())
-    update      Update[]
+    dateCreated DateTime  @default(now())
+    histories   History[]
 }
 
 model Page {
-    id          Int      @id @default(autoincrement())
-    chapterName String
-    pageNumber  Int
-    body        String
-    book        Book     @relation(fields: [bookID], references: [id])
-    bookID      Int
-    dateCreated DateTime @default(now())
-    update      Update[]
+    id            Int       @id @default(autoincrement())
+    chapterName   String
+    pageNumber    Int
+    body          String
+    book          Book      @relation(fields: [bookID], references: [id])
+    bookID        Int
+    dateCreated   DateTime  @default(now())
+    lastUpdatedBy Int
+    histories     History[]
 }
 
 model Genre {
@@ -51,23 +53,18 @@ model Genre {
     genre String
 }
 
-model Update {
-    id      Int       @id @default(autoincrement())
-    userID  Int
-    body    String
-    status  String
-    message Message[]
-    book    Book      @relation(fields: [bookID], references: [id])
-    bookID  Int
-    commit  String
-    page    Page      @relation(fields: [pageID], references: [id])
-    pageID  Int
-}
+model History {
+    id          Int      @id @default(autoincrement())
+    userID      Int
+    pageRef     Int
+    bookRef     Int
+    prevBody    String
+    currBody    String
+    commit      String
+    book        Book?    @relation(fields: [bookID], references: [id])
+    bookID      Int?
+    page        Page?    @relation(fields: [pageID], references: [id])
+    pageID      Int?
+    dateUpdated DateTime @default(now())
 
-model Message {
-    id       Int     @id @default(autoincrement())
-    message  String?
-    reply    String?
-    update   Update  @relation(fields: [updateID], references: [id])
-    updateID Int
 }

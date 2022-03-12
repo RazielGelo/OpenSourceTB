@@ -34,3 +34,5 @@ block content
 		each book, i in books
 			li
 				a(href="/books/"+book.id)= book.title
+				| 
+				span - #{(book.histories.length)} Pending Approval Requests

@@ -95,6 +95,9 @@ router.get('/profile', ensureAuthenticated, async (req, res) => {
 	const books = await prisma.book.findMany({
 		where: {
 			authorName: req.user.userName
+		},
+		include: {
+			histories: true
 		}
 	})
 	const userTotalBooksCount = await prisma.user.findUnique({

@@ -8,6 +8,11 @@ block script
 			menubar: false,
 			statusbar: false,
 			readonly: 1
+		}),
+		tinymce.init({
+			selector: '#currBody',
+			menubar: false,
+			statusbar: false
 		})
 		tinymce.init({
 			selector:  '#body',
@@ -15,10 +20,10 @@ block script
 			statusbar: false,
 		})
 block content
-	h1 Modify Page
-	p This is where you edit details of your book page. 
+	h1 Resolve conflict
+	p This is where you resolve or merge conflicts
 	hr
-	form(action=`/books/page/modify/${page.id}`, method='POST')
+	form(action=`/books/page/conflict/${page.id}`, method='POST')
 		div
 			label Chapter Name:
 			input(type="text", name='chapterName', value=`${page.chapterName}`)
@@ -26,15 +31,15 @@ block content
 			label Page Number:
 			input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
 		div
-			label Current content:
-			textarea#tempBody(name='tempBody', style="display:none;")=page.body
+			label Current Page Content:
+			textarea#tempBody(name='tempBody')=page.body
 		div
-			label Your content update:
-			textarea#body(name='body')=page.body
+			label Your Update:
+			textarea#body(name='body')=currVal
 		div
 			label Commit message:
 			input(type="text", name='commit')
 		div
-			button#update(type="submit") Update
+			button(type="submit") Update
 			| 
 			a(href=`/books/page/${page.id}`) Cancel

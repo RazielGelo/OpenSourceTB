@@ -14,8 +14,11 @@ block content
 				each genre in distinctGenre
 					option(selected) #{genre.genre}
 		div
-			label Description: 
+			label Description:
 			textarea(name='description')
+		div
+			label Link: 
+			input(name='link', type='url')
 		div
 			button(type="submit") Create
 			| 
