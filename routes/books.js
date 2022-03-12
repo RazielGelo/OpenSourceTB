@@ -414,10 +414,11 @@ router.post('/:id', ensureAuthenticated,
 
 // Approve Requests
 router.post('/page/:id', ensureAuthenticated, async (req, res) => {
-	console.log(req.body.chapterName1)
-	console.log(req.body.pageNumber1)
-	console.log(req.body.currBody)
-	console.log(req.body.updater)
+	const page = await prisma.page.findUnique({
+		where: {
+			id: parseInt(req.params.id)
+		}
+	})
 	try {
 		const updatePage = await prisma.page.update({
 			where: {
@@ -433,16 +434,16 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 				}
 			}			
 		})
-		// const clearHistory = await prisma.history.updateMany({
-		// 	where: {
-		// 		pageID: parseInt(req.params.id)
-		// 	},
-		// 	data: {
-		// 		book: {
-		// 			disconnect: true
-		// 		}
-		// 	}
-		// })
+		const clearHistory = await prisma.book.update({
+			where: {
+				id: page.bookID
+			},
+			data: {
+				histories: {
+					set: []
+				}
+			}
+		})
 		req.flash('success', 'Page update request approved successfully')
 		res.redirect(`/books/page/${req.params.id}`)
 
