@@ -37,24 +37,24 @@ block content
 					span - #{(pg.histories.length)} Pending Approval Requests
 	hr
 	if user
-		if user.userName == book.authorName
-			h3 Add Page Section
-			form(method='POST', action=`/books/${book.id}`)
-				div
-					label Chapter Name:
-					input(type="text", name='chapterName')
-				div
-					label Page Number:
-					input(type="number", name='pageNumber')
-				div
-					label Content:
-					textarea#body(name='body')
-				div
-					button(type="submit") Add Page
-					| 
-					a(href='/users/profile') Cancel
-		else
-			a(href=`/`) Back
-	else
-		a(href=`/`) Back
+		//- if user.userName == book.authorName
+		h3 Add Page Section
+		form(method='POST', action=`/books/${book.id}`)
+			div
+				label Chapter Name:
+				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`)
+			div
+				label Page Number:
+				input(type="number", name='pageNumber', value=`${prevPageNumber}`)
+			div
+				label Content:
+				textarea#body(name='body')=prevBody
+			div
+				button(type="submit") Add Page
+				| 
+				a(href='/users/profile') Cancel
+		//- else
+		//- 	a(href=`/`) Back
+	//- else
+	//- 	a(href=`/`) Back
 	script(src='/javascripts/delete_book.js')
