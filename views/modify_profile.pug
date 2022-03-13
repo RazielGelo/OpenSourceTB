@@ -7,13 +7,13 @@ block content
 	form(action="/users/modify", method='POST')
 		div
 			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName")
+			input(type="text", id="firstName", name="firstName", value=`${user.firstName}`)
 		div
 			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName")
+			input(type="text", id="lastName", name="lastName", value=`${user.lastName}`)
 		div
 			label(for="birthday") Birthday:
-			input(type="date", id="birthday", name="birthday")
+			input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`)
 		div
 			button(type="submit") Update
 			| 

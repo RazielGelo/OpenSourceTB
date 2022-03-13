@@ -23,11 +23,15 @@ router.post('/register',
 	body('lastName', 'Lastname is required').notEmpty(),
 	body('lastName', 'Lastname should at least be 2 characters long').isLength(2),
 	body('birthday', 'Birthday is required').notEmpty(),
-	body('birthday').custom((value, { req }) => {
+	body('birthday').custom((value,{ req }) => {
 		value = Date.now()
+		past = new Date('December 31, 1899 00:00:00')
 		if (new Date(req.body.birthday) > value) {
 			throw new Error('Birthday should be less than date today')
 
+		}
+		if (new Date(req.body.birthday) < past) {
+			throw new Error("Birthday should be at least in the 1900's")
 		}
 		return true;
 	}),
@@ -125,11 +129,15 @@ router.post('/modify', ensureAuthenticated,
 	body('lastName', 'Lastname is required').notEmpty(),
 	body('lastName', 'Lastname should at least be 2 characters long').isLength(2),
 	body('birthday', 'Birthday is required').notEmpty(),
-	body('birthday').custom((value, { req }) => {
+	body('birthday').custom((value,{ req }) => {
 		value = Date.now()
+		past = new Date('December 31, 1899 00:00:00')
 		if (new Date(req.body.birthday) > value) {
 			throw new Error('Birthday should be less than date today')
 
+		}
+		if (new Date(req.body.birthday) < past) {
+			throw new Error("Birthday should be at least in the 1900's")
 		}
 		return true;
 	}),

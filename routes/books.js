@@ -21,6 +21,9 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 		select: {
 			genre: true,
 		},
+		orderBy: {
+			genre: 'asc'
+		}
 	})
 	res.render('add_book.pug', { distinctGenre })
 })
@@ -42,6 +45,9 @@ router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
 		select: {
 			genre: true,
 		},
+		orderBy: {
+			genre: 'asc'
+		}
 	})
 	res.render('modify_book.pug', { distinctGenre, book })
 })
@@ -160,6 +166,9 @@ router.post('/add', ensureAuthenticated,
 			select: {
 				genre: true,
 			},
+			orderBy: {
+				genre: 'asc'
+			}
 		})
 		const user = req.user;
 		try {
@@ -253,6 +262,9 @@ router.post('/modify/:id', ensureAuthenticated,
 			select: {
 				genre: true,
 			},
+			orderBy: {
+				genre: 'asc'
+			}
 		})
 		const user = req.user;
 		let errors = validationResult(req)
@@ -336,8 +348,8 @@ router.post('/:id', ensureAuthenticated,
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
-		if (value <= 0) {
-			throw new Error('Page number should not be equal or less than 0')
+		if (value <= 0 || value > 10000) {
+			throw new Error('Page number should be between 1 and 10000')
 		}
 		return true;
 	}),
@@ -368,6 +380,9 @@ router.post('/:id', ensureAuthenticated,
 			},
 			orderBy: {
 				pageNumber: 'asc'
+			},
+			include: {
+				histories: true
 			}
 		})
 		const genre = await prisma.genre.findFirst({
@@ -379,7 +394,9 @@ router.post('/:id', ensureAuthenticated,
 		try {
 			// Get Errors
 			let errors = validationResult(req)
-
+			let prevBody = req.body.body
+			let prevChapter = req.body.chapterName
+			let prevPageNumber = req.body.pageNumber
 			if (!errors.isEmpty()) {
 				res.render('books', {
 					errors: errors.array(),
@@ -387,14 +404,17 @@ router.post('/:id', ensureAuthenticated,
 					book: book,
 					page: page,
 					genre: genre,
-					author: user.userName
+					author: user.userName,
+					prevBody: prevBody,
+					prevChapter: prevChapter,
+					prevPageNumber: prevPageNumber
 				})
 			} else {
 				let newPage = await prisma.page.create({
 					data: {
-						chapterName: req.body.chapterName,
-						pageNumber: parseInt(req.body.pageNumber),
-						body: req.body.body,
+						chapterName: prevChapter,
+						pageNumber: parseInt(prevPageNumber),
+						body: prevBody,
 						lastUpdatedBy: user.id,
 						book: {
 							connect: {
@@ -419,7 +439,42 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 			id: parseInt(req.params.id)
 		}
 	})
+
 	try {
+		const updateHistory = await prisma.history.updateMany({
+			where: {
+				pageRef: parseInt(req.params.id),
+			},			
+			data: {
+				book: {
+					set: []
+				}
+			}
+		})
+		// const clearHistory = await prisma.book.update({
+		// 	where: {
+		// 		id: page.bookID
+		// 	},
+		// 	data: {
+		// 		histories: {
+		// 			updateMany: {
+		// 				where: {
+		// 					pageRef: parseInt(req.params.id)
+		// 				},
+		// 				data: {
+		// 					book: {
+		// 						set: []
+		// 					}
+		// 				},
+		// 				include: {
+		// 					book: true
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// })
+
+		console.log(updateHistory)
 		const updatePage = await prisma.page.update({
 			where: {
 				id: parseInt(req.params.id)
@@ -429,16 +484,6 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 				pageNumber: parseInt(req.body.pageNumber1),
 				body: req.body.currBody,
 				lastUpdatedBy: parseInt(req.body.updater),
-				histories: {
-					set: []
-				}
-			}			
-		})
-		const clearHistory = await prisma.book.update({
-			where: {
-				id: page.bookID
-			},
-			data: {
 				histories: {
 					set: []
 				}
@@ -458,8 +503,8 @@ router.post('/page/modify/:id', ensureAuthenticated,
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
-		if (value <= 0) {
-			throw new Error('Page number should not be equal or less than 0')
+		if (value <= 0 || value > 10000) {
+			throw new Error('Page number should be between 1 and 10000')
 		}
 		return true;
 	}),
