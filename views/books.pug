@@ -34,7 +34,9 @@ block content
 				div
 					a(href="/books/page/"+pg.id)= pg.chapterName
 					| 
-					span - #{(pg.histories.length)} Pending Approval Requests
+					if user
+						if user.userName == book.authorName
+							span - #{(pg.histories.length)} Pending Approval Requests
 	hr
 	if user
 		//- if user.userName == book.authorName
