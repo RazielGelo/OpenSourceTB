@@ -440,41 +440,26 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 		}
 	})
 
+	const relatedHistory = await prisma.history.findMany({
+		where: {
+			pageRef: parseInt(req.params.id)
+		},
+		select: {
+			id: true
+		}
+	})
+
 	try {
-		const updateHistory = await prisma.history.updateMany({
+		const clearHistory = await prisma.book.update({
 			where: {
-				pageRef: parseInt(req.params.id),
-			},			
+				id: page.bookID
+			},
 			data: {
-				book: {
-					set: []
+				histories: {
+					disconnect: relatedHistory
 				}
 			}
 		})
-		// const clearHistory = await prisma.book.update({
-		// 	where: {
-		// 		id: page.bookID
-		// 	},
-		// 	data: {
-		// 		histories: {
-		// 			updateMany: {
-		// 				where: {
-		// 					pageRef: parseInt(req.params.id)
-		// 				},
-		// 				data: {
-		// 					book: {
-		// 						set: []
-		// 					}
-		// 				},
-		// 				include: {
-		// 					book: true
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// })
-
-		console.log(updateHistory)
 		const updatePage = await prisma.page.update({
 			where: {
 				id: parseInt(req.params.id)
@@ -486,7 +471,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 				lastUpdatedBy: parseInt(req.body.updater),
 				histories: {
 					set: []
-				}
+				}				
 			}
 		})
 		req.flash('success', 'Page update request approved successfully')

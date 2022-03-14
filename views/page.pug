@@ -47,13 +47,13 @@ block content
 						input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
 					div
 						button#Approve(type="submit") Approve
-			a(href=`/books/page/modify/${page.id}`) Edit Page
-			| 
-			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete
-			| 
-			a(href=`/books/${book.id}`) Cancel
-		else
-			a(href=`/books/${book.id}`) Back
+		a(href=`/books/page/modify/${page.id}`) Edit Page
+		| 
+		a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete
+		| 
+		a(href=`/books/${book.id}`) Cancel
+		//- else
+		//- 	a(href=`/books/${book.id}`) Back
 	else
 		a(href=`/books/${book.id}`) Back
 	script(src='/javascripts/delete_page.js') 
