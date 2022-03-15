@@ -340,13 +340,20 @@ router.get('/page/:id', async (req, res) => {
 			pageID: parseInt(req.params.id)
 		}
 	})
+	const allUser = await prisma.user.findMany({
+		select: {
+			id: true,
+			userName: true
+		}
+	})
 	if (user) {
 		res.render('page.pug', {
 			book: book,
 			page: page,
 			genre: genre,
 			author: user.userName,
-			history: history
+			history: history,
+			allUser: allUser
 		})
 	}
 })
