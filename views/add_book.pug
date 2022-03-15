@@ -7,18 +7,18 @@ block content
 	form(method='POST', action='/books/add')
 		div
 			label Title: 
-			input(name='title', type='text')
+			input(name='title', type='text', value=`${(!title) ? '' : title}`)
 		div
 			label Genre:
 			select(name='genre')
-				each genre in distinctGenre
+				each genre in distinctGenre					
 					option(selected) #{genre.genre}
 		div
 			label Description:
-			textarea(name='description')
+			textarea(name='description')=description
 		div
 			label Link: 
-			input(name='link', type='url')
+			input(name='link', type='url', value=`${(!link) ? '' : link}`)
 		div
 			button(type="submit") Create
 			| 

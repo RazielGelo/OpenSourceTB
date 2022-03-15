@@ -15,7 +15,7 @@ router.get('/all', async (req, res) => {
 })
 
 // Render Add Book
-router.get('/add', ensureAuthenticated, async (req, res) => {
+router.get('/add', ensureAuthenticated, async (req, res) => {	
 	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
@@ -25,7 +25,7 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 			genre: 'asc'
 		}
 	})
-	res.render('add_book.pug', { distinctGenre })
+	res.render('add_book.pug', { distinctGenre})
 })
 
 // Render Book Genre
@@ -170,7 +170,12 @@ router.post('/add', ensureAuthenticated,
 				genre: 'asc'
 			}
 		})
+		const title = req.body.title
+		const description = req.body.description
+		const link = req.body.link
 		const user = req.user;
+		const genre1 = req.body.genre
+		console.log(description)
 		try {
 			// Get Errors
 			let errors = validationResult(req)
@@ -183,7 +188,11 @@ router.post('/add', ensureAuthenticated,
 				res.render('add_book', {
 					errors: errors.array(),
 					user: user,
-					distinctGenre: distinctGenre
+					distinctGenre: distinctGenre,
+					title: title,
+					description: description,
+					link: link,
+					genre1: genre1
 				})
 			} else {
 				let newBook = await prisma.book.create({
@@ -471,7 +480,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 				lastUpdatedBy: parseInt(req.body.updater),
 				histories: {
 					set: []
-				}				
+				}
 			}
 		})
 		req.flash('success', 'Page update request approved successfully')
@@ -526,6 +535,14 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				id: page.bookID
 			}
 		})
+		const relatedHistory = await prisma.history.findMany({
+			where: {
+				pageRef: parseInt(req.params.id)
+			},
+			select: {
+				id: true
+			}
+		})
 		const user = req.user;
 		let errors = validationResult(req)
 
@@ -538,26 +555,32 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			})
 		}
 		else {
-			const currentPageBody = page.body.split('')
-			const prevPageBody = req.body.tempBody.split('')
-
-			let isDifferent = false;
-
-			var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length
-
-			for (let i = 0; i < limit; i++) {
-				if (currentPageBody[i] !== prevPageBody[i]) {
-					isDifferent = true
-				}
-			}
-
-			if (isDifferent) {
-				const currVal = req.body.body
-				// res.redirect(`/books/page/conflict/${req.params.id}`)
-				res.render('modify_page_conflict', { user, page, currVal })
-
-			} else {
+			if (user.userName === book.authorName) {				
 				try {
+					const clearHistory = await prisma.book.update({
+						where: {
+							id: page.bookID
+						},
+						data: {
+							histories: {
+								disconnect: relatedHistory
+							}
+						}
+					})
+					const updatePage = await prisma.page.update({
+						where: {
+							id: parseInt(req.params.id)
+						},
+						data: {
+							chapterName: req.body.chapterName,
+							pageNumber: parseInt(req.body.pageNumber),
+							body: req.body.body,
+							lastUpdatedBy: parseInt(user.id),
+							histories: {
+								set: []
+							}
+						}
+					})
 					const updateHistory = await prisma.history.create({
 						data: {
 							userID: user.id,
@@ -565,24 +588,62 @@ router.post('/page/modify/:id', ensureAuthenticated,
 							currBody: req.body.body,
 							commit: req.body.commit,
 							pageRef: parseInt(req.params.id),
-							bookRef: book.id,
-							book: {
-								connect: {
-									id: book.id
-								}
-							},
-							page: {
-								connect: {
-									id: parseInt(req.params.id)
-								}
-							}
+							bookRef: book.id
 						}
 					})
-					req.flash('success', 'Page update request submitted successfully')
+					req.flash('success', 'Page updated Successfully')
 					res.redirect(`/books/page/${req.params.id}`)
 
 				} catch (e) {
 					res.send(e)
+				}
+			} else {
+				const currentPageBody = page.body.split('')
+				const prevPageBody = req.body.tempBody.split('')
+
+				let isDifferent = false;
+
+				var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length
+
+				for (let i = 0; i < limit; i++) {
+					if (currentPageBody[i] !== prevPageBody[i]) {
+						isDifferent = true
+					}
+				}
+
+				if (isDifferent) {
+					const currVal = req.body.body
+					// res.redirect(`/books/page/conflict/${req.params.id}`)
+					res.render('modify_page_conflict', { user, page, currVal })
+
+				} else {
+					try {
+						const updateHistory = await prisma.history.create({
+							data: {
+								userID: user.id,
+								prevBody: req.body.tempBody,
+								currBody: req.body.body,
+								commit: req.body.commit,
+								pageRef: parseInt(req.params.id),
+								bookRef: book.id,
+								book: {
+									connect: {
+										id: book.id
+									}
+								},
+								page: {
+									connect: {
+										id: parseInt(req.params.id)
+									}
+								}
+							}
+						})
+						req.flash('success', 'Page update request submitted successfully')
+						res.redirect(`/books/page/${req.params.id}`)
+
+					} catch (e) {
+						res.send(e)
+					}
 				}
 			}
 		}

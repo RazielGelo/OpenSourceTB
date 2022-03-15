@@ -8,19 +8,19 @@ block content
 	form(action="/users/register", method='POST')
 		div
 			label(for="userName") Username:
-			input(type="text", id="userName", name="userName")
+			input(type="text", id="userName", name="userName", value=`${(!userName) ? '' : userName}`)
 		div
 			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName")
+			input(type="text", id="firstName", name="firstName", value=`${(!firstName) ? '' : firstName}`)
 		div
 			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName")
+			input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
 		div
 			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday")
+			input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
 		div
 			label(for="email") Email:
-			input(type="email", id="email", name="email")
+			input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
 		div
 			label(for="password") Password:
 			input(type="password", id="password", name="password")
