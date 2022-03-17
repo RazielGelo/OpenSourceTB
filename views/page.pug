@@ -53,11 +53,11 @@ block content
 							if hist.userID === user1.id
 								label Page update by: #{user1.userName}
 								textarea.currBody(name='currBody')=hist.currBody
+				div
 					div
 						input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
 					div
-						button#Approve(type="submit") Approve
-		a(href=`/books/page/modify/${page.id}`, class="buttonsmall") Edit Page
+						button#Approve(type="submit", class="buttonapprove") Approve
 		| 
 		a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttonsmall") Delete
 		| 
@@ -71,6 +71,10 @@ block content
 	</article> 
 
 	<aside class="info1">
+	a(href=`/books/page/modify/${page.id}`, class="buttoncore-update") Update Existing Page
+	|
+	a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttoncore-delete") Delete Existing Page
+	|
 	<h3>Better to display Book Chapters</h3>
 	<ul>
 		<li><a href="#">Chapter</a></li>

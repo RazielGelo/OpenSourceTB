@@ -56,6 +56,15 @@ block content
 	</article> 
 
 	<aside class="info1">
+	if user
+		//- a(href=`/books/request/${book.id}`) Request Access
+		if user.userName == book.authorName
+			div
+				a(href=`/books/modify/${book.id}`, class="buttoncore-update") Modify Book
+				| 
+				a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book
+				//- a(href=`/books/delete/${book.id}`) Delete
+	
 	h3 Book Chapter
 	if !book.pages
 		div
@@ -66,7 +75,5 @@ block content
 					if user
 						if user.userName == book.authorName
 							span - #{(pg.histories.length)} Pending Approval Requests
-	hr
-
 	</aside> 
 	</main> 
