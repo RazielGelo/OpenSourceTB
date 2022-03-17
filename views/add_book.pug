@@ -20,8 +20,8 @@ block content
 			label Link: 
 			input(name='link', type='url', value=`${(!link) ? '' : link}`)
 		div
-			button(type="submit") Create
+			button(type="submit", class="buttonsmall") Create
 			| 
-			a(href='/books/genre') Add Genre
+			a(href='/books/genre', class="buttonsmall") Add Genre
 			| 
-			a(href='/users/profile') Cancel
+			a(href='/users/profile', class="buttonsmall") Cancel

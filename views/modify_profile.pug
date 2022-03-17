@@ -15,7 +15,7 @@ block content
 			label(for="birthday") Birthday:
 			input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`)
 		div
-			button(type="submit") Update
+			button(type="submit", class="buttonsmall") Update
 			| 
-			a(href='/users/profile') Cancel
+			a(href='/users/profile', class="buttonsmall") Cancel
 			

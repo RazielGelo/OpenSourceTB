@@ -1,18 +1,18 @@
 extends layout
 
 block content
-	h1 Home
-	p This is where all main content will be displayed. 
-	hr
-	h2 Browse through our collection of <strong><u>#{totalbooksCount}</u></strong> books.
-	//- ul
-		//- each book, i in books
-			//- li
-			//- 	a(href="/books/"+book.id)= book.title
-	div(class="search-wrapper")
+	div
 		label(for="search") Search Books
 		| 
-		input(type="search", id="search", data-search)
+		input(type="search", id="search", class="search-wrapper", placeholder="Search by Title, Author or Genre", data-search)
+	
+	div(class="container")
+		img(src="https://i.ibb.co/NjqMKYW/10.png" alt="Snow")
+		a(href='/books/add', class="btn") PUBLISH NOW
+	
+	hr
+	h2 Browse through our collection of <strong><u>#{totalbooksCount}</u></strong> books.
+	
 	div(class="user-cards", data-book-cards-container)
 	template(data-book-template)
 		div(class="card")

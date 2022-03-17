@@ -6,32 +6,47 @@ html(lang="en")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		link(rel="stylesheet", href="/stylesheets/style.css")
 		link(rel="stylesheet", href="/stylesheets/search.css")
+		//- <!--Google Font -->
+		link(rel="preconnect" href="https://fonts.googleapis.com")
+		link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+		link(href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css2?family=McLaren&family=Roboto&display=swap" rel="stylesheet")
+		link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css")
 		block script
 		block title
 			title OpenSourceTextbook
+	div(id="wrapper")
 	header
-		div
+		img(src="https://i.ibb.co/wBK49jh/Logo.png" alt="OpensourceTB" style={height: "120px"})
+
 		if user
-			p Welcome #{user.firstName}!
+			p(class="name") Welcome #{user.firstName}!
 		div
-			img(src="https://i.ibb.co/wBK49jh/Logo.png" alt="OpensourceTB" class="logo" style={height: "100px"})
-			a(href='/') Home
+			if user
+				a(href='/users/logout', class="buttonsmall") Logout
+				|
+				a(href='/users/profile', class="buttonsmall") Profile
+			else 
+				a(href='/login', class="button") Login
 				| 
-				if user
-					a(href='/users/profile') Profile
-					| 
-					a(href='/users/logout') Logout
-				else 
-					a(href='/login') Login
-					| 
-					a(href='/register') Register
-	body
-		!= messages('message', locals)
-		if errors
-			each error, i in errors
-				div(class="alert alert-danger") #{error.msg}
-		block content		
-	footer
-		p OpenSource Textbook empowers and connects authors and readers through open accessto a global reading and publishing platform.
-		p Vancouver Community College, Vancouver, B.C., Canada
-		p Copyright &copy; 2021
+				a(href='/register', class="button") Register
+	nav
+		ul
+				a(href='/', class="active") HOME
+				a(href='/') GENRE
+				a(href='/') ABOUT US
+	main
+		<article>
+		body
+			!= messages('message', locals)
+			if errors
+				each error, i in errors
+					div(class="alert alert-danger") #{error.msg}
+			block content		
+		</article> 
+	</main> 
+		<footer>
+		<address>
+			p OpenSource Textbook empowers and connects authors and readers through open accessto a global reading and publishing platform.
+			p Vancouver Community College, Vancouver, B.C., Canada
+			p Copyright &copy; 2021

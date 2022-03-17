@@ -1,7 +1,8 @@
 extends layout 
 
 block content
-	h1 Users Page
+	a(href='/books/add', class="button") Add Book
+	h1 User Profile
 	p This is where all the information is displayed after you login.
 	hr
 	h3 Profile: 
@@ -23,11 +24,14 @@ block content
 		input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
 	
 	div
-		a(href='/books/add') Add Book
+		
 		| 
-		a(href='/users/modify') Edit Profile
+		a(href='/users/modify', class="buttonsmall") Edit Profile
 		| 
-		a(href='/users/modify/password') Change Password
+		a(href='/users/modify/password', class="buttonsmall") Change Password
+		br
+		br
+		br
 	hr
 	h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
 	ul

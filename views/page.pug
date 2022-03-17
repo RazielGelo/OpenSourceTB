@@ -19,11 +19,16 @@ block script
 		})
 
 block content
-	h1= book.title
-	h5 Written by #{author}
+
+	<main>
+	<article>
+
+	h2= book.title
+	h4 Written by #{author}
 	label Genre: #{genre.genre}
 	p Description: #{book.description}
 	hr
+
 	h3 Page Details: 
 	div
 		label Chapter Name:
@@ -33,6 +38,7 @@ block content
 		input(type="number", name='pageNumber', value=`${page.pageNumber}`, disabled)
 	div
 		label Current page update:
+
 		textarea#body=page.body
 	if user
 		if user.userName == book.authorName
@@ -51,13 +57,25 @@ block content
 						input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
 					div
 						button#Approve(type="submit") Approve
-		a(href=`/books/page/modify/${page.id}`) Edit Page
+		a(href=`/books/page/modify/${page.id}`, class="buttonsmall") Edit Page
 		| 
-		a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete
+		a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttonsmall") Delete
 		| 
-		a(href=`/books/${book.id}`) Cancel
+		a(href=`/books/${book.id}`, class="buttonsmall") Cancel
 		//- else
 		//- 	a(href=`/books/${book.id}`) Back
 	else
-		a(href=`/books/${book.id}`) Back
+		a(href=`/books/${book.id}`, class="buttonsmall") Back
 	script(src='/javascripts/delete_page.js') 
+
+	</article> 
+
+	<aside class="info1">
+	<h3>Better to display Book Chapters</h3>
+	<ul>
+		<li><a href="#">Chapter</a></li>
+		<li><a href="#">Chapter</a></li>
+		<li><a href="#">Chapter</a></li>
+	</ul>
+	</aside> 
+	</main> 

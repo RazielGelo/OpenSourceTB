@@ -10,7 +10,10 @@ block script
 		})
 
 block content
-	h1= book.title
+	<main>
+	<article>
+	
+	h2= book.title
 	h5 Written by #{author}
 	label Genre: #{genre.genre}
 	p Description: #{book.description}
@@ -22,11 +25,37 @@ block content
 		//- a(href=`/books/request/${book.id}`) Request Access
 		if user.userName == book.authorName
 			div
-				a(href=`/books/modify/${book.id}`) Modify Book
+				a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
 				| 
-				a(href='#', id="delete", data-id=`${book.id}`) Delete
+				a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete
 				//- a(href=`/books/delete/${book.id}`) Delete
-		hr
+	br
+	
+	if user
+		//- if user.userName == book.authorName
+		h3 Add Page Section
+		form(method='POST', action=`/books/${book.id}`)
+			div
+				label Chapter Name:
+				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
+			div
+				label Page Number:
+				input(type="number", name='pageNumber', value=`${prevPageNumber}`)
+			div
+				label Content:
+				textarea#body(name='body')=prevBody
+			div
+				button(type="submit", class="buttonsmall") Add Page
+				| 
+				a(href='/users/profile', class="buttonsmall") Cancel
+		//- else
+		//- 	a(href=`/`) Back
+	//- else
+	//- 	a(href=`/`) Back
+	script(src='/javascripts/delete_book.js')
+	</article> 
+
+	<aside class="info1">
 	h3 Book Chapter
 	if !book.pages
 		div
@@ -38,25 +67,6 @@ block content
 						if user.userName == book.authorName
 							span - #{(pg.histories.length)} Pending Approval Requests
 	hr
-	if user
-		//- if user.userName == book.authorName
-		h3 Add Page Section
-		form(method='POST', action=`/books/${book.id}`)
-			div
-				label Chapter Name:
-				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`)
-			div
-				label Page Number:
-				input(type="number", name='pageNumber', value=`${prevPageNumber}`)
-			div
-				label Content:
-				textarea#body(name='body')=prevBody
-			div
-				button(type="submit") Add Page
-				| 
-				a(href='/users/profile') Cancel
-		//- else
-		//- 	a(href=`/`) Back
-	//- else
-	//- 	a(href=`/`) Back
-	script(src='/javascripts/delete_book.js')
+
+	</aside> 
+	</main> 
