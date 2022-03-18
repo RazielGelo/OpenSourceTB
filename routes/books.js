@@ -346,6 +346,14 @@ router.get('/page/:id', async (req, res) => {
 			userName: true
 		}
 	})
+	const pages = await prisma.page.findMany({
+		where: {
+			bookID: book.id
+		},		
+		orderBy: {
+			pageNumber: 'asc'
+		}
+	})
 	if (user) {
 		res.render('page.pug', {
 			book: book,
@@ -353,7 +361,8 @@ router.get('/page/:id', async (req, res) => {
 			genre: genre,
 			author: user.userName,
 			history: history,
-			allUser: allUser
+			allUser: allUser,
+			pages: pages
 		})
 	}
 })

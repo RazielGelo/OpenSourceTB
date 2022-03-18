@@ -74,12 +74,12 @@ block content
 	a(href=`/books/page/modify/${page.id}`, class="buttoncore-update") Update Existing Page
 	|
 	a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttoncore-delete") Delete Existing Page
-	|
-	<h3>Better to display Book Chapters</h3>
-	<ul>
-		<li><a href="#">Chapter</a></li>
-		<li><a href="#">Chapter</a></li>
-		<li><a href="#">Chapter</a></li>
-	</ul>
+	| 
+	h3 Book Chapter
+	div
+		each pg, i in pages
+			if pg.id != page.id
+				div
+					a(href="/books/page/"+pg.id)= pg.chapterName
 	</aside> 
 	</main> 
