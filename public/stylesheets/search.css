@@ -29,22 +29,28 @@
 	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 	gap: .25rem;
 	margin-top: 1rem;
+
   }
   
   .card {
 	border: 1px solid rgb(255, 255, 255);
 	background-color: rgb(36, 45, 95);
 	padding: .5rem;
+	
   }
   
   .card > .header {
 	margin-bottom: .25rem;
 	color:rgb(224, 221, 0);
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	height: 30px;
   }
   
   .card > .body {
 	font-size: .8rem;
 	color: rgb(62, 192, 79);
+
   }
 
   .card > .link {

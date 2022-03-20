@@ -141,7 +141,11 @@ h1 {
 	font-family: "McLaren" 
 }
 nav { 
-	background: #3c3c52; 
+	/* background: #3c3c52;  */
+	background: #555FD5;
+	background: -webkit-linear-gradient(top, #555FD5, #152144);
+	background: -moz-linear-gradient(top, #555FD5, #152144);
+	background: linear-gradient(to bottom, #555FD5, #152144);
 	padding: 0; 
 	margin: 0; 
 	font-size: 20px; 
