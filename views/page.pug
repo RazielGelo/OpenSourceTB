@@ -73,8 +73,9 @@ block content
 	<aside class="info1">
 	a(href=`/books/page/modify/${page.id}`, class="buttoncore-update") Update Existing Page
 	|
-	if user.userName == book.authorName
-		a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttoncore-delete") Delete Existing Page
+	if user
+		if user.userName == book.authorName
+			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttoncore-delete") Delete Existing Page
 	| 
 	h3 Book Chapter
 	div
