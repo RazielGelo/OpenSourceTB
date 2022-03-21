@@ -32,18 +32,18 @@ block content
 	if user
 		//- if user.userName == book.authorName
 		h3 Add Page Section
-		form(method='POST', action=`/books/${book.id}`)
+		form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
 			div
 				label Chapter Name:
 				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
 			div
 				label Page Number:
-				input(type="number", name='pageNumber', value=`${prevPageNumber}`)
+				input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
 			div
 				label Content:
 				textarea#body(name='body')=prevBody
 			div
-				button(type="submit", class="buttonsmall") Add Page
+				button(type="submit", class="buttonsmall", name="submitButton") Add Page
 				| 
 				a(href='/users/profile', class="buttonsmall") Cancel
 		//- else
