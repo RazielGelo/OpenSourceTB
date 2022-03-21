@@ -370,6 +370,7 @@ router.get('/page/:id', async (req, res) => {
 // Add Page
 router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').notEmpty(),
+	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -393,6 +394,14 @@ router.post('/:id', ensureAuthenticated,
 		})
 	}),
 	body('body', 'Page should not be empty').notEmpty(),
+	body('body').custom((value, { req }) => {
+		value = req.body.body
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		if (strippedValue.length > 1600) {
+			throw new Error('Content should be max 1600 characters long')
+		}
+		return true;
+	}),
 	async (req, res) => {
 		const book = await prisma.book.findUnique({
 			where: {
@@ -510,6 +519,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 // Modify Page
 router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
+	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -540,6 +550,15 @@ router.post('/page/modify/:id', ensureAuthenticated,
 		})
 	}),
 	body('body', 'Content is required').notEmpty(),
+	body('body').custom((value, { req }) => {
+		value = req.body.body
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		if (strippedValue.length > 1600) {
+			throw new Error('Content should be max 1600 characters long')
+		}
+		return true;
+	}),
+	body('commit', 'Commit message is required').notEmpty(),
 	async (req, res) => {
 		const page = await prisma.page.findUnique({
 			where: {
@@ -668,6 +687,7 @@ router.post('/page/modify/:id', ensureAuthenticated,
 // Modify page conflict
 router.post('/page/conflict/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
+	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -698,6 +718,15 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 		})
 	}),
 	body('body', 'Content is required').notEmpty(),
+	body('body').custom((value, { req }) => {
+		value = req.body.body
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		if (strippedValue.length > 1600) {
+			throw new Error('Content should be max 1600 characters long')
+		}
+		return true;
+	}),
+	body('commit', 'Commit message is required').notEmpty(),
 	async (req, res) => {
 		const page = await prisma.page.findUnique({
 			where: {
