@@ -4,7 +4,7 @@ block content
 	h1 Add Book
 	p This is where you add your new book.
 	hr
-	form(method='POST', action='/books/add',onsubmit="submitButton.disabled = true; return true;")
+	form(method='POST', action='/books/add', onsubmit="submitButton.disabled = true; return true;")
 		div
 			label Title: 
 			input(name='title', type='text', value=`${(!title) ? '' : title}`)
