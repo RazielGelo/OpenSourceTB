@@ -1,32 +1,34 @@
 extends layout 
 
 block content
-	h1 Register
-	p This is where you register. 
-	p Please note that once Username has been set it cannot be changed. 
-	hr
+	//- h1 Register
+	//- p This is where you register. 
+	//- p Please note that once Username has been set it cannot be changed. 
+	//- hr
 	form(action="/users/register", method='POST')
-		div
-			label(for="userName") Username:
-			input(type="text", id="userName", name="userName", value=`${(!userName) ? '' : userName}`)
-		div
-			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName", value=`${(!firstName) ? '' : firstName}`)
-		div
-			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
-		div
-			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
-		div
-			label(for="email") Email:
-			input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
-		div
-			label(for="password") Password:
-			input(type="password", id="password", name="password")
-		div
-			label(for="password2") Confirm Password:
-			input(type="password", id="password2", name="password2")
-		div
-			button(type="submit", class="button") Register
-			<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>
+		fieldset
+			p(class="fieldsettitle") Register an account to OpenSource Textbook
+			div
+				label(for="userName") Username:
+				input(type="text", id="userName", name="userName", value=`${(!userName) ? '' : userName}`)
+			div
+				label(for="firstName") FirstName:
+				input(type="text", id="firstName", name="firstName", value=`${(!firstName) ? '' : firstName}`)
+			div
+				label(for="lastName") LastName:
+				input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
+			div
+				label(for="birthday") Birthday:
+				input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
+			div
+				label(for="email") Email:
+				input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
+			div
+				label(for="password") Password:
+				input(type="password", id="password", name="password")
+			div
+				label(for="password2") Confirm Password:
+				input(type="password", id="password2", name="password2")
+			div
+				button(type="submit", class="button") Register
+				<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>

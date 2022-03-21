@@ -173,9 +173,9 @@ main a {
 	text-decoration: none; 
 }
 article { 
-  padding: 1rem 1rem 1rem 1rem; 
-  background: white;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 1rem 1rem 1rem 1rem; 
+	background: white;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 aside { 
 	padding: 0 1rem 1rem 1rem; 
@@ -375,5 +375,21 @@ textarea {
 	border-radius: 4px;
 	background-color: #f8f8f8;
 	resize: none;
+}
+fieldset { 
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 60px;
+	margin-bottom: 60px;
+	font-family:'Roboto',sans-serif;
+	border-radius:.5em;
+}
+.fieldsettitle{ 
+	font-family:'Roboto',sans-serif;
+	font-size: 26px;
+	font-weight: 800;
+	text-align: center;
+	color: #000472;
+	margin-bottom: 50px;
 }
   
