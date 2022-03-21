@@ -12,7 +12,6 @@ deleteButton.onclick = async (e) => {
 	} else {
 		window.location.href = `/books/${bookid}`;
 	}
-
 }
 
 // headers: {

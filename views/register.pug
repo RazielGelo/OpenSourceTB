@@ -17,7 +17,7 @@ block content
 			input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
 		div
 			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
+			input(type="Date", id="birthday", name="birthday", min = "1900-01-01", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
 		div
 			label(for="email") Email:
 			input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
