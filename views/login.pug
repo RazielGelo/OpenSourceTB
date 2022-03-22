@@ -1,16 +1,24 @@
 extends layout
 
 block content
-	h1 Login
-	p This is where you login after registering.
-	hr
+	//- h1 Login
+	//- p This is where you login after registering.
+	//- hr
 	form(action="/users/login", method='POST')
-		div
-			label(for="email") Email:
-			input(type="email", id="email", name="email", required=true)
-		div
-			label(for="password") Password:
-			input(type="password", id="password", name="password", required=true)
-		div
-			button(type="submit", class="button") Login
-			<p>Dont have an OpenSource Textbook account?<a href="/users/register" title="Signup"><b> Sign Up</a></p>
+		fieldset
+			p(class="fieldsettitle") Log in to OpenSource Textbook
+			div
+				label(for="email") Email:
+				input(type="email", id="email", name="email", required=true)
+			div
+				label(for="password") Password:
+				input(type="password", id="password", name="password", required=true)
+			div
+				<p>Dont have an OpenSource Textbook account?<a href="/users/register" title="Signup"><b> Sign Up</a></p>
+				button(alt="login" type="submit", class="buttonAnimation")
+					<i>L</i>
+					<i>O</i>
+					<i>G</i>
+					<i>I</i>
+					<i>N</i>
+		</fieldset>

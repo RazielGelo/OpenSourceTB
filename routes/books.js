@@ -15,7 +15,7 @@ router.get('/all', async (req, res) => {
 })
 
 // Render Add Book
-router.get('/add', ensureAuthenticated, async (req, res) => {	
+router.get('/add', ensureAuthenticated, async (req, res) => {
 	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
@@ -25,7 +25,7 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 			genre: 'asc'
 		}
 	})
-	res.render('add_book.pug', { distinctGenre})
+	res.render('add_book.pug', { distinctGenre })
 })
 
 // Render Book Genre
@@ -121,7 +121,7 @@ router.post('/genre', ensureAuthenticated,
 	body('genre').custom(async (value, { req }) => {
 		value = await prisma.genre.findMany({})
 		value.forEach((genre) => {
-			if (genre.genre === req.body.genre) {
+			if (genre.genre === titleCase(req.body.genre)) {
 				throw new Error('Genre already exist, add a new one or just cancel')
 
 			}
@@ -142,14 +142,20 @@ router.post('/genre', ensureAuthenticated,
 			} else {
 				let newGenre = await prisma.genre.create({
 					data: {
-						genre: req.body.genre
+						genre: titleCase(req.body.genre)
 					}
 				})
 				req.flash('success', 'Genre successfully created');
 				res.redirect('/books/add');
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -211,47 +217,63 @@ router.post('/add', ensureAuthenticated,
 				req.flash('success', 'Book successfully created');
 				res.redirect('/users/profile');
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
 
 // Get Single book
 router.get('/:id', async (req, res) => {
-	const book = await prisma.book.findUnique({
-		where: {
-			id: parseInt(req.params.id)
-		}
-	})
-	const user = await prisma.user.findUnique({
-		where: {
-			userName: book.authorName
-		}
-	})
-	const page = await prisma.page.findMany({
-		where: {
-			bookID: book.id
-		},
-		include: {
-			histories: true
-		},
-		orderBy: {
-			pageNumber: 'asc'
-		}
-	})
-	const genre = await prisma.genre.findFirst({
-		where: {
-			id: book.genreID
-		}
-	})
-	if (user) {
-		res.render('books.pug', {
-			book: book,
-			page: page,
-			genre: genre,
-			author: user.userName
+	try {
+		const book = await prisma.book.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
 		})
+		const user = await prisma.user.findUnique({
+			where: {
+				userName: book.authorName
+			}
+		})
+		const page = await prisma.page.findMany({
+			where: {
+				bookID: book.id
+			},
+			include: {
+				histories: true
+			},
+			orderBy: {
+				pageNumber: 'asc'
+			}
+		})
+		const genre = await prisma.genre.findFirst({
+			where: {
+				id: book.genreID
+			}
+		})
+		if (user) {
+			res.render('books.pug', {
+				book: book,
+				page: page,
+				genre: genre,
+				author: user.userName
+			})
+		}
+	} catch (err) {
+		var err = new Error("Book doesn't exist");
+		err.status = 404;
+
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
 	}
 })
 
@@ -277,13 +299,18 @@ router.post('/modify/:id', ensureAuthenticated,
 		})
 		const user = req.user;
 		let errors = validationResult(req)
-
+		const prevTitle = req.body.title;
+		const prevGenre = req.body.genre;
+		const prevDesc = req.body.description;
 		if (!errors.isEmpty()) {
 			return res.render('modify_book.pug', {
 				errors: errors.array(),
 				user: user,
 				book: book,
-				distinctGenre: distinctGenre
+				distinctGenre: distinctGenre,
+				prevTitle: prevTitle,
+				prevGenre: prevGenre,
+				prevDesc: prevDesc
 			})
 		}
 		else {
@@ -307,70 +334,86 @@ router.post('/modify/:id', ensureAuthenticated,
 				req.flash('success', 'Book updated Successfully')
 				res.redirect(`/books/${req.params.id}`)
 
-			} catch (e) {
-				res.send(e)
+			} catch (err) {
+				var err = new Error("Something went wrong");
+				err.status = 404;
+	
+				res.render('error', {
+					message: err.message,
+					error: err
+				});
 			}
 		}
 	})
 
 // Get single page
 router.get('/page/:id', async (req, res) => {
-	const page = await prisma.page.findUnique({
-		where: {
-			id: parseInt(req.params.id)
-		}
-	})
-	const book = await prisma.book.findUnique({
-		where: {
-			id: page.bookID
-		}
-	})
-	const user = await prisma.user.findUnique({
-		where: {
-			userName: book.authorName
-		}
-	})
-	const genre = await prisma.genre.findFirst({
-		where: {
-			id: book.genreID
-		}
-	})
-	const history = await prisma.history.findMany({
-		where: {
-			pageID: parseInt(req.params.id)
-		}
-	})
-	const allUser = await prisma.user.findMany({
-		select: {
-			id: true,
-			userName: true
-		}
-	})
-	const pages = await prisma.page.findMany({
-		where: {
-			bookID: book.id
-		},		
-		orderBy: {
-			pageNumber: 'asc'
-		}
-	})
-	if (user) {
-		res.render('page.pug', {
-			book: book,
-			page: page,
-			genre: genre,
-			author: user.userName,
-			history: history,
-			allUser: allUser,
-			pages: pages
+	try {
+		const page = await prisma.page.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
 		})
+		const book = await prisma.book.findUnique({
+			where: {
+				id: page.bookID
+			}
+		})
+		const user = await prisma.user.findUnique({
+			where: {
+				userName: book.authorName
+			}
+		})
+		const genre = await prisma.genre.findFirst({
+			where: {
+				id: book.genreID
+			}
+		})
+		const history = await prisma.history.findMany({
+			where: {
+				pageID: parseInt(req.params.id)
+			}
+		})
+		const allUser = await prisma.user.findMany({
+			select: {
+				id: true,
+				userName: true
+			}
+		})
+		const pages = await prisma.page.findMany({
+			where: {
+				bookID: book.id
+			},
+			orderBy: {
+				pageNumber: 'asc'
+			}
+		})
+		if (user) {
+			res.render('page.pug', {
+				book: book,
+				page: page,
+				genre: genre,
+				author: user.userName,
+				history: history,
+				allUser: allUser,
+				pages: pages
+			})
+		}
+	} catch (err) {
+		var err = new Error("Page doesn't exist");
+		err.status = 404;
+
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
 	}
 })
 
 // Add Page
 router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').notEmpty(),
-	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
+	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -460,8 +503,14 @@ router.post('/:id', ensureAuthenticated,
 				req.flash('success', 'Page successfully created');
 				res.redirect(`/books/${book.id}`);
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -519,7 +568,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 // Modify Page
 router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
-	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
+	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -590,7 +639,7 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			})
 		}
 		else {
-			if (user.userName === book.authorName) {				
+			if (user.userName === book.authorName) {
 				try {
 					const clearHistory = await prisma.book.update({
 						where: {
@@ -629,8 +678,14 @@ router.post('/page/modify/:id', ensureAuthenticated,
 					req.flash('success', 'Page updated Successfully')
 					res.redirect(`/books/page/${req.params.id}`)
 
-				} catch (e) {
-					res.send(e)
+				} catch (err) {
+					var err = new Error("Something went wrong");
+					err.status = 404;
+		
+					res.render('error', {
+						message: err.message,
+						error: err
+					});
 				}
 			} else {
 				const currentPageBody = page.body.split('')
@@ -676,8 +731,14 @@ router.post('/page/modify/:id', ensureAuthenticated,
 						req.flash('success', 'Page update request submitted successfully')
 						res.redirect(`/books/page/${req.params.id}`)
 
-					} catch (e) {
-						res.send(e)
+					} catch (err) {
+						var err = new Error("Something went wrong");
+						err.status = 404;
+			
+						res.render('error', {
+							message: err.message,
+							error: err
+						});
 					}
 				}
 			}
@@ -797,8 +858,14 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 					req.flash('success', 'Page update request submitted successfully')
 					res.redirect(`/books/page/${req.params.id}`)
 
-				} catch (e) {
-					res.send(e)
+				} catch (err) {
+					var err = new Error("Something went wrong");
+					err.status = 404;
+		
+					res.render('error', {
+						message: err.message,
+						error: err
+					});
 				}
 			}
 		}
@@ -840,8 +907,14 @@ router.post('/request/:id', ensureAuthenticated,
 				req.flash('success', 'Request successfully sent to author');
 				res.redirect(`/books/${book.id}`);
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -901,6 +974,31 @@ const distinctGenre = async () => {
 			genre: true,
 		},
 	})
+}
+
+// catch 404 and forward to error handler
+router.use(function (req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+
+	//pass error to the next matching route.
+	next(err);
+});
+
+// handle error, print stacktrace
+router.use(function (err, req, res, next) {
+	res.status(err.status || 500);
+
+	res.render('error', {
+		message: err.message,
+		error: err
+	});
+});
+// Title Case Genre
+function titleCase(str) {
+	return str.toLowerCase().split(' ').map(function (word) {
+		return (word.charAt(0).toUpperCase() + word.slice(1));
+	}).join(' ');
 }
 
 module.exports = router

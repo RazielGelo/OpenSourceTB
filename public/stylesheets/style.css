@@ -107,6 +107,7 @@ footer {
   article { 
     order: 2; 
 	flex-basis: 100%; 
+	min-height: 600px;
   }
   .info1 { 
     order: 1; 
@@ -173,9 +174,9 @@ main a {
 	text-decoration: none; 
 }
 article { 
-  padding: 1rem 1rem 1rem 1rem; 
-  background: white;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding: 1rem 1rem 1rem 1rem; 
+	background: white;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 aside { 
 	padding: 0 1rem 1rem 1rem; 
@@ -192,7 +193,8 @@ footer {
 	border-top: 1px dotted #d9d9d9;
 }
 address { 
-	font-style: normal; 
+	font-style: normal;
+	font-family:'Roboto',sans-serif;
 	letter-spacing: 2px; 
 	font-size: 0.75rem; 
 	color: #bbb; 
@@ -280,6 +282,7 @@ address {
 	margin-bottom: 10px;
 	cursor: pointer;
   }
+
 .buttoncore-update, .buttoncore-delete {
 	height: 35px;
 	min-width: 260px;
@@ -354,7 +357,7 @@ address {
 	flex-shrink: inherit;
 }
 .container .btn:hover {
-	background-color: #e73c11;
+	background-color: #fc7a00;
 }
 
 input[type=text], select, [type=number], [type=password], [type=email], [type=date], [type=url] {
@@ -376,4 +379,131 @@ textarea {
 	background-color: #f8f8f8;
 	resize: none;
 }
+fieldset { 
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 60px;
+	margin-bottom: 60px;
+	font-family:'Roboto',sans-serif;
+	border-radius:.5em;
+}
+.fieldsettitle{ 
+	font-family:'Roboto',sans-serif;
+	font-size: 26px;
+	font-weight: 800;
+	text-align: center;
+	color: #000472;
+	margin-bottom: 50px;
+}
+.fieldsetborderless { 
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-family:'Roboto',sans-serif;
+	border-radius:.5em;
+	border-style: none;
+}
+/* EXPLORE */
+/* Button Animation Register and Login */
+.buttonAnimation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 35px;
+	position: relative;
+	padding: 0 20px;
+	font-size: 18px;
+	text-transform: uppercase;
+	border: 0;
+	box-shadow: rgb(248, 58, 0) 0px 7px 0px 0px;
+	background-color: rgb(230, 82, 24);
+	border-radius: 12px;
+	overflow: hidden;
+	transition: 31ms cubic-bezier(.5, .7, .4, 1);
+	cursor: pointer;
+	float: right;
+	min-width: 150px;
+	margin-right: 30px;
+	margin-bottom: 30px;
+   }
+   
+   .buttonAnimation:before {
+	content: attr(alt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	inset: 0;
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	letter-spacing: 4px;
+	opacity: 1;
+   }
+   
+   .buttonAnimation:active {
+	box-shadow: none;
+	transform: translateY(7px);
+	transition: 35ms cubic-bezier(.5, .7, .4, 1);
+   }
+   
+   .buttonAnimation:hover:before {
+	transition: all .0s;
+	transform: translateY(100%);
+	opacity: 0;
+   }
+   
+   .buttonAnimation i {
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	letter-spacing: 4px;
+	font-style: normal;
+	transition: all 2s ease;
+	transform: translateY(-20px);
+	opacity: 0;
+   }
+   
+   .buttonAnimation:hover i {
+	transition: all .2s ease;
+	transform: translateY(0px);
+	opacity: 1;
+   }
+   
+   .buttonAnimation:hover i:nth-child(1) {
+	transition-delay: 0.045s;
+   }
+   
+   .buttonAnimation:hover i:nth-child(2) {
+	transition-delay: calc(0.045s * 3);
+   }
+   
+   .buttonAnimation:hover i:nth-child(3) {
+	transition-delay: calc(0.045s * 4);
+   }
+   
+   .buttonAnimation:hover i:nth-child(4) {
+	transition-delay: calc(0.045s * 5);
+   }
+   
+   .buttonAnimation:hover i:nth-child(6) {
+	transition-delay: calc(0.045s * 6);
+   }
+   
+   .buttonAnimation:hover i:nth-child(7) {
+	transition-delay: calc(0.045s * 7);
+   }
+   
+   .buttonAnimation:hover i:nth-child(8) {
+	transition-delay: calc(0.045s * 8);
+   }
+   
+   .buttonAnimation:hover i:nth-child(9) {
+	transition-delay: calc(0.045s * 9);
+   }
+   
+   .buttonAnimation:hover i:nth-child(10) {
+	transition-delay: calc(0.045s * 10);
+   }
   
