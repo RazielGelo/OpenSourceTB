@@ -95,8 +95,13 @@ router.post('/register',
 					req.flash('success', 'You are now registered and can log in')
 					res.redirect('/users/login')
 				}
-			} catch (e) {
-				res.send(e)
+			} catch (err) {
+				res.status(err.status || 500);
+
+				res.render('error', {
+					message: err.message,
+					error: err
+				});
 			}
 		}
 	})

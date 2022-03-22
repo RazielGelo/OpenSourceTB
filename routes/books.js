@@ -15,7 +15,7 @@ router.get('/all', async (req, res) => {
 })
 
 // Render Add Book
-router.get('/add', ensureAuthenticated, async (req, res) => {	
+router.get('/add', ensureAuthenticated, async (req, res) => {
 	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
@@ -25,7 +25,7 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 			genre: 'asc'
 		}
 	})
-	res.render('add_book.pug', { distinctGenre})
+	res.render('add_book.pug', { distinctGenre })
 })
 
 // Render Book Genre
@@ -219,39 +219,49 @@ router.post('/add', ensureAuthenticated,
 
 // Get Single book
 router.get('/:id', async (req, res) => {
-	const book = await prisma.book.findUnique({
-		where: {
-			id: parseInt(req.params.id)
-		}
-	})
-	const user = await prisma.user.findUnique({
-		where: {
-			userName: book.authorName
-		}
-	})
-	const page = await prisma.page.findMany({
-		where: {
-			bookID: book.id
-		},
-		include: {
-			histories: true
-		},
-		orderBy: {
-			pageNumber: 'asc'
-		}
-	})
-	const genre = await prisma.genre.findFirst({
-		where: {
-			id: book.genreID
-		}
-	})
-	if (user) {
-		res.render('books.pug', {
-			book: book,
-			page: page,
-			genre: genre,
-			author: user.userName
+	try {
+		const book = await prisma.book.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
 		})
+		const user = await prisma.user.findUnique({
+			where: {
+				userName: book.authorName
+			}
+		})
+		const page = await prisma.page.findMany({
+			where: {
+				bookID: book.id
+			},
+			include: {
+				histories: true
+			},
+			orderBy: {
+				pageNumber: 'asc'
+			}
+		})
+		const genre = await prisma.genre.findFirst({
+			where: {
+				id: book.genreID
+			}
+		})
+		if (user) {
+			res.render('books.pug', {
+				book: book,
+				page: page,
+				genre: genre,
+				author: user.userName
+			})
+		}
+	} catch (err) {
+		var err = new Error("Book doesn't exist");
+		err.status = 404;
+
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
 	}
 })
 
@@ -315,55 +325,65 @@ router.post('/modify/:id', ensureAuthenticated,
 
 // Get single page
 router.get('/page/:id', async (req, res) => {
-	const page = await prisma.page.findUnique({
-		where: {
-			id: parseInt(req.params.id)
-		}
-	})
-	const book = await prisma.book.findUnique({
-		where: {
-			id: page.bookID
-		}
-	})
-	const user = await prisma.user.findUnique({
-		where: {
-			userName: book.authorName
-		}
-	})
-	const genre = await prisma.genre.findFirst({
-		where: {
-			id: book.genreID
-		}
-	})
-	const history = await prisma.history.findMany({
-		where: {
-			pageID: parseInt(req.params.id)
-		}
-	})
-	const allUser = await prisma.user.findMany({
-		select: {
-			id: true,
-			userName: true
-		}
-	})
-	const pages = await prisma.page.findMany({
-		where: {
-			bookID: book.id
-		},		
-		orderBy: {
-			pageNumber: 'asc'
-		}
-	})
-	if (user) {
-		res.render('page.pug', {
-			book: book,
-			page: page,
-			genre: genre,
-			author: user.userName,
-			history: history,
-			allUser: allUser,
-			pages: pages
+	try {
+		const page = await prisma.page.findUnique({
+			where: {
+				id: parseInt(req.params.id)
+			}
 		})
+		const book = await prisma.book.findUnique({
+			where: {
+				id: page.bookID
+			}
+		})
+		const user = await prisma.user.findUnique({
+			where: {
+				userName: book.authorName
+			}
+		})
+		const genre = await prisma.genre.findFirst({
+			where: {
+				id: book.genreID
+			}
+		})
+		const history = await prisma.history.findMany({
+			where: {
+				pageID: parseInt(req.params.id)
+			}
+		})
+		const allUser = await prisma.user.findMany({
+			select: {
+				id: true,
+				userName: true
+			}
+		})
+		const pages = await prisma.page.findMany({
+			where: {
+				bookID: book.id
+			},
+			orderBy: {
+				pageNumber: 'asc'
+			}
+		})
+		if (user) {
+			res.render('page.pug', {
+				book: book,
+				page: page,
+				genre: genre,
+				author: user.userName,
+				history: history,
+				allUser: allUser,
+				pages: pages
+			})
+		}
+	} catch (err) {
+		var err = new Error("Page doesn't exist");
+		err.status = 404;
+
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
 	}
 })
 
@@ -590,7 +610,7 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			})
 		}
 		else {
-			if (user.userName === book.authorName) {				
+			if (user.userName === book.authorName) {
 				try {
 					const clearHistory = await prisma.book.update({
 						where: {
@@ -902,5 +922,24 @@ const distinctGenre = async () => {
 		},
 	})
 }
+
+// catch 404 and forward to error handler
+router.use(function (req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+
+	//pass error to the next matching route.
+	next(err);
+});
+
+// handle error, print stacktrace
+router.use(function (err, req, res, next) {
+	res.status(err.status || 500);
+
+	res.render('error', {
+		message: err.message,
+		error: err
+	});
+});
 
 module.exports = router

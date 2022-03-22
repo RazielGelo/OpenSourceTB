@@ -30,5 +30,5 @@ block content
 				label(for="password2") Confirm Password:
 				input(type="password", id="password2", name="password2")
 			div
-				button(type="submit", class="button") Register
+				button(type="submit", class="button", onsubmit="submitButton.disabled = true; return true;") Register
 				<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>

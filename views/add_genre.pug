@@ -9,6 +9,6 @@ block content
 			label New Genre: 
 			input(name='genre', type='text')
 		div
-			button(type="submit", class="button") Create Genre
+			button(type="submit", class="button", onsubmit="submitButton.disabled = true; return true;") Create Genre
 			| 
 			a(href='/books/add', class="button") Cancel
