@@ -50,9 +50,8 @@ router.post('/register',
 		const userName = req.body.userName
 		const firstName = req.body.firstName
 		const lastName = req.body.lastName
-		const birthday = new Date(req.body.birthday)
+		const birthday = (!req.body.birthday) ? '' : new Date(req.body.birthday)
 		const email = req.body.email.toLowerCase()
-
 		if (!errors.isEmpty()) {
 			res.render('register.pug', {
 				errors: errors.array(),
@@ -96,13 +95,14 @@ router.post('/register',
 					res.redirect('/users/login')
 				}
 			} catch (err) {
-				res.status(err.status || 500);
-
+				var err = new Error("Something went wrong");
+				err.status = 404;
+	
 				res.render('error', {
 					message: err.message,
 					error: err
 				});
-			}
+			}			
 		}
 	})
 
@@ -184,8 +184,14 @@ router.post('/modify', ensureAuthenticated,
 				req.flash('success', 'Updated Successfully')
 				res.redirect('/users/profile')
 
-			} catch (e) {
-				res.send(e)
+			} catch (err) {
+				var err = new Error("Something went wrong");
+				err.status = 404;
+	
+				res.render('error', {
+					message: err.message,
+					error: err
+				});
 			}
 		}
 	})
@@ -234,8 +240,14 @@ router.post('/modify/password', ensureAuthenticated,
 				req.flash('success', 'Updated Successfully')
 				res.redirect('/users/profile')
 
-			} catch (e) {
-				res.send(e)
+			} catch (err) {
+				var err = new Error("Something went wrong");
+				err.status = 404;
+	
+				res.render('error', {
+					message: err.message,
+					error: err
+				});
 			}
 		}
 	})

@@ -7,7 +7,7 @@ block content
 	form(action=`/books/modify/${book.id}`, method='POST')
 		div
 			label(for="title") Title: 
-			input(type="text", id="text", name="title")
+			input(type="text", id="text", name="title", value=`${(!prevTitle) ? '' : prevTitle}`)
 		div
 			label Genre: 
 			select(name='genre')
@@ -15,7 +15,7 @@ block content
 					option(selected) #{genre.genre}
 		div
 			label Description: 
-			textarea(name='description')
+			textarea(name='description')=prevDesc
 		div
 			button(type="submit", class="buttonsmall") Update
 			| 

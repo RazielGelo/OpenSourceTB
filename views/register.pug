@@ -5,7 +5,7 @@ block content
 	//- p This is where you register. 
 	//- p Please note that once Username has been set it cannot be changed. 
 	//- hr
-	form(action="/users/register", method='POST')
+	form(action="/users/register", method='POST', onsubmit="submitButton.disabled = true; return true;")
 		fieldset
 			p(class="fieldsettitle") Register an account to OpenSource Textbook
 			div
@@ -30,5 +30,5 @@ block content
 				label(for="password2") Confirm Password:
 				input(type="password", id="password2", name="password2")
 			div
-				button(type="submit", class="button", onsubmit="submitButton.disabled = true; return true;") Register
+				button(type="submit", class="button", name="submitButton") Register
 				<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>

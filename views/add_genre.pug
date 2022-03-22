@@ -4,11 +4,11 @@ block content
 	h1 Add Genre
 	p This is where you add more genre.
 	hr
-	form(method='POST', action='/books/genre')
+	form(method='POST', action='/books/genre', onsubmit="submit.disabled = true; return true;")
 		device
 			label New Genre: 
 			input(name='genre', type='text')
 		div
-			button(type="submit", class="button", onsubmit="submitButton.disabled = true; return true;") Create Genre
+			button(type="submit", class="button", name="submit") Create Genre
 			| 
 			a(href='/books/add', class="button") Cancel

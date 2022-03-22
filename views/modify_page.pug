@@ -30,12 +30,21 @@ block content
 	p This is where you edit details of your book page. 
 	hr
 	form(action=`/books/page/modify/${page.id}`, method='POST')
-		div
-			label Chapter Name:
-			input(type="text", name='chapterName', value=`${page.chapterName}`)
-		div
-			label Page Number:
-			input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
+		if user
+			if user.userName == book.authorName
+				div
+					label Chapter Name:
+					input(type="text", name='chapterName', value=`${page.chapterName}`)
+				div
+					label Page Number:
+					input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
+			else
+				div
+					label Chapter Name:
+					input(type="text", name='chapterName', value=`${page.chapterName}`, readonly)
+				div
+					label Page Number:
+					input(type="number", name='pageNumber',  value=`${page.pageNumber}`, readonly)
 		div
 			textarea#tempBody(name='tempBody', style="display:none;")=page.body
 		div

@@ -121,7 +121,7 @@ router.post('/genre', ensureAuthenticated,
 	body('genre').custom(async (value, { req }) => {
 		value = await prisma.genre.findMany({})
 		value.forEach((genre) => {
-			if (genre.genre === req.body.genre) {
+			if (genre.genre === titleCase(req.body.genre)) {
 				throw new Error('Genre already exist, add a new one or just cancel')
 
 			}
@@ -142,14 +142,20 @@ router.post('/genre', ensureAuthenticated,
 			} else {
 				let newGenre = await prisma.genre.create({
 					data: {
-						genre: req.body.genre
+						genre: titleCase(req.body.genre)
 					}
 				})
 				req.flash('success', 'Genre successfully created');
 				res.redirect('/books/add');
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -211,8 +217,14 @@ router.post('/add', ensureAuthenticated,
 				req.flash('success', 'Book successfully created');
 				res.redirect('/users/profile');
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -287,13 +299,18 @@ router.post('/modify/:id', ensureAuthenticated,
 		})
 		const user = req.user;
 		let errors = validationResult(req)
-
+		const prevTitle = req.body.title;
+		const prevGenre = req.body.genre;
+		const prevDesc = req.body.description;
 		if (!errors.isEmpty()) {
 			return res.render('modify_book.pug', {
 				errors: errors.array(),
 				user: user,
 				book: book,
-				distinctGenre: distinctGenre
+				distinctGenre: distinctGenre,
+				prevTitle: prevTitle,
+				prevGenre: prevGenre,
+				prevDesc: prevDesc
 			})
 		}
 		else {
@@ -317,8 +334,14 @@ router.post('/modify/:id', ensureAuthenticated,
 				req.flash('success', 'Book updated Successfully')
 				res.redirect(`/books/${req.params.id}`)
 
-			} catch (e) {
-				res.send(e)
+			} catch (err) {
+				var err = new Error("Something went wrong");
+				err.status = 404;
+	
+				res.render('error', {
+					message: err.message,
+					error: err
+				});
 			}
 		}
 	})
@@ -390,7 +413,7 @@ router.get('/page/:id', async (req, res) => {
 // Add Page
 router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').notEmpty(),
-	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
+	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -480,8 +503,14 @@ router.post('/:id', ensureAuthenticated,
 				req.flash('success', 'Page successfully created');
 				res.redirect(`/books/${book.id}`);
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -539,7 +568,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 // Modify Page
 router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name is required').notEmpty(),
-	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
+	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
 		value = parseInt(req.body.pageNumber)
@@ -649,8 +678,14 @@ router.post('/page/modify/:id', ensureAuthenticated,
 					req.flash('success', 'Page updated Successfully')
 					res.redirect(`/books/page/${req.params.id}`)
 
-				} catch (e) {
-					res.send(e)
+				} catch (err) {
+					var err = new Error("Something went wrong");
+					err.status = 404;
+		
+					res.render('error', {
+						message: err.message,
+						error: err
+					});
 				}
 			} else {
 				const currentPageBody = page.body.split('')
@@ -696,8 +731,14 @@ router.post('/page/modify/:id', ensureAuthenticated,
 						req.flash('success', 'Page update request submitted successfully')
 						res.redirect(`/books/page/${req.params.id}`)
 
-					} catch (e) {
-						res.send(e)
+					} catch (err) {
+						var err = new Error("Something went wrong");
+						err.status = 404;
+			
+						res.render('error', {
+							message: err.message,
+							error: err
+						});
 					}
 				}
 			}
@@ -817,8 +858,14 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 					req.flash('success', 'Page update request submitted successfully')
 					res.redirect(`/books/page/${req.params.id}`)
 
-				} catch (e) {
-					res.send(e)
+				} catch (err) {
+					var err = new Error("Something went wrong");
+					err.status = 404;
+		
+					res.render('error', {
+						message: err.message,
+						error: err
+					});
 				}
 			}
 		}
@@ -860,8 +907,14 @@ router.post('/request/:id', ensureAuthenticated,
 				req.flash('success', 'Request successfully sent to author');
 				res.redirect(`/books/${book.id}`);
 			}
-		} catch (e) {
-			res.send(e);
+		} catch (err) {
+			var err = new Error("Something went wrong");
+			err.status = 404;
+
+			res.render('error', {
+				message: err.message,
+				error: err
+			});
 		}
 
 	})
@@ -941,5 +994,11 @@ router.use(function (err, req, res, next) {
 		error: err
 	});
 });
+// Title Case Genre
+function titleCase(str) {
+	return str.toLowerCase().split(' ').map(function (word) {
+		return (word.charAt(0).toUpperCase() + word.slice(1));
+	}).join(' ');
+}
 
 module.exports = router
