@@ -5,7 +5,7 @@ deleteButton.onclick = async (e) => {
 	e.preventDefault() 	// do not trigger default functionality		
 	console.log(id)
 	if (confirm("Are you sure you want to delete this page?")) {
-		await fetch(`http://localhost:3000/books/page/delete/${id}`, {
+		await fetch(`http://localhost:${process.env.PORT || 3000}/books/page/delete/${id}`, {
 			method: 'DELETE'
 		})
 		window.location.href = `/books/${bookid}`;

@@ -15,7 +15,7 @@ searchInput.addEventListener("input", e => {
 })
 
 
-fetch("http://localhost:3000/books/all")
+fetch(`http://localhost:${process.env.PORT || 3000}/books/all`)
   .then(res => res.json())
   .then(data => {
     books = data.map(book => {
