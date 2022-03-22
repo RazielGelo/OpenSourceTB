@@ -17,7 +17,7 @@ block content
 			input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
 		div
 			label(for="birthday") Birthday:
-			input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
+			input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday}`)
 		div
 			label(for="email") Email:
 			input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
@@ -30,3 +30,4 @@ block content
 		div
 			button(type="submit", class="button") Register
 			<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>
+			//- .toISOString().substring(0, 10)
