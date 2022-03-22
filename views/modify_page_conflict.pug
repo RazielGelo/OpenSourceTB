@@ -38,8 +38,8 @@ block content
 			textarea#body(name='body')=currVal
 		div
 			label Commit message:
-			input(type="text", name='commit', class="textarea")
+			input(type="text", name='commit')
 		div
-			button(type="submit", class="buttonsmall") Update
+			button(type="submit") Update
 			| 
-			a(href=`/books/page/${page.id}`, class="buttonsmall") Cancel
+			a(href=`/books/page/${page.id}`) Cancel

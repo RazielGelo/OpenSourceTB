@@ -1,47 +1,50 @@
 extends layout 
 
 block content
-	//- h1 User Profile
-	//- p This is where all the information is displayed after you login.
-	//- hr
-	fieldset 
-		a(href='/users/modify', class="buttonsmall") Edit Profile
-		h2 User Profile
-		//- form(action="/users/profile", method='GET')		
+	div.book-container.bg-blue
 		div
-			label(for="userName") Username:
-			input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
-		div
-			label(for="email") Email:
-			input(type="email", id="email", name="email", value=`${user.email}`, disabled)
-		div
-			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName", value=`${user.firstName}`, disabled)
-		div
-			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName", value=`${user.lastName}`, disabled)
-		div
-			label(for="birthday") Birthday:
-			input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
-		
-		div
-			| 
-			a(href='/users/modify/password', class="buttonsmall") Change Password
-			br
-			br
-			br
-	</fieldset>
-	<fieldset>
-		h2 My Dashboard
-		h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
-		ul
-			each book, i in books
-				li
-					a(href="/books/"+book.id)= book.title
-					| 
-					span - #{(book.histories.length)} Pending Approval Requests
-		a(href='/books/add', class="buttoncore-update") Publish New Book
-	</fieldset>
-	//- <aside class="info2">
-	//- 	a(href='/books/add', class="buttoncore-update") Publish New Book
-	//- </aside> 
+		div.text-light 
+			div
+				h1 Users Page
+				block welcomer
+					if user
+						h3 Welcome #{user.firstName}!
+			p This is where all the information is displayed after you login.
+			hr
+			h3 Profile: 
+			//- form(action="/users/profile", method='GET')
+			div
+				label(for="userName ") Username
+				br
+				input.roundedbg-white.bg-light.rounded(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
+			div
+				label(for="email") Email
+				br
+				input.roundedbg-white.bg-light.rounded(type="email", id="email", name="email", value=`${user.email}`, disabled)
+			div
+				label(for="firstName") FirstName
+				br
+				input.roundedbg-white.bg-light.rounded(type="text", id="firstName", name="firstName", value=`${user.firstName}`, disabled)
+			div
+				label(for="lastName") LastName
+				br
+				input.roundedbg-white.bg-light.rounded(type="text", id="lastName", name="lastName", value=`${user.lastName}`, disabled)
+			div
+				label(for="birthday") Birthday
+				br
+				input.roundedbg-white.bg-light.rounded(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
+			
+			div
+				a.text-white(href='/books/add') Add Book
+				| 
+				a.text-white(href='/users/modify') Edit Profile
+				| 
+				a.text-white(href='/users/modify/password') Change Password
+			hr
+			h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
+			ul
+				each book, i in books
+					li
+						a.text-white(href="/books/"+book.id)= book.title
+						| 
+						span - #{(book.histories.length)} Pending Approval Requests

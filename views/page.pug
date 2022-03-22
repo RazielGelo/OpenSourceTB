@@ -19,70 +19,51 @@ block script
 		})
 
 block content
-
-	<main>
-	<article>
-
-	h2= book.title
-	h4 Written by #{author}
-	label Genre: #{genre.genre}
-	p Description: #{book.description}
-	hr
-
-	h3 Page Details: 
-	div
-		label Chapter Name:
-		input(type="text", name='chapterName', value=`${page.chapterName}`, disabled)
-	div
-		label Page Number:
-		input(type="number", name='pageNumber', value=`${page.pageNumber}`, disabled)
-	div
-		label Current page update:
-
-		textarea#body=page.body
-	if user
-		if user.userName == book.authorName
-			each hist, i in history
-				form(action=`/books/page/${page.id}`, method='POST')
-					div
-						input(type="text", name="chapterName1", style="display:none;", value=`${page.chapterName}`)
-					div
-						input(type="number", name="pageNumber1", style="display:none;", value=`${page.pageNumber}`)
-					div
-						each user1,  i in allUser
-							if hist.userID === user1.id
-								label Page update by: #{user1.userName}
-								textarea.currBody(name='currBody')=hist.currBody
+	div.book-container.bg-blue.text-light
+		div(class="mt-auto")
+		div(class="d-flex flex-column bd-highlight")
+			h1= book.title
+			h5 Written by #{author}
+			label Genre: #{genre.genre}
+			p Description: #{book.description}
+			div.bg-dark-blue.p-2
+				h3 Page Details
 				div
-					div
-						input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
-					div
-						button#Approve(type="submit", class="buttonapprove") Approve
-			| 
-			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttonsmall") Delete
-		| 
-		a(href=`/books/${book.id}`, class="buttonsmall") Cancel
-		//- else
-		//- 	a(href=`/books/${book.id}`) Back
-	else
-		a(href=`/books/${book.id}`, class="buttonsmall") Back
-	
-
-	</article> 
-
-	<aside class="info1">
-	a(href=`/books/page/modify/${page.id}`, class="buttoncore-update") Update Existing Page
-	|
-	if user
-		if user.userName == book.authorName
-			a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttoncore-delete") Delete Existing Page
-	| 
-	h3 Book Chapter
-	div
-		each pg, i in pages
-			if pg.id != page.id
+					label Chapter Name
+					br
+					input(type="text", name='chapterName', value=`${page.chapterName}`, disabled)
 				div
-					a(href="/books/page/"+pg.id)= pg.chapterName
-	script(src='/javascripts/delete_page.js') 
-	</aside> 
-	</main> 
+					label Page Number
+					br
+					input(type="number", name='pageNumber', value=`${page.pageNumber}`, disabled)
+				div
+					label Current page update
+					br
+					textarea#body=page.body
+				if user
+					if user.userName == book.authorName
+						each hist, i in history
+							form(action=`/books/page/${page.id}`, method='POST')
+								div
+									input(type="text", name="chapterName1", style="display:none;", value=`${page.chapterName}`)
+								div
+									input(type="number", name="pageNumber1", style="display:none;", value=`${page.pageNumber}`)
+								div
+									each user1,  i in allUser
+										if hist.userID === user1.id
+											label Page update by: #{user1.userName}
+											textarea.currBody(name='currBody')=hist.currBody
+								div
+									input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
+								div
+									button#Approve(type="submit") Approve
+					a(class="btn btn-secondary m-2" href=`/books/page/modify/${page.id}`) Edit Page
+					| 
+					a(class="btn btn-danger m-2" href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`) Delete
+					| 
+					a(class="btn btn-warning m-2" href=`/books/${book.id}`) Cancel
+					//- else
+					//- 	a(href=`/books/${book.id}`) Back
+				else
+					a(class="btn btn-light m-2" href=`/books/${book.id}`) Back
+				script(src='/javascripts/delete_page.js') 

@@ -10,68 +10,92 @@ block script
 		})
 
 block content
-	<main>
-	<article>
-	
-	h2= book.title
-	h5 Written by #{author}
-	label Genre: #{genre.genre}
-	p Description: #{book.description}
-	if book.link
-		a(href=`${book.link}`,  target="_blank") Author's Link
-		br
-	hr
-	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
-		if user.userName == book.authorName
-			div
-				//- a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
-				| 
-				a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
-	if user
-		//- if user.userName == book.authorName
-		h3 Add Page Section
-		form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
-			div
-				label Chapter Name:
-				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
-			div
-				label Page Number:
-				input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
-			div
-				label Content:
-				textarea#body(name='body')=prevBody
-			div
-				button(type="submit", class="buttonsmall", name="submitButton") Add Page
-				| 
-				a(href='/users/profile', class="buttonsmall") Cancel
-		//- else
-		//- 	a(href=`/`) Back
-	//- else
-	//- 	a(href=`/`) Back
-	script(src='/javascripts/delete_book.js')
-	</article> 
+	div.book-container.bg-blue.text-light
+		div(class="mt-auto")
+		div(class="d-flex flex-column bd-highlight")
 
-	<aside class="info1">
+			//- DESCRIPTION
+			
+			div(class="d-flex description-and-chapeter mt-auto ")
+				div(class="p-2 w70")
+					h1= book.title
+					h5 Written by #{author}
+					label Genre: #{genre.genre}
+					p Description: #{book.description}
+
+				div.bg-light(class="w30 d-flex flex-column bd-highlight pb-3 align-self-stretch")
+						div(class="d-flex flex-column bd-highlight mb-3 p-2 rounded")
+							h3.text-dark.text-center.pt-5 Book Chapter
+							if !book.pages
+								ul.list-group.list-group-flush
+									each pg, i in page
+										li.list-group-item
+											a.text-wrap(href="/books/page/"+pg.id)= pg.chapterName
+											| 
+											if user
+												if user.userName == book.authorName
+													span - #{(pg.histories.length)} Pending Approval Requests
+			
+
+			if book.link
+				a(href=`${book.link}`,  target="_blank") Author's Link
+				br
+
+			if user
+				//- a(href=`/books/request/${book.id}`) Request Access
+				if user.userName == book.authorName
+					div
+						a(href=`/books/modify/${book.id}`) Modify Book
+						| 
+						a(href='#', id="delete", data-id=`${book.id}`) Delete
+						//- a(href=`/books/delete/${book.id}`) Delete
+
+
+		//- ADD BOOK
 	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
-		if user.userName == book.authorName
-			div
-				a(href=`/books/modify/${book.id}`, class="buttoncore-update") Modify Book
-				| 
-				a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
-	
-	h3 Book Chapter
-	if !book.pages
-		div
-			each pg, i in page
-				div
-					a(href="/books/page/"+pg.id)= pg.chapterName
-					| 
-					if user
-						if user.userName == book.authorName
-							span - #{(pg.histories.length)} Pending Approval Requests
-	</aside> 
-	</main> 
+	div.book-container.bg-dark-blue.text-light
+		div(class="mt-auto")
+		div(class="d-flex flex-column bd-highlight")
+				//- if user.userName == book.authorName
+				h2 Add Page Section
+				form(method='POST', action=`/books/${book.id}` class="d-flex flex-column mt-auto p-2 ")
+					div
+						label Chapter Name
+						br
+						input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`)
+					div
+						label Page Number
+						br
+						input(type="number", name='pageNumber', value=`${prevPageNumber}`)
+					div
+						label Content
+						br
+						textarea#body(name='body')=prevBody
+					div(class ="p-2")
+						button(type="submit" class="btn btn-primary") Add Page
+						| 
+						a(href='/users/profile' class="btn btn-warning") Cancel
+					
+					//- if user
+					//- 	div(class="mt-auto p-2 bd-highlight bg-light")
+					//- 		//- if user.userName == book.authorName
+					//- 		h3 Add Page Section
+					//- 		form(method='POST', action=`/books/${book.id}`)
+					//- 			div
+					//- 				label Chapter Name:
+					//- 				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`)
+					//- 			div
+					//- 				label Page Number:
+					//- 				input(type="number", name='pageNumber', value=`${prevPageNumber}`)
+					//- 			div
+					//- 				label Content:
+					//- 				textarea#body(name='body')=prevBody
+					//- 			div
+					//- 				button(type="submit" class="btn btn-primary") Add Page
+					//- 				| 
+					//- 				a(href='/users/profile' class="btn btn-warning") Cancel
+							//- else
+							//- 	a(href=`/`) Back
+						//- else
+						//- 	a(href=`/`) Back
+		script(src='/javascripts/delete_book.js')

@@ -1,21 +1,27 @@
 extends layout
 
 block content
-	h1 Edit Profile
-	p This is where you edit your profile and password. 
-	hr
-	form(action="/users/modify", method='POST')
+	div.book-container.bg-blue
 		div
-			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName", value=`${user.firstName}`)
-		div
-			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName", value=`${user.lastName}`)
-		div
-			label(for="birthday") Birthday:
-			input(type="date", id="birthday", name="birthday", value=`${user.birthday.toDateString()}`)
-		div
-			button(type="submit", class="buttonsmall") Update
-			| 
-			a(href='/users/profile', class="buttonsmall") Cancel
-			
+		div.text-light 
+			h1 Edit Profile
+			p This is where you edit your profile and password. 
+			hr
+			form(action="/users/modify", method='POST')
+				div
+					label(for="firstName") FirstName:
+					br
+					input(type="text", id="firstName", name="firstName", value=`${user.firstName}`)
+				div
+					label(for="lastName") LastName:
+					br
+					input(type="text", id="lastName", name="lastName", value=`${user.lastName}`)
+				div
+					label(for="birthday") Birthday:
+					br
+					input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`)
+				div.m-10px
+					button.btn.btn-outline-success(type="submit") Update
+					| 
+					a.btn.btn-outline-warning(href='/users/profile') Cancel
+					
