@@ -185,7 +185,6 @@ router.post('/add', ensureAuthenticated,
 		const link = req.body.link
 		const user = req.user;
 		const genre1 = req.body.genre
-		console.log(description)
 		try {
 			// Get Errors
 			let errors = validationResult(req)
