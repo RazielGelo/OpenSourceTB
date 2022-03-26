@@ -17,12 +17,12 @@ block script
 block content
 	<main>
 	<aside class="info1">
-	<h3>Better to display Book Chapters</h3>
-	<ul>
-		<li><a href="#">Chapter</a></li>
-		<li><a href="#">Chapter</a></li>
-		<li><a href="#">Chapter</a></li>
-	</ul>
+	h3 Book Chapter
+	div
+		each pg, i in pages
+			if pg.id != page.id
+				div
+					a(href="/books/page/modify/"+pg.id)= pg.chapterName
 	</aside> 
 	<article>
 

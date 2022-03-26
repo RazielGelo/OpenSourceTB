@@ -9,13 +9,14 @@ module.exports = function (passport) {
 	// Local Strategy
 	passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
 		try {
+			// Query to check if user with given email address already exists
 			const user = await prisma.user.findFirst({ where: { email } })
 			if (!user)
 				return done(null, false, {
 					message: "Sorry, we can't find an account with this email address. Please try again or create a new account.",
 					statusCode: 400
 				});
-
+			// Compare hashed password against user password
 			const validPassword = await bcrypt.compare(password, user.password);
 			if (!validPassword)
 				return done(null, false, {
