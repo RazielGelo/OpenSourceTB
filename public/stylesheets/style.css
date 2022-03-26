@@ -1,3 +1,7 @@
+html{
+	position: relative;
+	min-height: 100%;
+}
 body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   }
@@ -32,7 +36,7 @@ body {
 	  width: 20%;
 	  box-sizing: border-box;
 	  max-width: 100%;
-	  height: auto
+	  height: auto;
   }
   
   #main_area_style {
@@ -41,7 +45,7 @@ body {
 	  width: 80%;
 	  box-sizing: border-box;
 	  max-width: 100%;
-	  height: auto
+	  height: auto;
   }
   
   footer {
@@ -49,6 +53,11 @@ body {
 	  color: #ffffff;
 	  text-align: center;
 	  clear: both;
+	  position: absolute;
+	  bottom: 0;
+	  width: 100%;
+	  height: auto;
+	  line-height: auto;
   }
   
   .alert-error{
@@ -383,7 +392,7 @@ fieldset {
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 60px;
-	margin-bottom: 60px;
+	margin-bottom: 200px;
 	font-family:'Roboto',sans-serif;
 	border-radius:.5em;
 }
@@ -393,7 +402,7 @@ fieldset {
 	font-weight: 800;
 	text-align: center;
 	color: #000472;
-	margin-bottom: 50px;
+	margin-bottom: auto;
 }
 .fieldsetborderless { 
 	margin-left: 10%;
