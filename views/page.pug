@@ -83,6 +83,11 @@ block content
 			if pg.id != page.id
 				div
 					a(href="/books/page/"+pg.id)= pg.chapterName
+					| 
+					if user
+						if user.userName == book.authorName
+							if (pg.histories.length > 0)
+								span - #{(pg.histories.length)} Pending Approval Requests
 	script(src='/javascripts/delete_page.js') 
 	</aside> 
 	</main> 

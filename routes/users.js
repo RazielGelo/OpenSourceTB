@@ -1,19 +1,22 @@
+// Import base framework for route handling
 const express = require('express')
 const router = express.Router()
+// Import Bcrypt and Passport libraries
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+// Imports PrismaClient
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 // Import framework for error handling
 const { body, validationResult } = require('express-validator')
 
-// Render Register Form
+// Render register form
 router.get('/register', async (req, res) => {
 	res.render('register.pug');
 })
 
-// Register Process
+// Register process route
 router.post('/register',
 
 	body('userName', "Username is required").notEmpty(),
@@ -65,8 +68,7 @@ router.post('/register',
 		}
 		else {
 			const hashedPassword = await bcrypt.hash(req.body.password, 10)
-
-			// This code can be refined
+			
 			try {
 				if (res.username != null && res.email != null) {
 					req.flash('failure', 'Username and email already taken, please choose different ones')
@@ -106,12 +108,12 @@ router.post('/register',
 		}
 	})
 
-// Render Login Form
+// Render login form
 router.get('/login', async (req, res) => {
 	res.render('login.pug')
 })
 
-// Render Profile page
+// Render profile page
 router.get('/profile', ensureAuthenticated, async (req, res) => {
 	const books = await prisma.book.findMany({
 		where: {
@@ -134,12 +136,12 @@ router.get('/profile', ensureAuthenticated, async (req, res) => {
 	res.render('profile.pug', { books, userTotalBooksCount })
 })
 
-// Render Modify page
+// Render modify profile page
 router.get('/modify', ensureAuthenticated, async (req, res) => {
 	res.render('modify_profile.pug')
 })
 
-// Modify User
+// Modify user profile post route
 router.post('/modify', ensureAuthenticated,
 	body('firstName', 'Firstname is required').notEmpty(),
 	body('firstName', 'Firstname should at least be 2 characters long').isLength(2),
@@ -169,7 +171,6 @@ router.post('/modify', ensureAuthenticated,
 			})
 		}
 		else {
-			// This code can be refined
 			try {
 				const updateUser = await prisma.user.update({
 					where: {
@@ -195,12 +196,12 @@ router.post('/modify', ensureAuthenticated,
 			}
 		}
 	})
-
+// Render modify password route
 router.get('/modify/password', ensureAuthenticated, async (req, res) => {
 	res.render('modify_password.pug')
 })
 
-// Modify User Password
+// Modify User Password post route
 router.post('/modify/password', ensureAuthenticated,
 	body('current_password', 'Current Password is required').notEmpty(),
 	body('new_password', 'Password must have 8 characters').isLength(8),
@@ -253,7 +254,7 @@ router.post('/modify/password', ensureAuthenticated,
 	})
 
 
-// Login Process
+// Login process post route
 router.post('/login', async (req, res, next) => {
 	passport.authenticate('local', {
 		successRedirect: '/users/profile',
@@ -264,7 +265,7 @@ router.post('/login', async (req, res, next) => {
 
 
 
-// logout
+// Handles logout process
 router.get('/logout', async (req, res) => {
 	req.logout()
 	req.flash('success', 'You are successfully logged out')
@@ -272,7 +273,7 @@ router.get('/logout', async (req, res) => {
 	res.redirect('/users/login')
 })
 
-// This code can be refined
+// Custom middleware to check if email and and username already exists (pre-registration)
 async function checkExisting(req, res, next) {
 	const email = await prisma.user.findUnique({
 		where: {

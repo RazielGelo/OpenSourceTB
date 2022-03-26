@@ -34,25 +34,6 @@ app.use((req, res, next) => {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
-
-// Express Validator Middleware
-// app.use(expressValidator({
-// 	errorFormatter: (param, msg, value) => {		
-// 		var namespace = param.split('.'),
-// 		root = namespace.shift(),
-// 		formParam = root;
-
-// 		while (namespace.length) {
-// 			formParam += '[' + namespace.shift() + ']'
-// 		}
-
-// 		return	{
-// 			param: formParam,
-// 			msg: msg,
-// 			value: value
-// 		}
-// 	}
-// }))
   
 // Passport Config
 require('./middleware/passport')(passport);
@@ -64,19 +45,13 @@ app.get('*', function (req, res, next) {
 	res.locals.user = req.user || null,
 	next()
 })
-// localhost:3000/*
-// localhost:3000/books/*
-// localhost:3000/users/*
 
-
-/* ======================================================= */
-
+/* ================END of PASSPORT RELATED==================== */
 
 // Routes
 const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
 const booksRouter = require('./routes/books')
-
 
 // Use route
 app.use('/', indexRouter)
@@ -88,16 +63,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Page Not Found');
     err.status = 404;
 
-    //pass error to the next matching route.
+    // Pass error to the next matching route.
     next(err);
 });
 
-// handle error, print stacktrace
+// Error Handler
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
 

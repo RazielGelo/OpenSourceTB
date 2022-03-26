@@ -1,6 +1,7 @@
+// Import base framework for route handling
 const express = require('express');
 const router = express.Router();
-// Import PrismaClient
+// Imports PrismaClient
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
@@ -10,15 +11,15 @@ router.get('/', async (req, res) => {
 	const totalbooksCount = await prisma.book.count()
 	res.render('index.pug', { books, totalbooksCount })
 })
-
+// Render Login page
 router.get('/login', async (req, res) => {
 	res.render('login.pug')
 })
-
+// Render Register page
 router.get('/register', async (req, res) => {
 	res.render('register.pug');
 })
-
+// Render Books page
 router.get('/books', async (req, res) => {
 	res.render('books.pug');
 })
