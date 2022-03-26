@@ -1,6 +1,8 @@
+// Import base framework for route handling
 const express = require('express');
 const router = express.Router();
-// Import PrismaClient
+
+// Imports PrismaClient
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
@@ -8,7 +10,7 @@ const prisma = new PrismaClient()
 const { body, validationResult } = require('express-validator');
 const e = require('connect-flash');
 
-// Render all books API returning JSON data
+// Render all books API returning JSON data (used in search feature)
 router.get('/all', async (req, res) => {
 	const books = await prisma.book.findMany({})
 	res.json(books)
@@ -64,7 +66,18 @@ router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
 			id: page.bookID
 		}
 	})
-	res.render('modify_page.pug', { page, book })
+	const pages = await prisma.page.findMany({
+		where: {
+			bookID: book.id
+		},
+		include: {
+			histories: true
+		},
+		orderBy: {
+			pageNumber: 'asc'
+		}
+	})
+	res.render('modify_page.pug', { page, book, pages })
 })
 
 // Render Page conflict
@@ -104,20 +117,11 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 	})
 	res.render('delete_book.pug', { book, user, page, genre })
 })
-
-// // Render request access
-// router.get('/request/:id', ensureAuthenticated, async (req, res) => {
-// 	const book = await prisma.book.findUnique({
-// 		where: {
-// 			id: parseInt(req.params.id)
-// 		}
-// 	})
-// 	res.render('request_access.pug', { book })
-// })
-
+const allowAlphaSpcDash = /^[a-zA-Z\s]*$/;
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
+	body('genre').matches(/^[-a-zA-Z\s]*$/).withMessage("Genre can only contain letters, spaces, and dashes"),
 	body('genre').custom(async (value, { req }) => {
 		value = await prisma.genre.findMany({})
 		value.forEach((genre) => {
@@ -127,7 +131,7 @@ router.post('/genre', ensureAuthenticated,
 			}
 			return true;
 		})
-	}),
+	}),	
 	async (req, res) => {
 		const user = req.user;
 		try {
@@ -181,7 +185,6 @@ router.post('/add', ensureAuthenticated,
 		const link = req.body.link
 		const user = req.user;
 		const genre1 = req.body.genre
-		console.log(description)
 		try {
 			// Get Errors
 			let errors = validationResult(req)
@@ -384,6 +387,9 @@ router.get('/page/:id', async (req, res) => {
 			where: {
 				bookID: book.id
 			},
+			include: {
+				histories: true
+			},
 			orderBy: {
 				pageNumber: 'asc'
 			}
@@ -455,11 +461,11 @@ router.post('/:id', ensureAuthenticated,
 			where: {
 				bookID: book.id
 			},
-			orderBy: {
-				pageNumber: 'asc'
-			},
 			include: {
 				histories: true
+			},
+			orderBy: {
+				pageNumber: 'asc'
 			}
 		})
 		const genre = await prisma.genre.findFirst({
@@ -966,16 +972,6 @@ function ensureAuthenticated(req, res, next) {
 	}
 }
 
-// This code is for future reference 
-const distinctGenre = async () => {
-	await prisma.genre.findMany({
-		distinct: ['genre'],
-		select: {
-			genre: true,
-		},
-	})
-}
-
 // catch 404 and forward to error handler
 router.use(function (req, res, next) {
 	var err = new Error('Not Found');
@@ -994,12 +990,29 @@ router.use(function (err, req, res, next) {
 		error: err
 	});
 });
+
 // Title Case Genre
 function titleCase(str) {
-	return str.trim().toLowerCase().split(' ').map(function (word) {
-		return (word.charAt(0).toUpperCase() + word.slice(1));
-	}).join(' ');
-
+	if (str.includes(' ')) {
+		return str.trim().toLowerCase().split(' ').map(function (word) {
+			return (word.charAt(0).toUpperCase() + word.slice(1));
+		}).join(' ');
+	}
+	else {
+		return str.trim().toLowerCase().split('-').map(function (word) {
+			return (word.charAt(0).toUpperCase() + word.slice(1));
+		}).join('-');
+	}
 }
 
 module.exports = router
+
+// // Render request access (This is supposed to be for the feature that an author can control the amount of collaborators in a book)
+// router.get('/request/:id', ensureAuthenticated, async (req, res) => {
+// 	const book = await prisma.book.findUnique({
+// 		where: {
+// 			id: parseInt(req.params.id)
+// 		}
+// 	})
+// 	res.render('request_access.pug', { book })
+// })
