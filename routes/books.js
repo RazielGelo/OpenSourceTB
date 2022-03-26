@@ -1003,7 +1003,6 @@ function titleCase(str) {
 			return (word.charAt(0).toUpperCase() + word.slice(1));
 		}).join('-');
 	}
-	
 }
 
 module.exports = router
