@@ -23,6 +23,11 @@ block content
 			if pg.id != page.id
 				div
 					a(href="/books/page/modify/"+pg.id)= pg.chapterName
+					| 
+					if user
+						if user.userName == book.authorName
+							if (pg.histories.length > 0)
+								span - #{(pg.histories.length)} Pending Approval Requests
 	</aside> 
 	<article>
 

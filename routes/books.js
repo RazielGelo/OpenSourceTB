@@ -70,6 +70,9 @@ router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			bookID: book.id
 		},
+		include: {
+			histories: true
+		},
 		orderBy: {
 			pageNumber: 'asc'
 		}
@@ -385,6 +388,9 @@ router.get('/page/:id', async (req, res) => {
 			where: {
 				bookID: book.id
 			},
+			include: {
+				histories: true
+			},
 			orderBy: {
 				pageNumber: 'asc'
 			}
@@ -456,11 +462,11 @@ router.post('/:id', ensureAuthenticated,
 			where: {
 				bookID: book.id
 			},
-			orderBy: {
-				pageNumber: 'asc'
-			},
 			include: {
 				histories: true
+			},
+			orderBy: {
+				pageNumber: 'asc'
 			}
 		})
 		const genre = await prisma.genre.findFirst({
