@@ -57,10 +57,10 @@ const booksRouter = require('./routes/books');
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/books', booksRouter);
-app.use(express.static(path.join('public')));
+app.use(express.static(path.join((__dirname, 'public'))));
 
 // Setup View Engine
-app.set('views', path.join('views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // Catch 404 and forward to error handler
