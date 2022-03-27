@@ -4,17 +4,17 @@ const router = express.Router();
 
 // Imports PrismaClient
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 // Import framework for error handling
 const { body, validationResult } = require('express-validator');
-const e = require('connect-flash');
+require('connect-flash');
 
 // Render all books API returning JSON data (used in search feature)
 router.get('/all', async (req, res) => {
-	const books = await prisma.book.findMany({})
-	res.json(books)
-})
+	const books = await prisma.book.findMany({});
+	res.json(books);
+});
 
 // Render Add Book
 router.get('/add', ensureAuthenticated, async (req, res) => {
@@ -26,14 +26,14 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 		orderBy: {
 			genre: 'asc'
 		}
-	})
-	res.render('add_book.pug', { distinctGenre })
-})
+	});
+	res.render('add_book.pug', { distinctGenre });
+});
 
 // Render Book Genre
 router.get('/genre', ensureAuthenticated, async (req, res) => {
-	res.render('add_genre.pug')
-})
+	res.render('add_genre.pug');
+});
 
 // Render Book Modify
 router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
@@ -41,7 +41,7 @@ router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
+	});
 	const distinctGenre = await prisma.genre.findMany({
 		distinct: ['genre'],
 		select: {
@@ -50,9 +50,9 @@ router.get('/modify/:id', ensureAuthenticated, async (req, res) => {
 		orderBy: {
 			genre: 'asc'
 		}
-	})
-	res.render('modify_book.pug', { distinctGenre, book })
-})
+	});
+	res.render('modify_book.pug', { distinctGenre, book });
+});
 
 // Render Page Modify
 router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
@@ -60,12 +60,12 @@ router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
+	});
 	const book = await prisma.book.findUnique({
 		where: {
 			id: page.bookID
 		}
-	})
+	});
 	const pages = await prisma.page.findMany({
 		where: {
 			bookID: book.id
@@ -76,9 +76,9 @@ router.get('/page/modify/:id', ensureAuthenticated, async (req, res) => {
 		orderBy: {
 			pageNumber: 'asc'
 		}
-	})
-	res.render('modify_page.pug', { page, book, pages })
-})
+	});
+	res.render('modify_page.pug', { page, book, pages });
+});
 
 // Render Page conflict
 router.get('/page/conflict/:id', ensureAuthenticated, async (req, res) => {
@@ -86,9 +86,9 @@ router.get('/page/conflict/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
-	res.render('modify_page_conflict.pug', { page })
-})
+	});
+	res.render('modify_page_conflict.pug', { page });
+});
 
 // Render Delete Book
 router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
@@ -96,12 +96,12 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
+	});
 	const user = await prisma.user.findUnique({
 		where: {
 			userName: book.authorName
 		}
-	})
+	});
 	const page = await prisma.page.findMany({
 		where: {
 			bookID: book.id
@@ -109,51 +109,51 @@ router.get('/delete/:id', ensureAuthenticated, async (req, res) => {
 		orderBy: {
 			pageNumber: 'asc'
 		}
-	})
+	});
 	const genre = await prisma.genre.findFirst({
 		where: {
 			id: book.genreID
 		}
-	})
-	res.render('delete_book.pug', { book, user, page, genre })
-})
-const allowAlphaSpcDash = /^[a-zA-Z\s]*$/;
+	});
+	res.render('delete_book.pug', { book, user, page, genre });
+});
+
 // Add Genre
 router.post('/genre', ensureAuthenticated,
 	body('genre', 'Genre is required').notEmpty(),
-	body('genre').matches(/^[-a-zA-Z\s]*$/).withMessage("Genre can only contain letters, spaces, and dashes"),
+	body('genre').matches(/^[-a-zA-Z\s]*$/).withMessage('Genre can only contain letters, spaces, and dashes'),
 	body('genre').custom(async (value, { req }) => {
-		value = await prisma.genre.findMany({})
+		value = await prisma.genre.findMany({});
 		value.forEach((genre) => {
 			if (genre.genre === titleCase(req.body.genre)) {
-				throw new Error('Genre already exist, add a new one or just cancel')
+				throw new Error('Genre already exist, add a new one or just cancel');
 
 			}
 			return true;
-		})
+		});
 	}),	
 	async (req, res) => {
 		const user = req.user;
 		try {
 			// Get Errors
-			let errors = validationResult(req)
+			let errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
 				res.render('add_genre', {
 					errors: errors.array(),
 					user: user
-				})
+				});
 			} else {
-				let newGenre = await prisma.genre.create({
+				await prisma.genre.create({
 					data: {
 						genre: titleCase(req.body.genre)
 					}
-				})
+				});
 				req.flash('success', 'Genre successfully created');
 				res.redirect('/books/add');
 			}
 		} catch (err) {
-			var err = new Error("Something went wrong");
+			new Error('Something went wrong');
 			err.status = 404;
 
 			res.render('error', {
@@ -162,7 +162,7 @@ router.post('/genre', ensureAuthenticated,
 			});
 		}
 
-	})
+	});
 
 // Add Book
 router.post('/add', ensureAuthenticated,
@@ -179,20 +179,20 @@ router.post('/add', ensureAuthenticated,
 			orderBy: {
 				genre: 'asc'
 			}
-		})
-		const title = req.body.title
-		const description = req.body.description
-		const link = req.body.link
+		});
+		const title = req.body.title;
+		const description = req.body.description;
+		const link = req.body.link;
 		const user = req.user;
-		const genre1 = req.body.genre
+		const genre1 = req.body.genre;
 		try {
 			// Get Errors
-			let errors = validationResult(req)
+			let errors = validationResult(req);
 			const genre = await prisma.genre.findFirst({
 				where: {
 					genre: req.body.genre
 				}
-			})
+			});
 			if (!errors.isEmpty()) {
 				res.render('add_book', {
 					errors: errors.array(),
@@ -202,9 +202,9 @@ router.post('/add', ensureAuthenticated,
 					description: description,
 					link: link,
 					genre1: genre1
-				})
+				});
 			} else {
-				let newBook = await prisma.book.create({
+				await prisma.book.create({
 					data: {
 						title: req.body.title,
 						genreID: genre.id,
@@ -216,12 +216,12 @@ router.post('/add', ensureAuthenticated,
 							}
 						}
 					}
-				})
+				});
 				req.flash('success', 'Book successfully created');
 				res.redirect('/users/profile');
 			}
 		} catch (err) {
-			var err = new Error("Something went wrong");
+			new Error('Something went wrong');
 			err.status = 404;
 
 			res.render('error', {
@@ -230,7 +230,7 @@ router.post('/add', ensureAuthenticated,
 			});
 		}
 
-	})
+	});
 
 // Get Single book
 router.get('/:id', async (req, res) => {
@@ -239,12 +239,12 @@ router.get('/:id', async (req, res) => {
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const user = await prisma.user.findUnique({
 			where: {
 				userName: book.authorName
 			}
-		})
+		});
 		const page = await prisma.page.findMany({
 			where: {
 				bookID: book.id
@@ -255,22 +255,22 @@ router.get('/:id', async (req, res) => {
 			orderBy: {
 				pageNumber: 'asc'
 			}
-		})
+		});
 		const genre = await prisma.genre.findFirst({
 			where: {
 				id: book.genreID
 			}
-		})
+		});
 		if (user) {
 			res.render('books.pug', {
 				book: book,
 				page: page,
 				genre: genre,
 				author: user.userName
-			})
+			});
 		}
 	} catch (err) {
-		var err = new Error("Book doesn't exist");
+		new Error('Book doesn\'t exist');
 		err.status = 404;
 
 		res.render('error', {
@@ -278,7 +278,7 @@ router.get('/:id', async (req, res) => {
 			error: err
 		});
 	}
-})
+});
 
 // Modify Book
 router.post('/modify/:id', ensureAuthenticated,
@@ -290,7 +290,7 @@ router.post('/modify/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const distinctGenre = await prisma.genre.findMany({
 			distinct: ['genre'],
 			select: {
@@ -299,9 +299,9 @@ router.post('/modify/:id', ensureAuthenticated,
 			orderBy: {
 				genre: 'asc'
 			}
-		})
+		});
 		const user = req.user;
-		let errors = validationResult(req)
+		let errors = validationResult(req);
 		const prevTitle = req.body.title;
 		const prevGenre = req.body.genre;
 		const prevDesc = req.body.description;
@@ -314,7 +314,7 @@ router.post('/modify/:id', ensureAuthenticated,
 				prevTitle: prevTitle,
 				prevGenre: prevGenre,
 				prevDesc: prevDesc
-			})
+			});
 		}
 		else {
 			// This code can be refined
@@ -323,8 +323,8 @@ router.post('/modify/:id', ensureAuthenticated,
 					where: {
 						genre: req.body.genre
 					}
-				})
-				const updateBook = await prisma.book.update({
+				});
+				await prisma.book.update({
 					where: {
 						id: parseInt(req.params.id)
 					},
@@ -333,12 +333,12 @@ router.post('/modify/:id', ensureAuthenticated,
 						genreID: genre.id,
 						description: req.body.description,
 					}
-				})
-				req.flash('success', 'Book updated Successfully')
-				res.redirect(`/books/${req.params.id}`)
+				});
+				req.flash('success', 'Book updated Successfully');
+				res.redirect(`/books/${req.params.id}`);
 
 			} catch (err) {
-				var err = new Error("Something went wrong");
+				new Error('Something went wrong');
 				err.status = 404;
 	
 				res.render('error', {
@@ -347,7 +347,7 @@ router.post('/modify/:id', ensureAuthenticated,
 				});
 			}
 		}
-	})
+	});
 
 // Get single page
 router.get('/page/:id', async (req, res) => {
@@ -356,33 +356,33 @@ router.get('/page/:id', async (req, res) => {
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const book = await prisma.book.findUnique({
 			where: {
 				id: page.bookID
 			}
-		})
+		});
 		const user = await prisma.user.findUnique({
 			where: {
 				userName: book.authorName
 			}
-		})
+		});
 		const genre = await prisma.genre.findFirst({
 			where: {
 				id: book.genreID
 			}
-		})
+		});
 		const history = await prisma.history.findMany({
 			where: {
 				pageID: parseInt(req.params.id)
 			}
-		})
+		});
 		const allUser = await prisma.user.findMany({
 			select: {
 				id: true,
 				userName: true
 			}
-		})
+		});
 		const pages = await prisma.page.findMany({
 			where: {
 				bookID: book.id
@@ -393,7 +393,7 @@ router.get('/page/:id', async (req, res) => {
 			orderBy: {
 				pageNumber: 'asc'
 			}
-		})
+		});
 		if (user) {
 			res.render('page.pug', {
 				book: book,
@@ -403,10 +403,10 @@ router.get('/page/:id', async (req, res) => {
 				history: history,
 				allUser: allUser,
 				pages: pages
-			})
+			});
 		}
 	} catch (err) {
-		var err = new Error("Page doesn't exist");
+		new Error('Page doesn\'t exist');
 		err.status = 404;
 
 		res.render('error', {
@@ -414,7 +414,7 @@ router.get('/page/:id', async (req, res) => {
 			error: err
 		});
 	}
-})
+});
 
 // Add Page
 router.post('/:id', ensureAuthenticated,
@@ -422,9 +422,9 @@ router.post('/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number should not be empty').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
-		value = parseInt(req.body.pageNumber)
+		value = parseInt(req.body.pageNumber);
 		if (value <= 0 || value > 10000) {
-			throw new Error('Page number should be between 1 and 10000')
+			throw new Error('Page number should be between 1 and 10000');
 		}
 		return true;
 	}),
@@ -433,21 +433,21 @@ router.post('/:id', ensureAuthenticated,
 			where: {
 				bookID: parseInt(req.params.id)
 			}
-		})
+		});
 		value.forEach((page) => {
 			if (page.pageNumber === parseInt(req.body.pageNumber)) {
-				throw new Error('Page number already exists')
+				throw new Error('Page number already exists');
 
 			}
 			return true;
-		})
+		});
 	}),
 	body('body', 'Page should not be empty').notEmpty(),
 	body('body').custom((value, { req }) => {
-		value = req.body.body
-		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		value = req.body.body;
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, '');
 		if (strippedValue.length > 1600) {
-			throw new Error('Content should be max 1600 characters long')
+			throw new Error('Content should be max 1600 characters long');
 		}
 		return true;
 	}),
@@ -456,7 +456,7 @@ router.post('/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const page = await prisma.page.findMany({
 			where: {
 				bookID: book.id
@@ -467,19 +467,19 @@ router.post('/:id', ensureAuthenticated,
 			orderBy: {
 				pageNumber: 'asc'
 			}
-		})
+		});
 		const genre = await prisma.genre.findFirst({
 			where: {
 				id: book.genreID
 			}
-		})
-		const user = req.user
+		});
+		const user = req.user;
 		try {
 			// Get Errors
-			let errors = validationResult(req)
-			let prevBody = req.body.body
-			let prevChapter = req.body.chapterName
-			let prevPageNumber = req.body.pageNumber
+			let errors = validationResult(req);
+			let prevBody = req.body.body;
+			let prevChapter = req.body.chapterName;
+			let prevPageNumber = req.body.pageNumber;
 			if (!errors.isEmpty()) {
 				res.render('books', {
 					errors: errors.array(),
@@ -491,9 +491,9 @@ router.post('/:id', ensureAuthenticated,
 					prevBody: prevBody,
 					prevChapter: prevChapter,
 					prevPageNumber: prevPageNumber
-				})
+				});
 			} else {
-				let newPage = await prisma.page.create({
+				await prisma.page.create({
 					data: {
 						chapterName: prevChapter,
 						pageNumber: parseInt(prevPageNumber),
@@ -505,12 +505,12 @@ router.post('/:id', ensureAuthenticated,
 							}
 						}
 					}
-				})
+				});
 				req.flash('success', 'Page successfully created');
 				res.redirect(`/books/${book.id}`);
 			}
 		} catch (err) {
-			var err = new Error("Something went wrong");
+			new Error('Something went wrong');
 			err.status = 404;
 
 			res.render('error', {
@@ -519,7 +519,7 @@ router.post('/:id', ensureAuthenticated,
 			});
 		}
 
-	})
+	});
 
 // Approve Requests
 router.post('/page/:id', ensureAuthenticated, async (req, res) => {
@@ -527,7 +527,7 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
+	});
 
 	const relatedHistory = await prisma.history.findMany({
 		where: {
@@ -536,10 +536,10 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 		select: {
 			id: true
 		}
-	})
+	});
 
 	try {
-		const clearHistory = await prisma.book.update({
+		await prisma.book.update({
 			where: {
 				id: page.bookID
 			},
@@ -548,8 +548,8 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 					disconnect: relatedHistory
 				}
 			}
-		})
-		const updatePage = await prisma.page.update({
+		});
+		await prisma.page.update({
 			where: {
 				id: parseInt(req.params.id)
 			},
@@ -562,14 +562,14 @@ router.post('/page/:id', ensureAuthenticated, async (req, res) => {
 					set: []
 				}
 			}
-		})
-		req.flash('success', 'Page update request approved successfully')
-		res.redirect(`/books/page/${req.params.id}`)
+		});
+		req.flash('success', 'Page update request approved successfully');
+		res.redirect(`/books/page/${req.params.id}`);
 
 	} catch (e) {
-		res.send(e)
+		res.send(e);
 	}
-})
+});
 
 // Modify Page
 router.post('/page/modify/:id', ensureAuthenticated,
@@ -577,9 +577,9 @@ router.post('/page/modify/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not exceed 60 characters').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
-		value = parseInt(req.body.pageNumber)
+		value = parseInt(req.body.pageNumber);
 		if (value <= 0 || value > 10000) {
-			throw new Error('Page number should be between 1 and 10000')
+			throw new Error('Page number should be between 1 and 10000');
 		}
 		return true;
 	}),
@@ -588,28 +588,28 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		value = await prisma.page.findMany({
 			where: {
 				bookID: currentPage.bookID
 			}
-		})
+		});
 		value.forEach((page) => {
 			if (currentPage.pageNumber !== parseInt(req.body.pageNumber)) {
 				if (page.pageNumber === parseInt(req.body.pageNumber)) {
-					throw new Error('Page number already exists')
+					throw new Error('Page number already exists');
 
 				}
 			}
 			return true;
-		})
+		});
 	}),
 	body('body', 'Content is required').notEmpty(),
 	body('body').custom((value, { req }) => {
-		value = req.body.body
-		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		value = req.body.body;
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, '');
 		if (strippedValue.length > 1600) {
-			throw new Error('Content should be max 1600 characters long')
+			throw new Error('Content should be max 1600 characters long');
 		}
 		return true;
 	}),
@@ -619,12 +619,12 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const book = await prisma.book.findUnique({
 			where: {
 				id: page.bookID
 			}
-		})
+		});
 		const relatedHistory = await prisma.history.findMany({
 			where: {
 				pageRef: parseInt(req.params.id)
@@ -632,9 +632,9 @@ router.post('/page/modify/:id', ensureAuthenticated,
 			select: {
 				id: true
 			}
-		})
+		});
 		const user = req.user;
-		let errors = validationResult(req)
+		let errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
 			return res.render('modify_page.pug', {
@@ -642,12 +642,12 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				page: page,
 				user: user,
 				book: book
-			})
+			});
 		}
 		else {
 			if (user.userName === book.authorName) {
 				try {
-					const clearHistory = await prisma.book.update({
+					await prisma.book.update({
 						where: {
 							id: page.bookID
 						},
@@ -656,8 +656,8 @@ router.post('/page/modify/:id', ensureAuthenticated,
 								disconnect: relatedHistory
 							}
 						}
-					})
-					const updatePage = await prisma.page.update({
+					});
+					await prisma.page.update({
 						where: {
 							id: parseInt(req.params.id)
 						},
@@ -670,8 +670,8 @@ router.post('/page/modify/:id', ensureAuthenticated,
 								set: []
 							}
 						}
-					})
-					const updateHistory = await prisma.history.create({
+					});
+					await prisma.history.create({
 						data: {
 							userID: user.id,
 							prevBody: req.body.tempBody,
@@ -680,12 +680,12 @@ router.post('/page/modify/:id', ensureAuthenticated,
 							pageRef: parseInt(req.params.id),
 							bookRef: book.id
 						}
-					})
-					req.flash('success', 'Page updated Successfully')
-					res.redirect(`/books/page/${req.params.id}`)
+					});
+					req.flash('success', 'Page updated Successfully');
+					res.redirect(`/books/page/${req.params.id}`);
 
 				} catch (err) {
-					var err = new Error("Something went wrong");
+					new Error('Something went wrong');
 					err.status = 404;
 		
 					res.render('error', {
@@ -694,27 +694,27 @@ router.post('/page/modify/:id', ensureAuthenticated,
 					});
 				}
 			} else {
-				const currentPageBody = page.body.split('')
-				const prevPageBody = req.body.tempBody.split('')
+				const currentPageBody = page.body.split('');
+				const prevPageBody = req.body.tempBody.split('');
 
 				let isDifferent = false;
 
-				var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length
+				var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length;
 
 				for (let i = 0; i < limit; i++) {
 					if (currentPageBody[i] !== prevPageBody[i]) {
-						isDifferent = true
+						isDifferent = true;
 					}
 				}
 
 				if (isDifferent) {
-					const currVal = req.body.body
+					const currVal = req.body.body;
 					// res.redirect(`/books/page/conflict/${req.params.id}`)
-					res.render('modify_page_conflict', { user, page, currVal })
+					res.render('modify_page_conflict', { user, page, currVal });
 
 				} else {
 					try {
-						const updateHistory = await prisma.history.create({
+						await prisma.history.create({
 							data: {
 								userID: user.id,
 								prevBody: req.body.tempBody,
@@ -733,12 +733,12 @@ router.post('/page/modify/:id', ensureAuthenticated,
 									}
 								}
 							}
-						})
-						req.flash('success', 'Page update request submitted successfully')
-						res.redirect(`/books/page/${req.params.id}`)
+						});
+						req.flash('success', 'Page update request submitted successfully');
+						res.redirect(`/books/page/${req.params.id}`);
 
 					} catch (err) {
-						var err = new Error("Something went wrong");
+						new Error('Something went wrong');
 						err.status = 404;
 			
 						res.render('error', {
@@ -749,7 +749,7 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				}
 			}
 		}
-	})
+	});
 
 // Modify page conflict
 router.post('/page/conflict/:id', ensureAuthenticated,
@@ -757,9 +757,9 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 	body('chapterName', 'Chapter name should not be empty').isLength({ max: 60 }),
 	body('pageNumber', 'Page number is required').notEmpty(),
 	body('pageNumber').custom((value, { req }) => {
-		value = parseInt(req.body.pageNumber)
+		value = parseInt(req.body.pageNumber);
 		if (value <= 0) {
-			throw new Error('Page number should not be equal or less than 0')
+			throw new Error('Page number should not be equal or less than 0');
 		}
 		return true;
 	}),
@@ -768,28 +768,28 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		value = await prisma.page.findMany({
 			where: {
 				bookID: currentPage.bookID
 			}
-		})
+		});
 		value.forEach((page) => {
 			if (currentPage.pageNumber !== parseInt(req.body.pageNumber)) {
 				if (page.pageNumber === parseInt(req.body.pageNumber)) {
-					throw new Error('Page number already exists')
+					throw new Error('Page number already exists');
 
 				}
 			}
 			return true;
-		})
+		});
 	}),
 	body('body', 'Content is required').notEmpty(),
 	body('body').custom((value, { req }) => {
-		value = req.body.body
-		let strippedValue = value.replace(/(<([^>]+)>)/gi, "")
+		value = req.body.body;
+		let strippedValue = value.replace(/(<([^>]+)>)/gi, '');
 		if (strippedValue.length > 1600) {
-			throw new Error('Content should be max 1600 characters long')
+			throw new Error('Content should be max 1600 characters long');
 		}
 		return true;
 	}),
@@ -799,14 +799,14 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
+		});
 		const book = await prisma.book.findUnique({
 			where: {
 				id: page.bookID
 			}
-		})
+		});
 		const user = req.user;
-		let errors = validationResult(req)
+		let errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
 			return res.render('modify_page_conflict.pug', {
@@ -814,34 +814,34 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 				page: page,
 				user: user,
 				book: book
-			})
+			});
 		}
 		else {
-			const currentPageBody = page.body.split('')
-			const prevPageBody = req.body.tempBody.split('')
-			const currVal = req.body.body
+			const currentPageBody = page.body.split('');
+			const prevPageBody = req.body.tempBody.split('');
+			const currVal = req.body.body;
 
 			let isDifferent = false;
 
-			var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length
+			var limit = currentPageBody.length > prevPageBody.length ? currentPageBody.length : prevPageBody.length;
 
 			for (let i = 0; i < limit; i++) {
 				if (currentPageBody[i] === prevPageBody[i]) {
-					isDifferent = false
+					isDifferent = false;
 				}
 				else {
-					isDifferent = true
+					isDifferent = true;
 				}
 			}
 
 			if (isDifferent) {
-				res.render('modify_page_conflict.pug', { user, page, currVal })
+				res.render('modify_page_conflict.pug', { user, page, currVal });
 
 			}
 			else {
 
 				try {
-					const updateHistory = await prisma.history.create({
+					await prisma.history.create({
 						data: {
 							userID: user.id,
 							prevBody: req.body.tempBody,
@@ -860,12 +860,12 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 								}
 							}
 						}
-					})
-					req.flash('success', 'Page update request submitted successfully')
-					res.redirect(`/books/page/${req.params.id}`)
+					});
+					req.flash('success', 'Page update request submitted successfully');
+					res.redirect(`/books/page/${req.params.id}`);
 
 				} catch (err) {
-					var err = new Error("Something went wrong");
+					new Error('Something went wrong');
 					err.status = 404;
 		
 					res.render('error', {
@@ -875,7 +875,7 @@ router.post('/page/conflict/:id', ensureAuthenticated,
 				}
 			}
 		}
-	})
+	});
 
 // Post request access
 router.post('/request/:id', ensureAuthenticated,
@@ -885,20 +885,20 @@ router.post('/request/:id', ensureAuthenticated,
 			where: {
 				id: parseInt(req.params.id)
 			}
-		})
-		const user = req.user
+		});
+		const user = req.user;
 		try {
 			// Get Errors
-			let errors = validationResult(req)
+			let errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
 				res.render('books', {
 					errors: errors.array(),
 					user: user,
 					book: book
-				})
+				});
 			} else {
-				let newRequest = await prisma.request.create({
+				await prisma.request.create({
 					data: {
 						bookID: parseInt(req.params.id),
 						userID: parseInt(req.user.id),
@@ -909,12 +909,12 @@ router.post('/request/:id', ensureAuthenticated,
 							}
 						}
 					}
-				})
+				});
 				req.flash('success', 'Request successfully sent to author');
 				res.redirect(`/books/${book.id}`);
 			}
 		} catch (err) {
-			var err = new Error("Something went wrong");
+			new Error('Something went wrong');
 			err.status = 404;
 
 			res.render('error', {
@@ -923,44 +923,35 @@ router.post('/request/:id', ensureAuthenticated,
 			});
 		}
 
-	})
+	});
 
 // Delete Book
 router.delete('/delete/:id', ensureAuthenticated, async (req, res) => {
-	const deletePages = await prisma.page.deleteMany({
+	await prisma.page.deleteMany({
 		where: {
 			bookID: parseInt(req.params.id)
 		}
-	})
-	const deleteBook = await prisma.book.delete({
+	});
+	await prisma.book.delete({
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
+	});
 	// const transaction = await prisma.$transaction([deletePages, deleteBook])
-	req.flash('success', 'Book successfully deleted')
-	res.status(200).send("Successfully deleted")
-})
+	req.flash('success', 'Book successfully deleted');
+	res.status(200).send('Successfully deleted');
+});
 
 // Delete Page
 router.delete('/page/delete/:id', ensureAuthenticated, async (req, res) => {
-	const deletePage = await prisma.page.delete({
+	await prisma.page.delete({
 		where: {
 			id: parseInt(req.params.id)
 		}
-	})
-	req.flash('success', 'Page successfully deleted')
-	res.status(200).send("Successfully deleted")
-})
-
-async function checkPageNumber(req, res, next) {
-	const page = await prisma.page.findMany({
-		where: {
-			bookID: parseInt(req.params.id)
-		}
-	})
-	return next()
-}
+	});
+	req.flash('success', 'Page successfully deleted');
+	res.status(200).send('Successfully deleted');
+});
 
 // Access Control
 function ensureAuthenticated(req, res, next) {
@@ -982,7 +973,7 @@ router.use(function (req, res, next) {
 });
 
 // handle error, print stacktrace
-router.use(function (err, req, res, next) {
+router.use(function (err, res) {
 	res.status(err.status || 500);
 
 	res.render('error', {
@@ -1005,7 +996,7 @@ function titleCase(str) {
 	}
 }
 
-module.exports = router
+module.exports = router;
 
 // // Render request access (This is supposed to be for the feature that an author can control the amount of collaborators in a book)
 // router.get('/request/:id', ensureAuthenticated, async (req, res) => {
