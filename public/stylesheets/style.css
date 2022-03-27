@@ -25,7 +25,8 @@ body {
   }
   
   header {
-	  background-color: #000472;
+	  /* background-color: #000472; */
+	  background-color:#1E2749;
 	  color: #ffffff;
 	  text-align: left
   }
@@ -49,7 +50,8 @@ body {
   }
   
   footer {
-	  background-color: #000472;
+	  /* background-color: #000472; */
+	  background-color:#1E2749;
 	  color: #ffffff;
 	  text-align: center;
 	  clear: both;
@@ -131,7 +133,8 @@ footer {
   }
 }
 header { 
-	background: #000472; 
+	/* background: #000472;  */
+	background-color:#1E2749;
 	color: #fff; 
 	padding: .5rem .5rem .5rem .5rem; 
 	margin: 0 ; 
@@ -142,7 +145,8 @@ body {
 	margin: 0px;
 }
 #wrapper { 
-	background: #000472; 
+	/* background: #000472;  */
+	background-color:#1E2749;
 	margin: 0 auto; max-width: 100%
 }
 .test { 
