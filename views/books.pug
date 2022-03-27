@@ -27,7 +27,7 @@ block content
 			div
 				//- a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
 				| 
-				a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
+				//- a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
 				//- a(href=`/books/delete/${book.id}`) Delete
 	if user
 		//- if user.userName == book.authorName
@@ -50,7 +50,7 @@ block content
 		//- 	a(href=`/`) Back
 	//- else
 	//- 	a(href=`/`) Back
-	script(src='/javascripts/delete_book.js')
+	
 	</article> 
 
 	<aside class="info1">
@@ -76,3 +76,4 @@ block content
 								span - #{(pg.histories.length)} Pending Approval Requests
 	</aside> 
 	</main> 
+	script(src='/javascripts/delete_book.js')
