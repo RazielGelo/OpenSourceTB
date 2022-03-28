@@ -9,15 +9,16 @@ block content
 				ul
 					each book, i in books
 						li
+							span #{(book.histories.length)} Pending Approval Requests - 
+							|
 							a(href="/books/"+book.id)= book.title
-							| 
-							span - #{(book.histories.length)} Pending Approval Requests
+							|
 				a(href='/books/add', class="buttoncore-update") Publish New Book
 			</fieldset>
 	</article>
-	<aside class="info1">
+	<aside class="info2">
 		fieldset 
-				h2 User Profile
+				h1 User Profile
 				div
 					label(for="userName") Username:
 					input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)

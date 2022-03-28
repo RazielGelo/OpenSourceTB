@@ -6,7 +6,9 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node index.js",
-		"dev": "nodemon index.js"
+		"dev": "nodemon index.js",
+		"sass:build": "node-sass public/sass/index.sass public/stylesheets/index.css",
+		"sass:watch": "node-sass -w public/sass/index.sass public/stylesheets/index.css"
 	},
 	"repository": {
 		"type": "git",
@@ -30,6 +32,7 @@
 		"http": "^0.0.1-security",
 		"jquery": "^3.6.0",
 		"mongoose": "^6.1.7",
+		"node-sass": "^7.0.1",
 		"passport": "^0.5.2",
 		"passport-local": "^1.0.0",
 		"pug": "^3.0.2"
