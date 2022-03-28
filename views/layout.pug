@@ -15,27 +15,42 @@ html(lang="en")
 		block script
 		block title
 			title OpenSourceTextbook
-	div(id="wrapper")
+	//- div(id="wrapper")
+	//- nav
+	//- 	img(src="/images/logo.jpg" alt="OpensourceTB" style={height: "60px"})
+	//- 	div(class="navdiv")
+	//- 		ul
+	//- 				a(href='/', class="active") HOME
+	//- 				//- a(href='/') GENRE
+	//- 				a(href='/') ABOUT US
 	header
 		//- img(src="https://i.ibb.co/wBK49jh/Logo.png" alt="OpensourceTB" style={height: "120px"})
-		img(src="/images/logo.jpg" alt="OpensourceTB" style={height: "120px"})
+		img(src="/images/logo btb.jpg" alt="OpensourceTB" style={height: "60px"})
 		
 		if user
 			p(class="name") Welcome #{user.firstName}!
+		//- ul
+		//- 			a(href='/', class="active") HOME
+		//- 			//- a(href='/') GENRE
+		//- 			a(href='/') ABOUT US
 		div
 			if user
-				a(href='/users/logout', class="buttonsmall") Logout
+				//- a(href='/users/logout', class="buttonsmall") Logout
+				a(href='/users/logout', class="navbar") LOGOUT
 				|
-				a(href='/users/profile', class="buttonsmall") Profile
+				//- a(href='/users/profile', class="buttonsmall") Profile
+				a(href='/users/profile', class="navbar") PROFILE
 			else 
-				a(href='/login', class="button") Login
+				//- a(href='/login', class="button") Login
 				| 
-				a(href='/register', class="button") Register
-	nav
-		ul
-				a(href='/', class="active") HOME
-				//- a(href='/') GENRE
-				a(href='/') ABOUT US
+				//- a(href='/register', class="button") Register
+				a(href='/register', class="navbar") REGISTER
+				|
+				a(href='/login', class="navbar") LOGIN
+			
+			a(href='/', class="navbar") ABOUT US
+			|
+			a(href='/', class="active", class="navbar") HOME
 	main
 		<article>
 		body
