@@ -1,27 +1,29 @@
 extends layout 
 
 block content
-	h1 Add Book
-	p This is where you add your new book.
-	hr
-	form(method='POST', action='/books/add', onsubmit="submitButton.disabled = true; return true;")
-		div
-			label Title: 
-			input(name='title', type='text', value=`${(!title) ? '' : title}`)
-		div
-			label Genre:
-			select(name='genre')
-				each genre in distinctGenre					
-					option(selected) #{genre.genre}
-		div
-			label Description:
-			textarea(name='description')=description
-		div
-			label Link: 
-			input(name='link', type='url', value=`${(!link) ? '' : link}`)
-		div
-			button(type="submit", class="buttonsmall", name="submitButton") Create
-			| 
-			a(href='/books/genre', class="buttonsmall") Add Genre
-			| 
-			a(href='/users/profile', class="buttonsmall") Cancel
+	div(class="header1_edit")
+		h1 Add Book
+		p This is where you add your new book.
+		
+	div(class="form_container")
+		form(method='POST', action='/books/add', onsubmit="submitButton.disabled = true; return true;")
+			div(class="label_container")
+				label Title: 
+				input(name='title', type='text', value=`${(!title) ? '' : title}`)
+			
+				label Genre:
+				select(name='genre')
+					each genre in distinctGenre					
+						option(selected) #{genre.genre}
+			
+				label Description:
+				textarea(name='description')=description
+			
+				label Link: 
+				input(name='link', type='url', value=`${(!link) ? '' : link}`)
+			div(class="button_container")
+				button(type="submit", class="button_edit", name="submitButton") Create
+				| 
+				a(href='/books/genre', class="button_edit") Add Genre
+				| 
+				a(href='/users/profile', class="button_edit") Cancel
