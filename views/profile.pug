@@ -1,51 +1,48 @@
 extends layout 
 
 block content
-	<main class="bg-blue">
-	div(class= "container px-4 px-md-3")
-		div.mt-80( class="row align-items-lg-center")
-			div(class="col-12 mx-auto col-md-4 order-md-2 col-lg-5 img-container")
-				<article class ="text-light">
-					h2 My Dashboard
-					<fieldset>
-						h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
-						ul.fs-5
-							each book, i in books
-								li
-									span #{(book.histories.length)} Pending Approval Requests - 
-									|
-									a(href="/books/"+book.id)= book.title
-									|
-						a(href='/books/add', class="btn btn-warning") Publish New Book
-					</fieldset>
-				</article>
-			div(class="col-12 mx-auto col-md-4 order-md-2")
-				<aside class="info2">
-					h1.pt-4 User Profile
-					fieldset 
-							div
-								label(for="userName") Username:
-								input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
-							div
-								label(for="email") Email:
-								input(type="email", id="email", name="email", value=`${user.email}`, disabled)
-							div
-								label(for="firstName") FirstName:
-								input(type="text", id="firstName", name="firstName", value=`${user.firstName}`, disabled)
-							div
-								label(for="lastName") LastName:
-								input(type="text", id="lastName", name="lastName", value=`${user.lastName}`, disabled)
-							div
-								label(for="birthday") Birthday:
-								input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
-							
-							div
-								a(href='/users/modify',  class="btn btn-warning m-2") Edit Profile
-								| 
-								a(href='/users/modify/password',  class="btn btn-warning m-2") Change Password
-								br
-								br
-								br
-					</fieldset>
-				</aside>
+	<main>
+	<article>
+		h2 My Dashboard
+			<fieldset>
+				h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
+				ul
+					each book, i in books
+						li
+							a(href="/books/"+book.id)= book.title
+							| 
+							if (book.histories.length > 0) 
+								span - #{(book.histories.length)} Pending Approval Requests
+				a(href='/books/add', class="buttoncore-update") Publish New Book
+			</fieldset>
+	</article>
+	<aside class="info1">
+		fieldset 
+				h2 User Profile
+				div
+					label(for="userName") Username:
+					input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
+				div
+					label(for="email") Email:
+					input(type="email", id="email", name="email", value=`${user.email}`, disabled)
+				div
+					label(for="firstName") FirstName:
+					input(type="text", id="firstName", name="firstName", value=`${user.firstName}`, disabled)
+				div
+					label(for="lastName") LastName:
+					input(type="text", id="lastName", name="lastName", value=`${user.lastName}`, disabled)
+				div
+					label(for="birthday") Birthday:
+					input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
+				
+				div
+					a(href='/users/modify', class="buttonsmall") Edit Profile
+					| 
+					a(href='/users/modify/password', class="buttonsmall") Change Password
+					br
+					br
+					br
+		</fieldset>
+	</aside>
+
 	</main> 

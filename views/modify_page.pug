@@ -15,13 +15,13 @@ block script
 			statusbar: false,
 		})
 block content
-	
+
 	div(class="banner_edit")
-			h1 Modify Page
-			p This is where you edit details of your book page. 
+		h1 Modify Page
+		p This is where you edit details of your book page. 
 	
 	<main>
-	<aside class="info3">
+	<aside class="info2">
 	h3 Book Chapter
 	div
 		each pg, i in pages
@@ -39,36 +39,35 @@ block content
 	//- h2 Modify Page
 	//- p This is where you edit details of your book page. 
 	//- hr
-	div(class="body_content")
-		div(class="modify_container")
-			form(action=`/books/page/modify/${page.id}`, method='POST')
-				if user
-					if user.userName == book.authorName
-						div(class="label_container")
-							label Chapter Name:
-							input(type="text", name='chapterName', value=`${page.chapterName}`)
-						
-							label Page Number:
-							input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
-					else
-						
-							label Chapter Name:
-							input(type="text", name='chapterName', value=`${page.chapterName}`, readonly)
-						
-							label Page Number:
-							input(type="number", name='pageNumber',  value=`${page.pageNumber}`, readonly)
-				div(class="label_container")
-					textarea#tempBody(name='tempBody', style="display:none;")=page.body
-				
-					label Content update:
-					textarea#body(name='body')=page.body
-				
-					label Commit message:
-					input(type="text", name='commit')
-				div(class="button_container")
-					button#update(type="submit", class="button_edit") Update
-					| 
-					a(href=`/books/page/${page.id}`) 
-						button(type="button", class="button_edit") Cancel
+
+	div(class="modify_container")
+		form(action=`/books/page/modify/${page.id}`, method='POST')
+			if user
+				if user.userName == book.authorName
+					div(class="label_container")
+						label Chapter Name:
+						input(type="text", name='chapterName', value=`${page.chapterName}`)
+					
+						label Page Number:
+						input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
+				else
+					
+						label Chapter Name:
+						input(type="text", name='chapterName', value=`${page.chapterName}`, readonly)
+					
+						label Page Number:
+						input(type="number", name='pageNumber',  value=`${page.pageNumber}`, readonly)
+			div(class="label_container")
+				textarea#tempBody(name='tempBody', style="display:none;")=page.body
+			
+				label Content update:
+				textarea#body(name='body')=page.body
+			
+				label Commit message:
+				input(type="text", name='commit')
+			div
+				button#update(type="submit", class="buttonsmall") Update
+				| 
+				a(href=`/books/page/${page.id}`, class="buttonsmall") Cancel
 		</article> 
 	</main> 
