@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 // For .env to work, we need this
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 
 
 // Initialization of Frameworks
@@ -52,6 +55,7 @@ app.get('*', function (req, res, next) {
 const userRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 const booksRouter = require('./routes/books');
+const res = require('express/lib/response');
 
 // Use route
 app.use('/', indexRouter);
@@ -73,7 +77,7 @@ app.use(function (req, res, next) {
 });
 
 // Error Handler
-app.use(function (err, res,) {
+app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 
 	res.render('error', {
