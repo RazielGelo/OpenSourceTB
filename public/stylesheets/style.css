@@ -19,7 +19,7 @@ body {
 	color: #000472;
 }
   h2 {
-	  color: #ffffff;
+	  
 	  font-size: 24px;
   }
 
@@ -30,7 +30,7 @@ body {
   header {
 	  /* background-color: #000472; */
 	  background-color:#1E2749;
-	  color: #ffffff;
+	  
 	  text-align: left
   }
   
@@ -55,7 +55,7 @@ body {
   footer {
 	  /* background-color: #000472; */
 	  background-color:#1E2749;
-	  color: #ffffff;
+	  
 	  text-align: center;
 	  clear: both;
 	  bottom: 0;
@@ -358,44 +358,24 @@ address {
 	max-width: 100%;
 	height: auto;
 }
-.container {
+.img-container {
 	position: sticky;
 	max-width: 100%;
 	height: auto;
 }
-.container img {
+.img-container img {
 	max-width: 100%;
 	height: auto;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
 }
-.container .btn {
-	position: absolute;
-	top: 70%;
-	left: 20%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%); 
+.img-container .btn {
+	
 	background-color: #E44D26;
 	color: white;
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
-	border-radius:10em;
-	text-align: center;
-	height: 25px;
-	min-width: 150px;
-	padding: 5px; 
-	margin-left: 10%;
-	margin-top: 40px;
-	display: flex;
-	font-family:'Roboto',sans-serif;
-	font-weight: 500;
-	font-weight: bold;
-	color:#FFFFFF;
-	letter-spacing: 5px;
-	text-decoration:none;
-	flex-shrink: inherit;
+	border-radius: 15px;
+	
 }
 .container .btn:hover {
 	background-color: #fc7a00;
@@ -428,13 +408,13 @@ fieldset {
 	margin-bottom: 10px;
 	font-family:'Roboto',sans-serif;
 	border-radius:.5em;
-	color: #ffffff;
+	
 }
 .fieldsettitle{ 
 	font-family:'Roboto',sans-serif;
 	font-size: 26px;
 	text-align: center;
-	color: #ffffff;
+	
 	margin-bottom: auto;
 }
 fieldset { 
@@ -444,13 +424,13 @@ fieldset {
 	margin-bottom: 10px;
 	font-family:'Roboto',sans-serif;
 	border-radius:.5em;
-	color: #ffffff;
+	
 }
 .fieldsettitle{ 
 	font-family:'Roboto',sans-serif;
 	font-size: 26px;
 	text-align: center;
-	color: #ffffff;
+	
 	margin-bottom: auto;
 }
 .fieldsetborderless { 
@@ -574,31 +554,6 @@ fieldset {
 	transition-delay: calc(0.045s * 10);
    }
   /* ANN LAUREN NIKEA */
-  .navbar {
-	height: 35px;
-	/* min-width: 150px; */
-	padding:.2em;
-	margin: 0px;
-	top: 5px;
-	margin-right: 30px;
-	border-radius:10em;
-	box-sizing: border-box;
-	text-decoration:none;
-	font-family:'Roboto',sans-serif;
-	color:#FFFFFF;
-	text-align:center;
-	float: right;
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
-	border-style: none;
-	margin-bottom: 10px;
-	cursor: pointer;
-	font-family: McLaren;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
-	margin-top: 5px;
- 	letter-spacing: 2px;
-  }
  .fieldsetwrapper { 
 	margin-left: 15%;
 	margin-right: 15%;
@@ -606,12 +561,16 @@ fieldset {
 	margin-bottom: 10px;
 	font-family:'Roboto',sans-serif;
 	border-radius:.5em;
-	color: #ffffff;
+	
 }
 .fieldsetwrappertitle{ 
 	font-family:'Roboto',sans-serif;
 	font-size: 26px;
 	text-align: center;
-	color: #ffffff;
+	
 	margin-bottom: auto;
+}
+
+header{
+	margin-bottom: 80px;
 }
