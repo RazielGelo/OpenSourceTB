@@ -23,10 +23,10 @@ block content
 					label Link: 
 					input(name='link', type='url', value=`${(!link) ? '' : link}`)
 				div(class="button_container")
-					button(type="submit", class="button_edit", name="submitButton") Create
+					button.text-light(type="submit", class="button_edit", name="submitButton") Create
 					| 
 					a(href='/books/genre')
-						button(type="button", class="button_edit") Add Genre
+						button.text-light(type="button", class="button_edit") Add Genre
 					| 
 					a(href='/users/profile')
-						button(type="button", class="button_edit") Cancel
+						button.text-light(type="button", class="button_edit") Cancel
