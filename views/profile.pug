@@ -11,7 +11,8 @@ block content
 						li
 							a(href="/books/"+book.id)= book.title
 							| 
-							span - #{(book.histories.length)} Pending Approval Requests
+							if (book.histories.length > 0) 
+								span - #{(book.histories.length)} Pending Approval Requests
 				a(href='/books/add', class="buttoncore-update") Publish New Book
 			</fieldset>
 	</article>
