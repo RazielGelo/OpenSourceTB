@@ -50,4 +50,5 @@
   padding-bottom: 2em; }
 
 .body_content {
-  background-color: ghostwhite; }
+  background-color: ghostwhite;
+  padding: 0; }
