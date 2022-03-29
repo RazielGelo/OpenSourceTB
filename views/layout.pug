@@ -51,24 +51,25 @@ html(lang="en")
 							li.nav-item.active
 								a.nav-link.text-light.active(href='/users/profile') Profile
 							li.nav-item.active
-								a.text-light(href='/users/logout') Logout
+								a.nav-link.text-light.active(href='/users/logout') Logout
+							li.nav-item.active
+								a.nav-link.text-light.active(href='/about') About
 
 				else
-					div#navbarNav.collapse.navbar-collapse
+					div.collapse.navbar-collapse#navbarNav
 						ul.navbar-nav.mr-auto
 							li.nav-item.active
 								a.nav-link.text-light.active(href='/') Home
-
 							li.nav-item.active
 								a.nav-link.text-light.active(href='/login') Login
-
 							li.nav-item.active
 								a.nav-link.text-light.active(href='/register') Register
-		</div>
+							li.nav-item.active
+								a.nav-link.text-light.active(href='/about') About		</div>
 	block content
 
 	</main> 
-		<footer class="mt-50">
+		<footer>
 		<address>
 			p OpenSource Textbook empowers and connects authors and readers through open accessto a global reading and publishing platform.
 			p Vancouver Community College, Vancouver, B.C., Canada

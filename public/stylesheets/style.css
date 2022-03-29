@@ -27,12 +27,6 @@ body {
 	  color: #c2c6ff
   }
   
-  header {
-	  /* background-color: #000472; */
-	  background-color:#1E2749;
-	  
-	  text-align: left
-  }
   
   #nav_style {
 	  background-color: #19a722;
@@ -53,15 +47,28 @@ body {
   }
   
   footer {
-	  /* background-color: #000472; */
-	  background-color:#1E2749;
-	  
-	  text-align: center;
-	  clear: both;
+	background-color: #1E2749;
+    color: #eeeeee;
+    height: 60px;
+    padding-top: 50px;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: 0 50vh 0 50vh #1E2749;
+    width: 100%;
+	/* position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	
+	color: white;
+	text-align: center;
+	line-height: auto;
+	  clear: both; */
+	  /* 
 	  bottom: 0;
 	  width: 100%;
 	  height: auto;
-	  line-height: auto;
+	   */
   }
   
   .alert-error{
@@ -94,10 +101,6 @@ body {
 	border-color: #d6e9c6;
   }
 /* ANN LAUREN*/
-header  { 
-  display: flex; 
-  flex-direction: column; 
-}
 nav > ul { 
   display: flex; 
   justify-content: flex-start; 
@@ -110,14 +113,10 @@ footer {
   text-align: center; 
 }
 
-.mt-50{
-	margin-top: 50px;
-}
+/* .pb-50{
+	margin-bottom: 50px;
+} */
 @media screen and (min-width: 768px) { 
-  header { 
-    flex-direction: row; 
-    justify-content: space-between; 
-  } 
   main { 
     flex-direction: row; 
   }
@@ -232,7 +231,7 @@ address {
 	font-style: normal;
 	font-family:'Roboto',sans-serif;
 	letter-spacing: 2px; 
-	font-size: 0.75rem; 
+	font-size: 1em; 
 	color: #bbb; 
 }
 .name { 	
@@ -322,7 +321,7 @@ address {
 	cursor: pointer;
   }
 
-.buttoncore-update, .buttoncore-delete {
+/* .buttoncore-update, .buttoncore-delete {
 	height: 35px;
 	min-width: 260px;
 	width: 95%;
@@ -337,21 +336,17 @@ address {
 	text-align:center;
 	letter-spacing: 2px;
 	float: left;
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
 	border-style: none;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	cursor: pointer;
 	font-family: 'Mplus 1p',sans-serif;
 	font-style: normal;
-  }
+  } */
   .buttoncore-update {
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
-	/* background-color: #000472; */
 	background-color: #db9327;
   }
   .buttoncore-delete {
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
 	background-color: #000472;
   }
 .image {
@@ -572,5 +567,5 @@ fieldset {
 }
 
 header{
-	margin-bottom: 80px;
+	margin-bottom: 50px;
 }
