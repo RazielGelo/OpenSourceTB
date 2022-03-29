@@ -8,10 +8,10 @@ body {
   }
   
   a {
-	/* color: #bae1f0; */
+	color: #bae1f0; 
 	color: #fffefd;
-  }  
-  
+  } 
+
   div {
 	  padding: 2px;
   }
@@ -126,7 +126,7 @@ footer {
 	min-height: 650px;
   }
   .info1 { 
-    order: 1; 
+    order: 1;
     flex-basis: 25%; 
 	min-height: 600px;
   }
@@ -135,6 +135,14 @@ footer {
     flex-basis: 25%;
 	min-height: 600px;
 	color: #5d6c72;
+	margin-top: 1.2em;
+  }
+  .info3 { 
+    order: 4; 
+    flex-basis: 25%;
+	min-height: 600px;
+	color: #5d6c72;
+	margin-top: 1.2em;
   }
 }
 header { 
@@ -221,7 +229,11 @@ aside.info1 {
 	/* background: #FAFAFF;  */
 }
 aside.info2 { 
-	background: #47474d; 
+	background: #30343F; 
+}
+aside.info3{
+	background: ghostwhite;
+	text-align: center;
 }
 footer { 
 	padding: 1rem; 
