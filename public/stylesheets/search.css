@@ -12,7 +12,7 @@
 	/* top: 10px; */
 	right: 10px;
 	background: #CFDFFF;
-	border: 1px solid #CFDFFF;
+	border: 1px solid #414650;
 	box-sizing: border-box;
 	border-radius: 30px;
 	/* margin-top: 2px; */
@@ -26,7 +26,7 @@
   
   .user-cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: .25rem;
 	margin-top: 1rem;
 
@@ -42,7 +42,8 @@
 	border-radius: 1em;
 	border: #0a1361 0.2rem solid;
 	transition: all 0.4s ease-in;
-	box-shadow: 0.4rem 0.4rem 0.6rem #2b2b2c;
+	box-shadow: 0.4rem 0.4rem 0.6rem #434347;
+	margin: 0.2em;
 /* To remove animation from cards */
   }
 /* To remove animation from cards */
@@ -60,14 +61,13 @@
   }
   
   .card > .body {
-	font-size: .8rem;
+	font-size: 1em;
 	color: rgb(62, 192, 79);
 	font-size: 1em;
   }
 
   .card > .link {
-	font-size: .8rem;
-	color: #777;
+	font-size: 1em;
   }
   
   .hide {
