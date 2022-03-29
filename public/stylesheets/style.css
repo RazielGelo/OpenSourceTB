@@ -28,7 +28,8 @@ body {
 	  /* background-color: #000472; */
 	  background-color:#1E2749;
 	  color: #ffffff;
-	  text-align: left
+	  text-align: left;
+	  margin-bottom: 50px;
   }
   
   #nav_style {
@@ -50,15 +51,16 @@ body {
   }
   
   footer {
-	  /* background-color: #000472; */
-	  background-color:#1E2749;
-	  color: #ffffff;
-	  text-align: center;
-	  clear: both;
-	  bottom: 0;
-	  width: 100%;
-	  height: auto;
-	  line-height: auto;
+	font-size: 1em;
+	background-color: #1E2749;
+	text-align: center; 
+    color: #eeeeee;
+    height: 60px;
+    padding-top: 50px;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: 0 50vh 0 50vh #1E2749;
+    width: 100%;
   }
   
   .alert-error{
@@ -91,21 +93,11 @@ body {
 	border-color: #d6e9c6;
   }
 /* ANN LAUREN*/
-header  { 
-  display: flex; 
-  flex-direction: column; 
-}
-nav > ul { 
-  display: flex; 
-  justify-content: flex-start; 
-}
 main { 
   display: flex; 
   flex-direction: column; 
 }
-footer {
-  text-align: center; 
-}
+
 
 /* .mt-50{
 	margin-top: 50px;
@@ -219,15 +211,11 @@ aside.info3 {
 	background: #273469; 
 	padding-top: 2em
 }
-footer { 
-	padding: 1rem; 
-	border-top: 1px dotted #d9d9d9;
-}
+
 address { 
 	font-style: normal;
 	font-family:'Roboto',sans-serif;
 	letter-spacing: 2px; 
-	font-size: 0.75rem; 
 	color: #bbb; 
 }
 .name { 	
@@ -348,7 +336,13 @@ address {
 	max-width: 100%;
 	height: auto;
 }
-.container {
+
+.btn-orange{
+	color: rgb(255, 255, 255) !important;
+	background-color: #E44D26 !important;
+	border-radius: 10px !important;
+}
+/* .container {
 	position: sticky;
 	max-width: 100%;
 	height: auto;
@@ -389,7 +383,7 @@ address {
 }
 .container .btn:hover {
 	background-color: #fc7a00;
-}
+} */
 
 input[type=text], select, [type=number], [type=password], [type=email], [type=date], [type=url] {
 	width: 100%;

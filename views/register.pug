@@ -7,7 +7,7 @@ block content
 	//- hr
 	form(action="/users/register", method='POST', onsubmit="submitButton.disabled = true; return true;")
 		fieldset
-			p(class="fieldsettitle") Register an account to OpenSource Textbook
+			p(class="fieldsettitle") Register an account to Beyond the Books
 			div
 				label(for="userName") Username:
 				input(type="text", id="userName", name="userName", value=`${(!userName) ? '' : userName}`)
@@ -31,7 +31,7 @@ block content
 				input(type="password", id="password2", name="password2")
 			div
 				//- button(type="submit", class="button", name="submitButton") Register
-				<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>
+				<p>Already have an Beyond the Books account?<a href="/users/login" title="Registration"><b> Log in</a></p>
 				button(alt="register" type="submit", class="buttonAnimation")
 					<i>R</i>
 					<i>E</i>
