@@ -7,10 +7,10 @@ body {
 	/* color: rgb(255, 255, 255); */
   }
   
-  a {
-	/* color: #bae1f0; */
+  /* a {
+	color: #bae1f0; 
 	color: #fffefd;
-  }  
+  }  */
   
   div {
 	  padding: 2px;
@@ -136,6 +136,7 @@ footer {
     flex-basis: 25%;
 	min-height: 600px;
 	color: #5d6c72;
+	margin-top: 1.2em;
   }
 }
 header { 
@@ -222,7 +223,8 @@ aside.info1 {
 	/* background: #FAFAFF;  */
 }
 aside.info2 { 
-	background: #47474d; 
+	background: ghostwhite; 
+	text-align: center;
 }
 footer { 
 	padding: 1rem; 
