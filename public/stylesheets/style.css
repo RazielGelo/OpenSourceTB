@@ -132,6 +132,10 @@ footer {
     order: 3; 
     flex-basis: 15%;
   }
+  .info3 { 
+    order: 4; 
+    flex-basis: 25%;
+  }
 }
 header { 
 	/* background: #000472;  */
@@ -210,6 +214,9 @@ aside.info1 {
 }
 aside.info2 { 
 	background: #eee; 
+}
+aside.info3 { 
+	background: #273469; 
 }
 footer { 
 	padding: 1rem; 

@@ -21,12 +21,12 @@ block content
 		p This is where you edit details of your book page. 
 	
 	<main>
-	<aside class="info2">
+	<aside class="info3">
 	h3 Book Chapter
 	div
 		each pg, i in pages
 			if pg.id != page.id
-				div
+				div(class="chapter_bar")
 					a(href="/books/page/modify/"+pg.id)= pg.chapterName
 					| 
 					if user
@@ -35,10 +35,6 @@ block content
 								span - #{(pg.histories.length)} Pending Approval Requests
 	</aside> 
 	<article>
-	//- h2 Modify Page
-	//- p This is where you edit details of your book page. 
-	//- hr
-
 	div(class="modify_container")
 		form(action=`/books/page/modify/${page.id}`, method='POST')
 			if user
@@ -64,9 +60,10 @@ block content
 			
 				label Commit message:
 				input(type="text", name='commit')
-			div
-				button#update(type="submit", class="buttonsmall") Update
+			div(class="button_container")
+				button#update(type="submit", class="button_edit") Update
 				| 
-				a(href=`/books/page/${page.id}`, class="buttonsmall") Cancel
+				a(href=`/books/page/${page.id}`)
+					button(type="button", class="button_edit") Cancel
 		</article> 
 	</main> 
