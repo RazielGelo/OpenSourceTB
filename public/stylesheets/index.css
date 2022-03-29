@@ -38,7 +38,9 @@
   text-align: center;
   height: auto;
   padding-top: 2em;
-  padding-bottom: 2em; }
+  padding-bottom: 2em;
+  font-weight: bold;
+  font-size: 16px; }
 
 .banner_edit > h1 {
   color: white; }
@@ -60,3 +62,7 @@
 
 .chapter_bar > a {
   color: white; }
+
+.info3 > h3 {
+  color: #E4D9FF;
+  text-align: center; }
