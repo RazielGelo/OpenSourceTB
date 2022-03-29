@@ -12,7 +12,7 @@
 	/* top: 10px; */
 	right: 10px;
 	background: #CFDFFF;
-	border: 1px solid #CFDFFF;
+	border: 1px solid #414650;
 	box-sizing: border-box;
 	border-radius: 30px;
 	/* margin-top: 2px; */
@@ -26,23 +26,22 @@
   
   .user-cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: .25rem;
 	margin-top: 1rem;
 
   }
   
   .card {
-	border: 1px solid rgb(255, 255, 255);
-	background-color: rgb(36, 45, 95);
-	padding: .5px;
-/* To remove animation from cards */
-	width: 130px;
-	height: 110px;
+	border: 1px solid rgb(58, 56, 85);
+	padding: 1em;
+	width: auto;
+	height: 130px;
 	border-radius: 1rem;
-	border: #0a1361 0.2rem solid;
+	border: #ffffff 0.2rem solid;
 	transition: all 0.4s ease-in;
-	box-shadow: 0.4rem 0.4rem 0.6rem #2b2b2c;
+	box-shadow: 0.4rem 0.4rem 0.6rem #434347;
+	margin: 0.2em;
 /* To remove animation from cards */
   }
 /* To remove animation from cards */
@@ -54,20 +53,20 @@
 /* To remove animation from cards */
   .card > .header {
 	margin-bottom: .25rem;
-	color:rgb(224, 221, 0);
+	color:rgb(4, 16, 37);
+	font-size: 1.2em;
 	overflow: hidden; 
 	text-overflow: ellipsis;
 	height: 30px;
   }
   
   .card > .body {
-	font-size: .8rem;
+	font-size: 1em;
 	color: rgb(62, 192, 79);
   }
 
   .card > .link {
-	font-size: .8rem;
-	color: #777;
+	font-size: 1em;
   }
   
   .hide {

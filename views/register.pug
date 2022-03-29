@@ -7,27 +7,27 @@ block content
 	//- hr
 	form(action="/users/register", method='POST', onsubmit="submitButton.disabled = true; return true;")
 		fieldset
-			p(class="fieldsettitle") Register an account to OpenSource Textbook
+			p.text-dark(class="fieldsettitle") Register an account to OpenSource Textbook
 			div
-				label(for="userName") Username:
+				label.text-dark(for="userName") Username:
 				input(type="text", id="userName", name="userName", value=`${(!userName) ? '' : userName}`)
 			div
-				label(for="firstName") FirstName:
+				label.text-dark(for="firstName") FirstName:
 				input(type="text", id="firstName", name="firstName", value=`${(!firstName) ? '' : firstName}`)
 			div
-				label(for="lastName") LastName:
+				label.text-dark(for="lastName") LastName:
 				input(type="text", id="lastName", name="lastName", value=`${(!lastName) ? '' : lastName}`)
 			div
-				label(for="birthday") Birthday:
+				label.text-dark(for="birthday") Birthday:
 				input(type="Date", id="birthday", name="birthday", value=`${(!birthday) ? '' : birthday.toISOString().substring(0, 10)}`)
 			div
-				label(for="email") Email:
+				label.text-dark(for="email") Email:
 				input(type="email", id="email", name="email", value=`${(!email) ? '' : email}`)
 			div
-				label(for="password") Password:
+				label.text-dark(for="password") Password:
 				input(type="password", id="password", name="password")
 			div
-				label(for="password2") Confirm Password:
+				label.text-dark(for="password2") Confirm Password:
 				input(type="password", id="password2", name="password2")
 			div
 				//- button(type="submit", class="button", name="submitButton") Register
