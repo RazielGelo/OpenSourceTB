@@ -625,6 +625,17 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				id: page.bookID
 			}
 		});
+		const pages = await prisma.page.findMany({
+			where: {
+				bookID: book.id
+			},
+			include: {
+				histories: true
+			},
+			orderBy: {
+				pageNumber: 'asc'
+			}
+		});
 		const relatedHistory = await prisma.history.findMany({
 			where: {
 				pageRef: parseInt(req.params.id)
@@ -641,7 +652,8 @@ router.post('/page/modify/:id', ensureAuthenticated,
 				errors: errors.array(),
 				page: page,
 				user: user,
-				book: book
+				book: book,
+				pages: pages
 			});
 		}
 		else {
