@@ -2,22 +2,29 @@ extends layout
 
 block content
 
-	div(class="container")
-		//- img(src="https://i.ibb.co/NjqMKYW/10.png" alt="Snow")
-		img(src="/images/Homepage.png" alt="Homepage")
-		a(href='/books/add', class="btn") PUBLISH NOW
-	div
-	hr
-	label(for="search")
-	| 
-	input(type="search", id="search", class="search-wrapper", placeholder="Search by Title or Author", data-search)
-	|
-	h2 Browse through our collection of <strong><u>#{totalbooksCount}</u></strong> books.
-	|
-	div(class="user-cards", data-book-cards-container)
-	template(data-book-template)
-		div(class="card")
-			div(class="header", data-header)
-			div(class="body", data-body)
-			div(class="link", data-link)
-	script(src='/javascripts/search.js')
+	div(class= "container px-4 px-md-3")
+		div.mt-80( class="row align-items-lg-center")
+			div(class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 img-container")
+				img(src="/images/Homepage.png" alt="Homepage" width="600")
+			div(class="col-md-8 order-md-1 col-lg-7 text-center text-md-start img-container mb-4")
+				h1 BEYOND THE BOOKS
+				p Have you work through of writting an academic book, self- help, poetry book, children's book, memoir book that is tailored to your niche?
+				h3 IT'S TIME TO BEGIN WRITING YOUR NEW BOOK
+				a(href='/books/add', class="btn") PUBLISH NOW
+			hr
+		div.container
+			label(for="search")
+			| 
+			input(type="search", id="search", class="search-wrapper", placeholder="Search by Title or Author", data-search)
+			|
+			h2 Browse through our collection of 
+			br
+			h2 <strong><u>#{totalbooksCount}</u></strong> books.
+			|
+			div(class="user-cards", data-book-cards-container)
+			template(data-book-template)
+				div(class="card")
+					div(class="header", data-header)
+					div(class="body", data-body)
+					div(class="link", data-link)
+			script(src='/javascripts/search.js')
