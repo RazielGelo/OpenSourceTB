@@ -146,9 +146,7 @@ body {
 main { 
 	padding: 0; 
 }
-main a { 
-	text-decoration: none; 
-}
+
 article { 
 	padding: 1rem 1rem 1rem 1rem; 
 	background: white;
