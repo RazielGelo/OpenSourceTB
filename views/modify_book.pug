@@ -1,22 +1,26 @@
 extends layout
 
 block content
-	h1 Modify Book
-	p This is where you edit details of your book. 
-	hr
-	form(action=`/books/modify/${book.id}`, method='POST')
-		div
-			label(for="title") Title: 
-			input(type="text", id="text", name="title", value=`${(!prevTitle) ? '' : prevTitle}`)
-		div
-			label Genre: 
-			select(name='genre')
-				each genre in distinctGenre
-					option(selected) #{genre.genre}
-		div
-			label Description: 
-			textarea(name='description')=prevDesc
-		div
-			button(type="submit", class="buttonsmall") Update
-			| 
-			a(href=`/books/${book.id}`, class="buttonsmall") Cancel
+	div(class="banner_edit")
+		h1 Modify Book
+		p This is where you edit details of your book. 
+	
+
+	div(class="modify_container")
+		form(action=`/books/modify/${book.id}`, method='POST')
+			div(class="label_container")
+				label(for="title") Title: 
+				input(type="text", id="text", name="title", value=`${(!prevTitle) ? '' : prevTitle}`)
+			
+				label Genre: 
+				select(name='genre')
+					each genre in distinctGenre
+						option(selected) #{genre.genre}
+			
+				label Description: 
+				textarea(name='description')=prevDesc
+			div(class="button_container")
+				button(type="submit", class="button_edit") Update
+				| 
+				a(href=`/books/${book.id}`)
+					button(type="button", class="button_edit") Cancel

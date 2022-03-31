@@ -1,0 +1,89 @@
+.header1_edit {
+  text-align: center;
+  margin: 0;
+  font-weight: bold;
+  padding-top: 30px; }
+
+.label_container > label {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 2.1em;
+  display: flex; }
+
+.label_container1 > label {
+  font-weight: bold;
+  line-height: 2.1em;
+  display: flex;
+  color: white; }
+
+.form_container {
+  display: flex;
+  justify-content: center; }
+
+.button_container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  text-align: center; }
+
+.button_edit {
+  background-color: #273469;
+  color: white;
+  font-weight: bold;
+  font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+  text-align: center;
+  padding-right: 30px;
+  padding-left: 30px;
+  margin: 1em;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.page_button {
+  background-color: #FAFAFF;
+  font-weight: bold;
+  font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+  text-align: center;
+  padding-right: 30px;
+  padding-left: 30px;
+  margin: 1em;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.banner_edit {
+  background-color: #1E2749;
+  color: white;
+  text-align: center;
+  height: auto;
+  padding-top: 2em;
+  padding-bottom: 2em; }
+
+.banner_edit > h2 {
+  color: white;
+  font-size: 40px; }
+
+.banner_edit > h1 {
+  color: white; }
+
+.modify_container {
+  padding-top: 2em;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-bottom: 2em; }
+
+.body_content {
+  background-color: #273469;
+  padding: 0; }
+
+.chapter_bar {
+  font-weight: bold;
+  text-align: left;
+  line-height: 40px; }
+
+.chapter_bar > a {
+  color: black;
+  font-size: 18px; }
+
+.modifyPage_text > h3 {
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: 25px; }
