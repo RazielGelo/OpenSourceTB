@@ -1,28 +1,31 @@
 extends layout 
 
 block content
-	div.fs-4
-		h1 Add Book
-		p This is where you add your new book.
-		hr
-		form(method='POST', action='/books/add', onsubmit="submitButton.disabled = true; return true;")
-			div
-				label Title: 
-				input(name='title', type='text', value=`${(!title) ? '' : title}`)
-			div
-				label Genre:
-				select.fs-5(name='genre')
-					each genre in distinctGenre					
-						option(selected) #{genre.genre}
-			div
-				label Description:
-				textarea(name='description')=description
-			div
-				label Link: 
-				input(name='link', type='url', value=`${(!link) ? '' : link}`)
-			div
-				button(type="submit", class="buttonsmall", name="submitButton") Create
-				| 
-				a(href='/books/genre', class="buttonsmall") Add Genre
-				| 
-				a(href='/users/profile', class="buttonsmall") Cancel
+		div(class= "bd-masthead mb-3")
+			div.fs-4( class="container px-4 px-md-3")
+				div(class ="row align-items-lg-center")
+					div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
+						h1 Add Book
+						p This is where you add your new book.
+						hr
+						form(method='POST', action='/books/add', onsubmit="submitButton.disabled = true; return true;")
+							div
+								label Title: 
+								input(name='title', type='text', value=`${(!title) ? '' : title}`)
+							div
+								label Genre:
+								select.fs-5(name='genre')
+									each genre in distinctGenre					
+										option(selected) #{genre.genre}
+							div
+								label Description:
+								textarea(name='description')=description
+							div
+								label Link: 
+								input(name='link', type='url', value=`${(!link) ? '' : link}`)
+							div
+								button(type="submit", class="buttonsmall", name="submitButton") Create
+								| 
+								a(href='/books/genre', class="buttonsmall") Add Genre
+								| 
+								a(href='/users/profile', class="buttonsmall") Cancel

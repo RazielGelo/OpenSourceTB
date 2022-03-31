@@ -1,14 +1,18 @@
 extends layout 
 
 block content
-	h1 Add Genre
-	p This is where you add more genre.
-	hr
-	form(method='POST', action='/books/genre', onsubmit="submit.disabled = true; return true;")
-		device
-			label New Genre: 
-			input(name='genre', type='text')
-		div
-			button(type="submit", class="button", name="submit") Create Genre
-			| 
-			a(href='/books/add', class="button") Cancel
+		div(class= "bd-masthead mb-3")
+			div.fs-4( class="container px-4 px-md-3")
+				div(class ="row align-items-lg-center")
+					div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
+						h1 Add Genre
+						p This is where you add more genre.
+						hr
+						form(method='POST', action='/books/genre', onsubmit="submit.disabled = true; return true;")
+							device
+								label New Genre: 
+								input(name='genre', type='text')
+							div
+								button(type="submit", class="button", name="submit") Create Genre
+								| 
+								a(href='/books/add', class="button") Cancel

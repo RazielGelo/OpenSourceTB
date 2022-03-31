@@ -10,70 +10,71 @@ block script
 		})
 
 block content
-	<main>
-	<article>
-	
-	h2= book.title
-	h5 Written by #{author}
-	label Genre: #{genre.genre}
-	p Description: #{book.description}
-	if book.link
-		a(href=`${book.link}`,  target="_blank") Author's Link
-		br
-	hr
-	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
-		if user.userName == book.authorName
-			div
-				//- a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
-				| 
-				//- a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
-	if user
-		//- if user.userName == book.authorName
-		h3 Add Page Section
-		form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
-			div
-				label Chapter Name:
-				input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
-			div
-				label Page Number:
-				input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
-			div
-				label Content:
-				textarea#body(name='body')=prevBody
-			div
-				button(type="submit", class="buttonsmall", name="submitButton") Add Page
-				| 
-				a(href='/users/profile', class="buttonsmall") Cancel
+	div.fs-4
+		<main>
+		<article>
+		
+		h2= book.title
+		h5 Written by #{author}
+		label Genre: #{genre.genre}
+		p Description: #{book.description}
+		if book.link
+			a(href=`${book.link}`,  target="_blank") Author's Link
+			br
+		hr
+		if user
+			//- a(href=`/books/request/${book.id}`) Request Access
+			if user.userName == book.authorName
+				div
+					//- a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
+					| 
+					//- a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
+					//- a(href=`/books/delete/${book.id}`) Delete
+		if user
+			//- if user.userName == book.authorName
+			h3 Add Page Section
+			form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
+				div
+					label Chapter Name:
+					input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
+				div
+					label Page Number:
+					input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
+				div
+					label Content:
+					textarea#body(name='body')=prevBody
+				div
+					button(type="submit", class="btn btn-primary", name="submitButton") Add Page
+					| 
+					a(href='/users/profile', class="btn btn-primary") Cancel
+			//- else
+			//- 	a(href=`/`) Back
 		//- else
 		//- 	a(href=`/`) Back
-	//- else
-	//- 	a(href=`/`) Back
-	
-	</article> 
+		
+		</article> 
 
-	<aside class="info1">
-	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
-		if user.userName == book.authorName
-			div
-				a(href=`/books/modify/${book.id}`, class="buttoncore-update") Modify Book
-				| 
-				a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
-	
-	h3 Book Chapter
-	if !book.pages
-		div
-			each pg, i in page
+		<aside class="info1">
+		if user
+			//- a(href=`/books/request/${book.id}`) Request Access
+			if user.userName == book.authorName
 				div
-					a(href="/books/page/"+pg.id)= pg.chapterName
+					a(href=`/books/modify/${book.id}`, class="buttoncore-update") Modify Book
 					| 
-					if user
-						if user.userName == book.authorName
-							if (pg.histories.length > 0)
-								span - #{(pg.histories.length)} Pending Approval Requests
-	</aside> 
-	</main> 
-	script(src='/javascripts/delete_book.js')
+					a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book
+					//- a(href=`/books/delete/${book.id}`) Delete
+		
+		h3 Book Chapter
+		if !book.pages
+			div
+				each pg, i in page
+					div
+						a(href="/books/page/"+pg.id)= pg.chapterName
+						| 
+						if user
+							if user.userName == book.authorName
+								if (pg.histories.length > 0)
+									span - #{(pg.histories.length)} Pending Approval Requests
+		</aside> 
+		</main> 
+		script(src='/javascripts/delete_book.js')
