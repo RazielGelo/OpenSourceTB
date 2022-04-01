@@ -39,26 +39,29 @@ body {
 	  height: auto;
   }
   
-
+/*KEEP OUT DO NOT DELETE　↓*/
   footer {
 	  background-color:#1E2749;
 	  color: #ffffff;
 	  text-align: center;
 	  clear: both;
 	  display: flex;
-	  margin-top: 70%;
   }
   
   .sticky {
-    position: fixed; /* Here's what sticks it */
-    bottom: 0; /* to the bottom of the window */
-    left: 0; /* and to the left of the window. */
-    height: auto;
-    width: 100%;
-    padding-top: 20px;
-    text-align: center;
+    margin-top: 3em;
 }
-
+@media screen and (max-width: 1300px) {
+	.sticky {
+		margin-top: 7em;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.sticky {
+		margin-top: 50%;
+	}
+}
+/*KEEP OUT DO NOT DELETE ↑*/
   .alert-error{
 	color: #a94442;
 	background-color: #f2dede;
