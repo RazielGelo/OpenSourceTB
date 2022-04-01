@@ -61,15 +61,16 @@ html(lang="en")
 	</header>
 	<main>
 		<article>
-		body
+		body(class="d-flex flex-column h-100")
 			!= messages('message', locals)
 			if errors
 				each error, i in errors
 					div(class="alert alert-danger") #{error.msg}
 			block content		
 		</article> 
-	</main> 
-		<footer class="mt-50">
+	</main>
+<footer class="">
+	div(class="container")
 		<address>
 			p OpenSource Textbook empowers and connects authors and readers through open accessto a global reading and publishing platform.
 			p Vancouver Community College, Vancouver, B.C., Canada

@@ -10,7 +10,8 @@ block content
 				div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
 					form(action="/users/login", method='POST')
 						fieldset
-							p(class="fieldsettitle") Log in to OpenSource Textbook
+							div
+								h2(class="fieldsettitle p-2") Log in to OpenSource Textbook
 							div
 								label(for="email") Email:
 								input(type="email", id="email", name="email", required=true)

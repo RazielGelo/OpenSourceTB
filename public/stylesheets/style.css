@@ -39,18 +39,26 @@ body {
 	  height: auto;
   }
   
+
   footer {
-	  /* background-color: #000472; */
 	  background-color:#1E2749;
 	  color: #ffffff;
 	  text-align: center;
 	  clear: both;
-	  bottom: 0;
-	  width: 100%;
-	  height: auto;
-	  line-height: auto;
+	  display: flex;
+	  margin-top: 70%;
   }
   
+  .sticky {
+    position: fixed; /* Here's what sticks it */
+    bottom: 0; /* to the bottom of the window */
+    left: 0; /* and to the left of the window. */
+    height: auto;
+    width: 100%;
+    padding-top: 20px;
+    text-align: center;
+}
+
   .alert-error{
 	color: #a94442;
 	background-color: #f2dede;
@@ -93,9 +101,6 @@ main {
   display: flex; 
   flex-direction: column; 
 }
-footer {
-  text-align: center; 
-}
 
 .mt-50{
 	margin-top: 50px;
@@ -135,9 +140,7 @@ header {
 	margin: 0 ; 
 }
 body { 
-	background: white; 
 	font-family: "McLaren", sans; 
-	margin: 0px;
 }
 #wrapper { 
 	/* background: #000472;  */
@@ -171,10 +174,7 @@ aside.info3 {
 	padding-top: 2.5em;
 	background: #FAFAFF; 
 }
-footer { 
-	padding: 1rem; 
-	border-top: 1px dotted #d9d9d9;
-}
+
 address { 
 	font-style: normal;
 	font-family:'Roboto',sans-serif;
