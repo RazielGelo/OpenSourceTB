@@ -5,11 +5,13 @@ block content
 		div.fs-4( class="container px-4 px-md-3")
 			div(class ="row align-items-lg-center")
 				div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
-					h1(class="font-title") Add Genre
-					p This is where you add more genre.
+					div(class="header1_edit")
+						h1 Add Genre
+						p This is where you add more genre.
+					
 					hr
 					form(method='POST', action='/books/genre', onsubmit="submit.disabled = true; return true;")
-						device
+						device(class="label_container")
 							label New Genre: 
 							input(name='genre', type='text')
 						div

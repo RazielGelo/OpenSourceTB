@@ -12,18 +12,19 @@ block content
 					//- 	h1(class="font-title") Modify Book
 					//- 	p This is where you edit details of your book. 
 					form(action=`/books/modify/${book.id}`, method='POST')
-						div
+						div(class="label_container")
 							label(for="title") Title: 
 							input(type="text", id="text", name="title", value=`${(!prevTitle) ? '' : prevTitle}`)
-						div
+						
 							label Genre: 
 							select(name='genre')
 								each genre in distinctGenre
 									option(selected) #{genre.genre}
-						div
+						
 							label Description: 
 							textarea(name='description')=prevDesc
-						div
+						div(class="button_container")
 							button(type="submit", class="buttonsmall") Update
 							| 
-							a(href=`/books/${book.id}`, class="buttonsmall") Cancel
+							a(href=`/books/${book.id}`)
+								button(type="button", class="buttonsmall") Cancel
