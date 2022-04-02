@@ -328,6 +328,16 @@ address {
 	border-color: #1E2749 !important;
 }
 
+.color-white {
+	background-color: #FFFFFF !important;
+	border-color: #FFFFFF !important;
+}
+
+.color-black {
+	color: #000 !important;
+	color: #000 !important;
+}
+
 input[type=text], select, [type=number], [type=password], [type=email], [type=date], [type=url] {
 	width: 100%;
 	padding: 12px 20px;

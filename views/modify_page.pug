@@ -41,31 +41,31 @@ block content
 				form(action=`/books/page/modify/${page.id}`, method='POST')
 					if user
 						if user.userName == book.authorName
-							div(class="label_container1")
-								label Chapter Name:
+							div(class="label_container1 ")
+								label.text-dark Chapter Name:
 								input(type="text", name='chapterName', value=`${page.chapterName}`)
 							
-								label Page Number:
+								label.text-dark Page Number:
 								input(type="number", name='pageNumber',  value=`${page.pageNumber}`)
 						else
 							
-								label Chapter Name:
+								label.text-dark Chapter Name:
 								input(type="text", name='chapterName', value=`${page.chapterName}`, readonly)
 							
-								label Page Number:
+								label.text-dark Page Number:
 								input(type="number", name='pageNumber',  value=`${page.pageNumber}`, readonly)
 					div(class="label_container1")
 						textarea#tempBody(name='tempBody', style="display:none;")=page.body
 					
-						label Content update:
+						label.text-dark Content update:
 						textarea#body(name='body')=page.body
 				
-						label Commit message:
+						label.text-dark Commit message:
 						input(type="text", name='commit')
 					div(class="button_container")
-						button#update(type="submit", class="page_button") Update
+						button#update(type="submit", class="btn btn-primary color-blue fs-4") Update
 						| 
 						a(href=`/books/page/${page.id}`) 
-							button(type="button", class="page_button") Cancel
+							button(type="button", class="btn btn-primary color-blue fs-4") Cancel
 			</article> 
 		</main> 
