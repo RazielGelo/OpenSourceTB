@@ -58,13 +58,13 @@ body {
 }
 @media screen and (max-width: 1000px) {
 	.footer-mt {
-		margin-top: auto;
+		margin-top: 300px;
 	}
 }
 
 @media screen and (max-width: 600px) {
 	.footer-mt {
-		margin-top: 100%;
+		margin-top: 150px;
 	}
 }
 /*KEEP OUT DO NOT DELETE ↑*/
@@ -477,4 +477,11 @@ fieldset {
    .buttonAnimation:hover i:nth-child(10) {
 	transition-delay: calc(0.045s * 10);
    }
-  
+  .view-botton{
+	  text-decoration: none;
+	  color: #fff !important;
+  }
+
+  :hover .view-botton{
+	  
+  }
