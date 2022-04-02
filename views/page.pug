@@ -57,9 +57,9 @@ block content
 						div
 							input(type="number", name="updater", style="display:none;", value=`${hist.userID}`)
 						div
-							button#Approve(type="submit", class="buttonapprove") Approve
-				| 
-				a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="buttonsmall") Delete
+							button#Approve(type="submit", class="btn btn-primary color-orange m-2") Approve
+							a(href='#', id="delete", data-id=`${page.id}`, data-bookid=`${book.id}`, class="btn btn-primary color-orange m-2") Delete 
+				
 			| 
 			a(href=`/books/${book.id}`, class="btn btn-primary color-blue m-2") Cancel
 			//- else
