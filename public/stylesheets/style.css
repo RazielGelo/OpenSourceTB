@@ -171,7 +171,7 @@ aside {
 	background: white;
   }
 aside.info1 { 
-	background: #CFDFFF; 
+	background: #f0f0f0; 
 }
 aside.info2 { 
 	background: #eee; 
@@ -319,8 +319,13 @@ address {
 	display: block;
 }
 .color-orange {
-	background-color: #fc7a00 !important;
-	border-color: #fc7a00 !important;
+	background-color: #e73c11 !important;
+	border-color: #e73c11 !important;
+}
+
+.color-blue {
+	background-color: #1E2749 !important;
+	border-color: #1E2749 !important;
 }
 
 input[type=text], select, [type=number], [type=password], [type=email], [type=date], [type=url] {

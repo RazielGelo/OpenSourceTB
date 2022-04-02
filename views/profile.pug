@@ -1,10 +1,10 @@
 extends layout 
 
 block content
-	<div class="container px-4 px-md-3">
+	<div class="container px-4 px-md-3 ">
 		<div class="row align-items-lg-center">				
 			<div class="col-100 mx-auto col-md-4 order-md-2 col-lg-5">
-				<aside class="info1">
+				<aside class="info1 p-5">
 					fieldset 
 							h2 User Profile
 							div
@@ -24,9 +24,9 @@ block content
 								input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
 							
 							div
-								a(href='/users/modify', class="buttonsmall") Edit Profile
+								a(href='/users/modify', class="btn btn-primary color-blue") Edit Profile
 								| 
-								a(href='/users/modify/password', class="buttonsmall") Change Password
+								a(href='/users/modify/password', class="btn btn-primary color-blue") Change Password
 								br
 								br
 								br
@@ -46,7 +46,7 @@ block content
 										| 
 										if (book.histories.length > 0)
 											span - #{(book.histories.length)} Pending Approval Requests
-							a(href='/books/add', class="buttoncore-update") Publish New Book
+							a(href='/books/add', class="btn btn-primary color-orange fs-4") Publish New Book
 						</fieldset>
 				</article>
 			</div>

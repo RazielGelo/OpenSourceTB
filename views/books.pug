@@ -10,17 +10,17 @@ block script
 		})
 
 block content
-	div.fs-4
+	div
 		<main>
 		<article>
-		
-		h2= book.title
-		h5 Written by #{author}
-		label Genre: #{genre.genre}
-		p Description: #{book.description}
-		if book.link
-			a(href=`${book.link}`,  target="_blank") Author's Link
-			br
+		div.fs-4.p-3
+			h2= book.title
+			h5 Written by #{author}
+			label Genre: #{genre.genre}
+			p Description: #{book.description}
+			if book.link
+				a(href=`${book.link}`,  target="_blank") Author's Link
+				br
 		hr
 		if user
 			//- a(href=`/books/request/${book.id}`) Request Access
@@ -32,25 +32,26 @@ block content
 					//- a(href=`/books/delete/${book.id}`) Delete
 		if user
 			//- if user.userName == book.authorName
-			h3 Add Page Section
-			form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
-				div
-					label Chapter Name:
-					input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
-				div
-					label Page Number:
-					input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
-				div
-					label Content:
-					textarea#body(name='body')=prevBody
-				div
-					button(type="submit", class="btn btn-primary", name="submitButton") Add Page
-					| 
-					a(href='/users/profile', class="btn btn-primary") Cancel
+			div.p-3
+				h3 Add Page Section
+				form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
+					div.fs-5
+						label Chapter Name:
+						input(type="text", name='chapterName', value=`${(!prevChapter) ? '' : prevChapter}`, class="input")
+					div.fs-5
+						label Page Number:
+						input(type="number", name='pageNumber', value=`${prevPageNumber}`, min=1)
+					div.fs-5
+						label Content:
+						textarea#body(name='body')=prevBody
+					div.fs-5
+						button(type="submit", class="btn btn-primary color-blue", name="submitButton") Add Page
+						| 
+						a(href='/users/profile', class="btn btn-primary color-blue") Cancel
+				//- else
+				//- 	a(href=`/`) Back
 			//- else
 			//- 	a(href=`/`) Back
-		//- else
-		//- 	a(href=`/`) Back
 		
 		</article> 
 
@@ -66,7 +67,7 @@ block content
 		
 		h3 Book Chapter
 		if !book.pages
-			div
+			div.fs-5
 				each pg, i in page
 					div
 						a(href="/books/page/"+pg.id)= pg.chapterName
