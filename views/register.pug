@@ -1,10 +1,6 @@
 extends layout 
 
 block content
-	//- h1 Register
-	//- p This is where you register. 
-	//- p Please note that once Username has been set it cannot be changed. 
-	//- hr
 	div(class= "bd-masthead mb-3")
 		div.fs-4( class="container px-4 px-md-3")
 			div(class ="row align-items-lg-center")
@@ -34,7 +30,6 @@ block content
 								label(for="password2") Confirm Password:
 								input(type="password", id="password2", name="password2")
 							div
-								//- button(type="submit", class="button", name="submitButton") Register
 								<p>Already have an OpenSource Textbook account?<a href="/users/login" title="Registration"><b> Log in</a></p>
 								button(alt="register" type="submit", class="buttonAnimation")
 									<i>R</i>

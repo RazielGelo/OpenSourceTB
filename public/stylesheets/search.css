@@ -1,21 +1,14 @@
 .search-wrapper {
-	/* display: flex;
-	flex-direction: column;
-	gap: .25rem; */
 	display: flex;
 	flex-direction: column;
-	/* gap: .30rem; */
 	padding: 10px;
 	min-width: 60%;
 	width: 40%;
-	/* position: sticky; */
-	/* top: 10px; */
 	right: 10px;
 	background: #CFDFFF;
 	border: 1px solid #CFDFFF;
 	box-sizing: border-box;
 	border-radius: 30px;
-	/* margin-top: 2px; */
 	float: right;
 	margin-bottom: 10px;
   }
@@ -33,8 +26,6 @@
   }
   
   .card {
-	/* border: 1px solid rgb(255, 255, 255);
-	background-color: rgb(36, 45, 95); */
 	border: 1px solid rgb(197, 191, 191);
 	background-color: rgb(255, 255, 255);
 	padding: .5px;
