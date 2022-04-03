@@ -20,8 +20,9 @@ block script
 			statusbar: false,
 		})
 block content
-	h1 Resolve conflict
-	p This is where you resolve or merge conflicts
+	div.mt-0(class="banner_edit")
+		h1(class="font-title") Resolve Conflict
+		p This is where you resolve or merge conflicts.
 	hr
 	form(action=`/books/page/conflict/${page.id}`, method='POST')
 		div

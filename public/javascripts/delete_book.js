@@ -9,7 +9,7 @@ deleteButton.onclick = async (e) => {
 		});
 		window.location.href = '/users/profile';
 	} else {
-		window.location.href = '/users/profile';
+		window.location.href = `/books/${id}`;
 	}
 
 };

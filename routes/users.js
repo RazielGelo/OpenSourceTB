@@ -224,7 +224,7 @@ router.post('/modify/password', ensureAuthenticated,
 		}
 		if (!validPassword) {
 			req.flash('failure', 'Current password is not equal to your old password');
-			return res.redirect('modify_password.pug');
+			return res.render('modify_password.pug');
 		}
 		else {
 			const hashedPassword = await bcrypt.hash(req.body.new_password, 10);
