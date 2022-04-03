@@ -594,3 +594,46 @@ fieldset {
     /* //color: #000472; */
     color: white;
 }
+
+/*about us mid text */
+.middletext{
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 40px;
+	letter-spacing: 3px;
+	margin-left: 30px;
+}
+.middlebottomtext{
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 25px;
+	letter-spacing: 3px;
+	margin-left: 30px;
+}
+/*about us body text */
+.aboutbody {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+  }
+
+	.one {
+	 font-size: large;
+	 font-family: Arial, Helvetica, sans-serif;
+	 margin-left: 15%;
+	 margin-right: 5%;
+	 line-height: 39px;
+	 width: 100%;
+	}
+	.two {
+		margin-left: 23%;
+		margin-right: 15%;
+	}
+	/*about us img format */
+	.aboutIMG {
+		width: 450px;
+		height: auto;
+		align-items: center;
+	}

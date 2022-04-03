@@ -24,4 +24,9 @@ router.get('/books', async (req, res) => {
 	res.render('books.pug');
 });
 
+// Render AboutUs page
+router.get('/about', async (req, res) => {
+	res.render('about_us.pug');
+});
+
 module.exports = router;
