@@ -31,7 +31,7 @@ block content
 				//- a(href=`/books/delete/${book.id}`) Delete
 	if user
 		//- if user.userName == book.authorName
-		h3 Add Page Section
+		h3(class="font-title") Add Page Section
 		form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
 			div
 				label Chapter Name:
@@ -53,7 +53,7 @@ block content
 	
 	</article> 
 
-	<aside class="info1">
+	<aside class="info2">
 	if user
 		//- a(href=`/books/request/${book.id}`) Request Access
 		if user.userName == book.authorName

@@ -1,21 +1,25 @@
 extends layout
 
 block content
-	h1 Edit Profile
-	p This is where you edit your profile and password. 
-	hr
-	form(action="/users/modify", method='POST')
-		div
-			label(for="firstName") FirstName:
-			input(type="text", id="firstName", name="firstName", value=`${user.firstName}`)
-		div
-			label(for="lastName") LastName:
-			input(type="text", id="lastName", name="lastName", value=`${user.lastName}`)
-		div
-			label(for="birthday") Birthday:
-			input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`)
-		div
-			button(type="submit", class="buttonsmall") Update
-			| 
-			a(href='/users/profile', class="buttonsmall") Cancel
+	div(class= "bd-masthead mb-3")
+		div.fs-4( class="container px-4 px-md-3")
+			div(class ="row align-items-lg-center")
+				div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
+					h1(class="font-title") Edit Profile
+					p This is where you edit your profile and password. 
+					hr
+					form(action="/users/modify", method='POST')
+						div
+							label(for="firstName") FirstName:
+							input(type="text", id="firstName", name="firstName", value=`${user.firstName}`)
+						div
+							label(for="lastName") LastName:
+							input(type="text", id="lastName", name="lastName", value=`${user.lastName}`)
+						div
+							label(for="birthday") Birthday:
+							input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`)
+						div
+							button(type="submit", class="buttonsmall") Update
+							| 
+							a(href='/users/profile', class="buttonsmall") Cancel
 			

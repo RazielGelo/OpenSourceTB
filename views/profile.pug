@@ -3,23 +3,23 @@ extends layout
 block content
 	<main>
 	<article>
-		h2 My Dashboard
+		h2(class="font-title") My Dashboard
 			<fieldset>
-				h3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
+				h3.mt-3 #{user.firstName}'s Books - Total Count: #{userTotalBooksCount._count.books}
 				ul
 					each book, i in books
 						li
-							a(href="/books/"+book.id)= book.title
+							a(class="font-homepage2", href="/books/"+book.id)= book.title
 							| 
 							if (book.histories.length > 0)
-								span - #{(book.histories.length)} Pending Approval Requests
+								span(class="font-homepage2") - #{(book.histories.length)} Pending Approval Requests
 				a(href='/books/add', class="buttoncore-update") Publish New Book
 			</fieldset>
 	</article>
 	<aside class="info1">
 		fieldset 
-				h2 User Profile
-				div
+				h2(class="font-title") User Profile
+				div.mt-3
 					label(for="userName") Username:
 					input(type="text", id="userName", name="userName", value=`${user.userName}`, disabled)
 				div
@@ -36,9 +36,10 @@ block content
 					input(type="date", id="birthday", name="birthday", value=`${user.birthday.toISOString().substring(0, 10)}`, disabled)
 				
 				div
+					a(href='/users/modify/password', class="buttonsmall") Change Password
+					|
 					a(href='/users/modify', class="buttonsmall") Edit Profile
 					| 
-					a(href='/users/modify/password', class="buttonsmall") Change Password
 					br
 					br
 					br
