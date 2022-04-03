@@ -27,6 +27,9 @@ html(lang="en")
 			<a class="navbar-brand" href="/">
 			<img src="/images/Books.png" alt="" width="60" height="50" class="d-inline-block align-text-top">
 			</a>
+			| 
+			if user
+				p(class="font-name") Welcome #{user.firstName}!
 			<nav class="flex-wrap flex-sm-nowrap fs-4" aria-label="Main navigation">
 				button.navbar-toggler(
 					type='button' 

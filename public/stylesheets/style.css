@@ -25,8 +25,6 @@ body {
   }
   
   header {
-	  /* background-color: #000472; */
-	  /* background-color:#1E2749; */
 	  background-color: #30343F;
 	  color: #ffffff;
 	  text-align: left
@@ -51,8 +49,6 @@ body {
   }
   
   footer {
-	  /* background-color: #000472; */
-	  /* background-color:#1E2749; */
 	  background-color: #30343F;
 	  color: #ffffff;
 	  text-align: center;
@@ -92,7 +88,7 @@ body {
 	background-color: #dff0d8;
 	border-color: #d6e9c6;
   }
-/* ANN LAUREN*/
+/* EMIL*/
 header  { 
   display: flex; 
   flex-direction: column; 
@@ -135,8 +131,6 @@ footer {
   }
 }
 header { 
-	/* background: #000472;  */
-	/* background-color:#1E2749; */
 	background-color: #30343F;
 	color: #fff; 
 	padding: .5rem .5rem .5rem .5rem; 
@@ -148,7 +142,6 @@ body {
 	margin: 0px;
 }
 #wrapper { 
-	/* background: #000472;  */
 	background-color:#1E2749;
 	margin: 0 auto; max-width: 100%
 }
@@ -161,17 +154,6 @@ h1 {
 	font-family: "McLaren" 
 }
 nav { 
-	/* background: #3c3c52;  */
-	/* background: #555FD5;
-	background: -webkit-linear-gradient(top, #555FD5, #152144);
-	background: -moz-linear-gradient(top, #555FD5, #152144);
-	background: linear-gradient(to bottom, #555FD5, #152144); */
-	/* background: rgb(2,0,36);
-	background: linear-gradient(180deg, rgba(2,0,36,1) 50%, rgba(88,126,134,1) 100%); */
-	/* background: rgb(5,2,50);
-background: linear-gradient(0deg, rgba(5,2,50,1) 0%, rgba(88,126,134,1) 100%); */
-/* background: rgb(39,52,105);
-background: linear-gradient(0deg, rgba(39,52,105,1) 78%, rgba(88,126,134,1) 100%); */
 	background-color: #30343F;
 	padding: 0; 
 	margin: 0; 
@@ -209,12 +191,9 @@ aside {
 	background: white;
   }
 aside.info1 { 
-	/* background: #CFDFFF;  */
-	/* background: #FAFAFF; */
 	background: #f0f0f0; 
 }
 aside.info2 { 
-	/* background: #eee;  */
 	background: #FAFAFF;
 }
 footer { 
@@ -236,7 +215,7 @@ address {
   	margin-top: 5px;
 	letter-spacing: 2px;
 }
-/* Profile, logout */
+
 .buttonsmall {
 	height: 25px;
 	min-width: 160px;
@@ -256,7 +235,6 @@ address {
 	text-align:center;
 	position: relative;
 	float: right;
-	/* background-color: #4c4c68; */
 	background-color: #30343F;
 	margin-bottom: 10px;
 	cursor: pointer;
@@ -282,7 +260,6 @@ address {
 	font-size: 16px;
 	color:#FFFFFF;
 	text-align:center;
-	/* background-color: #000472; */
 	background-color: #30343F;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -292,7 +269,7 @@ address {
 	outline: none;
 	border: none;
   }
-/* Register, Login */
+
 .button {
 	height: 35px;
 	min-width: 150px;
@@ -326,13 +303,10 @@ address {
 	box-sizing: border-box;
 	text-decoration:none;
 	font-size: 18px;
-	/* font-weight: 500; */
-	/* font-weight: bold; */
 	color:#FFFFFF;
 	text-align:center;
 	letter-spacing: 2px;
 	float: left;
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
 	border-style: none;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -344,7 +318,6 @@ address {
 	background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%);
   }
   .buttoncore-delete {
-	/* background-image: linear-gradient(to right, #e73c11 0%, #F16529  51%, #E44D26  100%); */
 	background-color: #30343F;
   }
 .image {
@@ -364,11 +337,6 @@ address {
 	display: block;
 }
 .container .btn {
-	/* position: absolute;
-	top: 70%;
-	left: 20%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);  */
 	background-color: #E44D26;
 	color: white;
 	font-size: 16px;
@@ -376,19 +344,12 @@ address {
 	cursor: pointer;
 	border-radius:10em;
 	text-align: center;
-	/* height: 25px;
-	min-width: 150px;
-	padding: 5px; 
-	margin-left: 10%;
-	margin-top: 40px;
-	display: flex; */
 	font-family:'Roboto',sans-serif;
 	font-weight: 500;
 	font-weight: bold;
 	color:#FFFFFF;
 	letter-spacing: 5px;
 	text-decoration:none;
-	/* flex-shrink: inherit; */
 }
 .container .btn:hover {
 	background-color: #fc7a00;
@@ -415,8 +376,6 @@ textarea {
 	resize: none;
 }
 fieldset { 
-	/* margin-left: 5%;
-	margin-right: 5%; */
 	margin-top: 30px;
 	margin-bottom: 10px;
 	font-family:'Roboto',sans-serif;
@@ -444,7 +403,6 @@ fieldset {
   }
 .column {
 	flex: 50%;
-	/* padding: 10px; */
 	min-height: 600px; 
   }
 /* EXPLORE */
@@ -459,18 +417,12 @@ fieldset {
 	font-size: 18px;
 	text-transform: uppercase;
 	border: 0;
-	/* box-shadow: rgb(248, 58, 0) 0px 7px 0px 0px;
-	background-color: rgb(230, 82, 24); */
 	box-shadow: rgb(4, 14, 102) 0px 7px 0px 0px;
 	background-color: rgb(6, 16, 148);
 	border-radius: 12px;
 	overflow: hidden;
 	transition: 31ms cubic-bezier(.5, .7, .4, 1);
 	cursor: pointer;
-	/* float: right;
-	min-width: 150px;
-	margin-right: 30px;
-	margin-bottom: 30px; */
    }
    
    .buttonAnimation:before {
@@ -563,7 +515,6 @@ fieldset {
 	font-size: 20px;
 	color: #2b2929;
 	margin-top: 5px;
-  	/* font-weight: 700; */
 }
 .font-homepage3 {
 	font-family: Raleway;
@@ -576,6 +527,14 @@ fieldset {
 	font-size: 30px;
 	color: #30343F;
   	font-weight: 700;
+}
+
+.font-name {
+	font-family: Raleway;
+	font-size: 30px;
+	color: #ffffff;
+  	font-weight: 700;
+	margin-bottom: 0px;
 }
 .banner_edit {
     background-color: #1E2749;
@@ -591,49 +550,5 @@ fieldset {
     font-size: 40px;
 }
 .banner_edit > h1 {
-    /* //color: #000472; */
     color: white;
 }
-
-/*about us mid text */
-.middletext{
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 40px;
-	letter-spacing: 3px;
-	margin-left: 30px;
-}
-.middlebottomtext{
-	text-align: center;
-	text-transform: uppercase;
-	font-size: 25px;
-	letter-spacing: 3px;
-	margin-left: 30px;
-}
-/*about us body text */
-.aboutbody {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr;
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
-  }
-
-	.one {
-	 font-size: large;
-	 font-family: Arial, Helvetica, sans-serif;
-	 margin-left: 15%;
-	 margin-right: 5%;
-	 line-height: 39px;
-	 width: 100%;
-	}
-	.two {
-		margin-left: 23%;
-		margin-right: 15%;
-	}
-	/*about us img format */
-	.aboutIMG {
-		width: 450px;
-		height: auto;
-		align-items: center;
-	}

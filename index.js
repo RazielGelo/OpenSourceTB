@@ -17,6 +17,18 @@ require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
+env = process.env.NODE_ENV || 'development';
+
+var forceSsl = function (req, res, next) {
+	if (req.headers['x-forwarded-proto'] !== 'https') {
+		return res.redirect(['https://', req.get('Host'), req.url].join(''));
+	}
+	return next();
+};
+
+if (env === 'production') {
+	app.use(forceSsl);
+}
 
 // Middleware
 app.use(express.json()); // Setup server to accept JSON
