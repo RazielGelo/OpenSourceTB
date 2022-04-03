@@ -37,9 +37,6 @@ block content
 								span - #{(pg.histories.length)} Pending Approval Requests
 	</aside> 
 	<article>
-	//- h2 Modify Page
-	//- p This is where you edit details of your book page. 
-	//- hr
 	form(action=`/books/page/modify/${page.id}`, method='POST')
 		if user
 			if user.userName == book.authorName

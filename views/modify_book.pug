@@ -8,9 +8,6 @@ block content
 		div.fs-4( class="container px-4 px-md-3")
 			div(class ="row align-items-lg-center")
 				div(class="col-12 mx-auto col-md-6 order-md-2 col-lg-8")
-					//- div(class="banner_edit")
-					//- 	h1(class="font-title") Modify Book
-					//- 	p This is where you edit details of your book. 
 					form(action=`/books/modify/${book.id}`, method='POST')
 						div(class="label_container")
 							label(for="title") Title: 
