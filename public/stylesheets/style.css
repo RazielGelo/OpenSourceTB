@@ -261,6 +261,9 @@ address {
 	margin-bottom: 10px;
 	cursor: pointer;
 	box-shadow: none;
+	border-color: none;
+	outline: none;
+	border: none;
   }
   .buttonapprove {
 	height: 25px;

@@ -8,11 +8,9 @@ block script
 			menubar: false,
 			statusbar: false,
 		})
-
 block content
 	<main>
 	<article>
-	
 	h2= book.title
 	h5 Written by #{author}
 	label Genre: #{genre.genre}
@@ -22,15 +20,10 @@ block content
 		br
 	hr
 	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
 		if user.userName == book.authorName
 			div
-				//- a(href=`/books/modify/${book.id}`, class="buttonsmall") Modify Book
 				| 
-				//- a(href='#', id="delete", data-id=`${book.id}`, class="buttonsmall") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
 	if user
-		//- if user.userName == book.authorName
 		h3(class="font-title") Add Page Section
 		form(method='POST', action=`/books/${book.id}`, onsubmit="submitButton.disabled = true; return true;")
 			div
@@ -45,24 +38,16 @@ block content
 			div
 				button(type="submit", class="buttonsmall", name="submitButton") Add Page
 				| 
-				a(href='/users/profile', class="buttonsmall") Cancel
-		//- else
-		//- 	a(href=`/`) Back
-	//- else
-	//- 	a(href=`/`) Back
-	
+				a(href='/users/profile', class="buttonsmall") Cancel	
 	</article> 
 
 	<aside class="info2">
 	if user
-		//- a(href=`/books/request/${book.id}`) Request Access
 		if user.userName == book.authorName
 			div
 				a(href=`/books/modify/${book.id}`, class="buttoncore-update") Modify Book
 				| 
-				a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book
-				//- a(href=`/books/delete/${book.id}`) Delete
-	
+				a(href='#', id="delete", data-id=`${book.id}`, class="buttoncore-delete") Delete Book	
 	h3 Book Chapter
 	if !book.pages
 		div

@@ -10,6 +10,6 @@ deleteButton.onclick = async (e) => {
 		});
 		window.location.href = `/books/${bookid}`;
 	} else {
-		window.location.href = `/books/${bookid}`;
+		window.location.href = `/books/page/${id}`;
 	}
 };

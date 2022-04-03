@@ -721,7 +721,6 @@ router.post('/page/modify/:id', ensureAuthenticated,
 
 				if (isDifferent) {
 					const currVal = req.body.body;
-					// res.redirect(`/books/page/conflict/${req.params.id}`)
 					res.render('modify_page_conflict', { user, page, currVal });
 
 				} else {
@@ -949,7 +948,6 @@ router.delete('/delete/:id', ensureAuthenticated, async (req, res) => {
 			id: parseInt(req.params.id)
 		}
 	});
-	// const transaction = await prisma.$transaction([deletePages, deleteBook])
 	req.flash('success', 'Book successfully deleted');
 	res.status(200).send('Successfully deleted');
 });
