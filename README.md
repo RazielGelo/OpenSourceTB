@@ -51,7 +51,7 @@ You can contact the Author in discord
 **********************************
 *********** USER STORY ***********
 **********************************
-*(Nice to Have) - for documentation purposes of limitations
+
 -----------------------------------------------------------------------------------------------------------------------
 Login 
 -----------------------------------------------------------------------------------------------------------------------
@@ -301,8 +301,9 @@ Resolved Conflict
 Resolved Conflict 1 	| When two users are trying to update the same existing page but the page was updated by the author  
 			| Resolved Conflict page will be displayed for the user who are trying to update the page and the updated page will be displayed. 
       
-
+-----------------------------------------------------------------------------------------------------------------------
 Roadmap
+-----------------------------------------------------------------------------------------------------------------------
 
 **************************************************************
 *********** NICE TO HAVE (For future Enhancements) ***********
