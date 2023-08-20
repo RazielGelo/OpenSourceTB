@@ -17,9 +17,7 @@ block script
 			toolbar: false,
 			readonly: 1
 		})
-
 block content
-
 	<main>
 	<article>
 	each pg, i in pages
@@ -35,7 +33,6 @@ block content
 	label Genre: #{genre.genre}
 	p Description: #{book.description}
 	hr
-
 	h3 Page Details: 
 	div
 		label Chapter Name:
@@ -45,7 +42,6 @@ block content
 		input(type="number", name='pageNumber', value=`${page.pageNumber}`, disabled)
 	div
 		label Current page update:
-
 		textarea#body=page.body
 	if user
 		if user.userName == book.authorName
@@ -68,10 +64,7 @@ block content
 		a(href=`/books/${book.id}`, class="buttonsmall") Cancel
 	else
 		a(href=`/books/${book.id}`, class="buttonsmall") Back
-	
-
 	</article> 
-
 	<aside class="info2">
 	a(href=`/books/page/modify/${page.id}`, class="buttoncore-update") Update Existing Page
 	|
